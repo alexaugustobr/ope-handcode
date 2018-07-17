@@ -2,7 +2,7 @@
 from django.db import models
 
 class ArquivosQuestao(models.Model):
-    questao = models.ForeignKey(to='Questao', related_name="arquivosQuestao", null=False, blank=False) #onetomany
+    questao = models.ForeignKey(to='Questao', on_delete="cascade", related_name="arquivosQuestao", null=False, blank=False) #onetomany
     arquivo = models.CharField(max_length=500)
 
     def __str__(self):
