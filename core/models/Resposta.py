@@ -6,7 +6,7 @@ from .Questao import Questao
 
 class Resposta(models.Model):
     aluno = models.ForeignKey(to='Aluno', on_delete="cascade", related_name="respostas", null=False, blank=False) #onetomany
-    questao = models.ForeignKey(to='Questao', on_delete="cascade",related_name="respostas", null=False, blank=False) #onetomany
+    questao = models.ForeignKey(to='Questao', on_delete="cascade", related_name="respostas", null=False, blank=False) #onetomany
     data_avaliacao = models.DateField(null=True,blank=True)
     nota = models.DecimalField(max_digits=4,decimal_places=2,null=True)
     avaliacao = models.TextField(null=True)

@@ -10,8 +10,6 @@ PERFIS = (
      (COORDENADOR,'Coordenador')
 )
 
-
-
 class Usuario(AbstractBaseUser):
     ra = models.IntegerField("RA", unique=True)
     nome = models.CharField("Nome", max_length=100, blank=True)
