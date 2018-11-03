@@ -47,7 +47,7 @@ class Entrega : AbstractModel {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     fun getDataEntrega() : Date? {
-        return tarefa!!.dataEntrega
+        return tarefa!!.dataHora
     }
 
     constructor() : super()

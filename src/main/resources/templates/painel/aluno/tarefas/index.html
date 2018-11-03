@@ -24,7 +24,7 @@
                             <i class="avatar-char bg-light-blue "></i>
                             <div class="m-0 ml-2 mr-2 flex-grow-1" style="flex-grow: 1">
                                 <h4 class="m-0 card-title" th:utext="|${entrega.tarefa.titulo}|">1º Entrega</h4>
-                                <span th:text="|Data para entrega: ${#dates.format(entrega.tarefa.dataEntrega, 'dd-mm-yyyy HH:mm')}|"></span>
+                                <span th:text="|Data para entrega: ${#dates.format(entrega.tarefa.dataEntrega, 'dd-MM-yyyy HH:mm')}|"></span>
                             </div>
                             <p class="m-0">
                                 <span class="text-success" th:class="${entrega.status.textClass}" th:text="${entrega.status.nome}">Entregue</span>
@@ -34,7 +34,7 @@
                             </p>
                         </div>
                         <div class="card-body m-0">
-                            <p th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-mm-yyyy HH:mm')}|"
+                            <p th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|"
                                class="card-subtitle">
                                 Lançada em 10/10/2018 pelo professor Alan Faraj
                             </p>
@@ -104,9 +104,9 @@
                                     <div class="card-text ml-3 mr-3">
                                         <ul class="list-group">
                                             <li th:each="arquivo : ${entrega.arquivos}" class="list-group-item d-flex align-items-center p-0">
-                                                <a class="flex-fill m-0 p-2">
-                                                    <span class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
-                                                    <span>Arquivo tal tal tal</span>
+                                                <a th:href="@{/publico/arquivos/__${arquivo.id}__}" class="flex-fill m-0 p-2">
+                                                    <span th:text="${arquivo.extensao}" class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
+                                                    <span th:text="${arquivo.nome}">Arquivo tal tal tal</span>
                                                     <span class="float-right">
                                                     <i class="zmdi zmdi-download zmdi-hc-fw"></i>
                                                 </span>
@@ -137,15 +137,15 @@
                         </div>
                         <hr>
                         <div th:if="${entrega?.status?.name() == 'PENDENTE'}" class="">
-                            <form method="post" th:action="@{/painel/aluno/entregas/__${entrega.id}__/enviar}" >
+                            <form method="post" th:action="@{/painel/aluno/entregas/__${entrega.id}__/enviar}" enctype="multipart/form-data">
                                 <div class="d-flex justify-content-center">
                                     <div class="form-group">
                                         <label>Selecione os arquivos:</label>
-                                        <input name="arquivos" type="file" class="" multiple="multiple">
+                                        <input required="required" name="arquivos" type="file" class="" multiple="multiple">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <button type="button" class="btn btn-primary btn-lg m-2">Enviar</button>
+                                    <button type="submit" class="btn btn-primary btn-lg m-2">Enviar</button>
                                 </div>
                             </form>
                         </div>
@@ -153,7 +153,7 @@
                         <div th:if="${not #lists.isEmpty(entrega.arquivos)}" class="mb-2">
                             <form method="post" th:action="@{/painel/aluno/entregas/__${entrega.id}__/marcar-como-entregue}" >
                                 <div class="d-flex justify-content-center">
-                                    <button  type="button" class="btn btn-success btn-lg m-2">Marcar como entrege</button>
+                                    <button  type="submit" class="btn btn-success btn-lg m-2">Marcar como entrege</button>
                                 </div>
                             </form>
                         </div>
@@ -169,7 +169,7 @@
                             <i class="avatar-char bg-light-blue "></i>
                             <div class="m-0 ml-2 mr-2 flex-grow-1" style="flex-grow: 1">
                                 <h4 class="m-0 card-title" th:utext="|${entrega.tarefa.titulo}|">1º Entrega</h4>
-                                <span th:text="|Data para entrega: ${#dates.format(entrega.tarefa.dataEntrega, 'dd-mm-yyyy HH:mm')}|"></span>
+                                <span th:text="|Data para entrega: ${#dates.format(entrega.tarefa.dataEntrega, 'dd-MM-yyyy HH:mm')}|"></span>
                             </div>
                             <p class="m-0">
                                 <span class="text-success" th:class="${entrega.status.textClass}" th:text="${entrega.status.nome}">Entregue</span>
@@ -179,7 +179,7 @@
                             </p>
                         </div>
                         <div class="card-body m-0">
-                            <p th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-mm-yyyy HH:mm')}|"
+                            <p th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|"
                                class="card-subtitle">
                                 Lançada em 10/10/2018 pelo professor Alan Faraj
                             </p>
@@ -191,6 +191,42 @@
                                     <br>Engenharia de software (Entregável 1)
                                     <br>Engenharia de software (Entregável 1)
                                     <br>Engenharia de software (Entregável 1)
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div th:if="${not #lists.isEmpty(entrega.arquivos)}" class="col-12">
+                                    <h5 class="mb-3 mt-3 ">Entregas do grupo</h5>
+                                    <div class="card-text ml-3 mr-3">
+                                        <ul class="list-group">
+                                            <li th:each="arquivo : ${entrega.arquivos}" class="list-group-item d-flex align-items-center p-0">
+                                                <a th:href="@{/publico/arquivos/__${arquivo.id}__}" class="flex-fill m-0 p-2">
+                                                    <span th:text="${arquivo.extensao}" class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
+                                                    <span th:text="${arquivo.nome}">Arquivo tal tal tal</span>
+                                                    <span class="float-right">
+                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
+                                                </span>
+                                                </a>
+                                            </li>
+                                            <!--<li class="list-group-item d-flex align-items-center p-0">
+                                                <a class="flex-fill m-0 p-2">
+                                                    <span class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
+                                                    <span>Arquivo tal tal tal</span>
+                                                    <span class="float-right">
+                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
+                                                </span>
+                                                </a>
+                                            </li>
+                                            <li class="list-group-item d-flex align-items-center p-0">
+                                                <a class="flex-fill m-0 p-2">
+                                                    <span class="p-2 badge badge-danger badge-pill mr-2">PDF</span>
+                                                    <span>Arquivo tal tal tal</span>
+                                                    <span class="float-right">
+                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
+                                                </span>
+                                                </a>
+                                            </li>-->
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <!--<div class="row mt-3">

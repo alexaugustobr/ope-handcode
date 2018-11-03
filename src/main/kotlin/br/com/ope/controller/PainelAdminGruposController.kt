@@ -46,8 +46,8 @@ class PainelAdminGruposController {
 
         if (!grupo.isPresent) return redirectGrupoNaoEncontrado(model, redirectAttributes)
 
-        val entregasPendentes  = entregaRepository.findAllByStatusAndGrupoOrderByDataCriacaoDesc(Entrega.Status.PENDENTE , grupo.get())
-        val entregasRealizadas = entregaRepository.findAllByStatusAndGrupoOrderByDataCriacaoDesc(Entrega.Status.REALIZADA , grupo.get())
+        val entregasPendentes  = entregaRepository.findAllByStatusAndGrupoOrderByTarefa_DataHoraDesc(Entrega.Status.PENDENTE , grupo.get())
+        val entregasRealizadas = entregaRepository.findAllByStatusAndGrupoOrderByTarefa_DataHoraDesc(Entrega.Status.REALIZADA , grupo.get())
 
         model.addAttribute("grupo", grupo.get())
         model.addAttribute("entregasPendentes", entregasPendentes)

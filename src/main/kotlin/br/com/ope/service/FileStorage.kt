@@ -8,6 +8,7 @@ import java.util.stream.Stream
 
 interface FileStorage {
     fun store(file: MultipartFile) : UUID
+    fun store(file: MultipartFile, uuid : UUID) : UUID
     fun loadFile(uuid: UUID): Resource
     fun deleteAll()
     fun loadFiles(): Stream<Path>

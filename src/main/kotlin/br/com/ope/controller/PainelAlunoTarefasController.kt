@@ -46,8 +46,8 @@ class PainelAlunoTarefasController {
 
         val grupo = grupoRepository.findOneByAlunosIn(Arrays.asList(aluno)).orElseThrow { RuntimeException() }
 
-        val entregasPendentes  = entregaRepository.findAllByStatusAndGrupoOrderByDataCriacaoDesc(Entrega.Status.PENDENTE , grupo)
-        val entregasRealizadas = entregaRepository.findAllByStatusAndGrupoOrderByDataCriacaoDesc(Entrega.Status.REALIZADA , grupo)
+        val entregasPendentes  = entregaRepository.findAllByStatusAndGrupoOrderByTarefa_DataHoraDesc(Entrega.Status.PENDENTE , grupo)
+        val entregasRealizadas = entregaRepository.findAllByStatusAndGrupoOrderByTarefa_DataHoraDesc(Entrega.Status.REALIZADA , grupo)
 
         model.addAttribute("grupo", grupo)
         model.addAttribute("entregasPendentes", entregasPendentes)

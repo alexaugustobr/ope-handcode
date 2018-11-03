@@ -8,6 +8,8 @@ import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.*
 
 @Component
@@ -100,10 +102,13 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
         //eventoRepository.save(evento)
 
         val atividades = mutableListOf<Tarefa>()
+        val futuro = LocalDateTime.now().plusDays(7)
 
-        val tarefa1 = Tarefa(Date(), "Lista de entregaveis", "Entrega de parte da documentacao 1", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList())
+        val ontem = LocalDateTime.now().minusDays(1)
 
-        val tarefa2 = Tarefa(Date(), "Lista de entregaveis", "Entrega de parte da documentacao 1", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList())
+        val tarefa1 = Tarefa(Date.from(futuro.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 2", "Entrega de parte da documentacao 2", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList())
+
+        val tarefa2 = Tarefa(Date.from(ontem.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 1", "Entrega de parte da documentacao 1", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList())
 
         atividades.add(tarefa1)
         atividades.add(tarefa2)
@@ -112,21 +117,21 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
 
         val entregas = mutableListOf<Entrega>()
 
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.PENDENTE, tarefa1, handcode, mutableListOf()))
+        entregas.add(Entrega(handcode.disciplina!!, null, Entrega.Status.PENDENTE, tarefa1, handcode, mutableListOf()))
 
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.PENDENTE, tarefa1, handcode, mutableListOf()))
+        entregas.add(Entrega(handcode.disciplina!!, null, Entrega.Status.PENDENTE, tarefa1, handcode, mutableListOf()))
 
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.PENDENTE, tarefa1, handcode, mutableListOf()))
+        entregas.add(Entrega(handcode.disciplina!!, null, Entrega.Status.PENDENTE, tarefa1, handcode, mutableListOf()))
 
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.PENDENTE, tarefa1, handcode, mutableListOf()))
+        entregas.add(Entrega(handcode.disciplina!!, null, Entrega.Status.PENDENTE, tarefa2, handcode, mutableListOf()))
 
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.PENDENTE, tarefa1, handcode, mutableListOf()))
+        entregas.add(Entrega(handcode.disciplina!!, null, Entrega.Status.PENDENTE, tarefa2, handcode, mutableListOf()))
 
 
 
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, tarefa2, handcode, mutableListOf()))
+        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, tarefa1, handcode, mutableListOf()))
 
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, tarefa2, handcode, mutableListOf()))
+        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, tarefa1, handcode, mutableListOf()))
 
         entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, tarefa2, handcode, mutableListOf()))
 
@@ -138,11 +143,11 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
 
         val eventos = mutableListOf<Evento>()
 
-        val evento1 = Evento(Date(), "Lista de entregaveis", "Entrega de parte da documentacao 1", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA))
+        val evento1 = Evento(Date(), "Evento", "Evento 1", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA))
 
         eventos.add(evento1)
 
-        val evento2 = Evento(Date(), "Lista de entregaveis", "Entrega de parte da documentacao 1", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA))
+        val evento2 = Evento(Date(), "Evento 2", "Evento 2", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA))
 
         eventos.add(evento2)
 

@@ -126,7 +126,7 @@
                             <i class="avatar-char bg-light-blue "></i>
                             <div class="m-0 ml-2 mr-2 flex-grow-1" style="flex-grow: 1">
                                 <h4 class="m-0 card-title" th:utext="|${entrega.tarefa.titulo}|">1º Entrega</h4>
-                                <span th:text="|Data para entrega: ${#dates.format(entrega.tarefa.dataEntrega, 'dd-mm-yyyy HH:mm')}|"></span>
+                                <span th:text="|Data para entrega: ${#dates.format(entrega.tarefa.dataEntrega, 'dd-MM-yyyy HH:mm')}|"></span>
                             </div>
                             <p class="m-0">
                                 <span class="text-success" th:class="${entrega.status.textClass}" th:text="${entrega.status.nome}">Entregue</span>
@@ -144,7 +144,7 @@
                             </div>
                         </div>
                         <div class="card-body m-0">
-                            <p th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-mm-yyyy HH:mm')}|"
+                            <p th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|"
                                class="card-subtitle">
                                 Lançada em 10/10/2018 pelo professor Alan Faraj
                             </p>
@@ -251,7 +251,7 @@
                             <i class="avatar-char bg-light-blue "></i>
                             <div class="m-0 ml-2 mr-2 flex-grow-1" style="flex-grow: 1">
                                 <h4 class="m-0 card-title" th:utext="|${entrega.tarefa.titulo}|">1º Entrega</h4>
-                                <span th:text="|Data para entrega: ${#dates.format(entrega.tarefa.dataEntrega, 'dd-mm-yyyy HH:mm')}|"></span>
+                                <span th:text="|Data para entrega: ${#dates.format(entrega.tarefa.dataEntrega, 'dd-MM-yyyy HH:mm')}|"></span>
                             </div>
                             <p class="m-0">
                                 <span class="text-success" th:class="${entrega.status.textClass}" th:text="${entrega.status.nome}">Entregue</span>
@@ -269,7 +269,7 @@
                             </div>
                         </div>
                         <div class="card-body m-0">
-                            <p th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-mm-yyyy HH:mm')}|"
+                            <p th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|"
                                class="card-subtitle">
                                 Lançada em 10/10/2018 pelo professor Alan Faraj
                             </p>
@@ -373,11 +373,11 @@
         <div th:if="${grupo.aguardando}" class="menu btn-support pmd-floating-action" role="navigation">
             <a th:href="@{/painel/admin/grupos/__${grupo.id}__/recusar}" data-toggle="tooltip" data-placement="top" data-original-title="Recusar grupo" class="m-2 btn pmd-btn-fab pmd-ripple-effect btn-danger"
                 type="button">
-                <i class="material-icons pmd-sm">clear</i>
+                <i style="font-size: 20px;" class="zmdi zmdi-minus zmdi-hc-fw"></i>
             </a>
             <a th:href="@{/painel/admin/grupos/__${grupo.id}__/aprovar}" data-toggle="tooltip" data-placement="top" data-original-title="Aprovar grupo" class="m-2 btn pmd-btn-fab pmd-ripple-effect btn-success"
                 type="button">
-                <i class="material-icons pmd-sm">check</i>
+                <i style="font-size: 20px;" class="zmdi zmdi-check zmdi-hc-fw"></i>
             </a>
         </div>
 
