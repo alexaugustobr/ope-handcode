@@ -27,9 +27,10 @@
 							<div class="actions">
 							</div>
 							<div class="profile__img">
-								<img id="img-logo-grupo" src="" th:src="@{/img/group_empty.jpg}" style="height: 200px;width: 200px;" />
+								<img th:if="${grupo.logoHash != null}" id="img-logo-grupo" src="" th:src="@{/publico/arquivos/__*{logoHash}__}" style="height: 200px;width: 200px;" />
+								<img th:if="${grupo.logoHash == null}" id="img-logo-grupo" src="" th:src="@{/img/group_empty.jpg}" style="height: 200px;width: 200px;" />
 								<a data-img-id="img-logo-grupo" data-input-result-id="input-logo-hash-grupo" class="js-link-upload-foto zmdi zmdi-camera profile__img__edit"></a>
-								<input id="input-logo-hash-grupo" name="logoHash" type="text" hidden="" />
+								<input id="input-logo-hash-grupo" th:field="*{logoHash}" type="text" hidden="" />
 							</div>
 							<div class="profile__info">
 								<h3 class="card-body__title">Informações Grupo</h3>
@@ -104,9 +105,20 @@
 								<a th:attr="data-alunoId=${aluno.id}" class="actions__item zmdi zmdi-close js-clica-remove-card"></a>
 							</div>
 							<div class="profile__img">
-								<img id="img-foto-integrante-0" src="" th:src="@{/img/group_empty.jpg}" style="height: 200px;width: 200px;" />
-								<a data-img-id="img-foto-integrante-0" data-input-result-id="input-foto-hash-0" class="js-link-upload-foto zmdi zmdi-camera profile__img__edit"></a>
-								<input th:field="*{alunos[__${i.index}__].fotoHash}" id="input-foto-hash-0" type="text" hidden="" />
+								<img th:if="${grupo.alunos[i.index].fotoHash == null}"
+									 th:id="|img-foto-integrante-${i.index}|"
+									 src=""
+									 th:src="@{/img/group_empty.jpg}"
+									 style="height: 200px;width: 200px;" />
+								<img th:if="${grupo.alunos[i.index].fotoHash != null}"
+									 th:id="|img-foto-integrante-${i.index}|"
+									 src=""
+									 th:src="@{/publico/arquivos/__${grupo.alunos[i.index].fotoHash}__}"
+									 style="height: 200px;width: 200px;" />
+								<a
+								   th:attr="data-input-result-id=|input-foto-hash-${i.index}|,data-img-id=|img-foto-integrante-${i.index}|"
+								   class="js-link-upload-foto zmdi zmdi-camera profile__img__edit"></a>
+								<input th:field="*{alunos[__${i.index}__].fotoHash}" th:id="|input-foto-hash-${i.index}|" type="text" hidden="" />
 								<input th:field="*{alunos[__${i.index}__].id}" type="text" hidden="" />
 							</div>
 							<div class="profile__info">
@@ -169,11 +181,11 @@
 					<div class="menu btn-support pmd-floating-action" role="navigation" style="display: flex; flex-direction: column;">
 						<button id="btn-add-aluno" data-toggle="tooltip" data-placement="left" data-original-title="Adicionar outro integrante" class="m-2 btn pmd-btn-fab pmd-ripple-effect btn-info"
 						 type="button">
-							<i class="material-icons pmd-sm">add</i>
+							<i style="font-size: 20px;" class="zmdi zmdi-plus zmdi-hc-fw"></i>
 						</button>
 						<button data-toggle="tooltip" data-placement="left" data-original-title="Finalizar" class="m-2 btn pmd-btn-fab pmd-ripple-effect btn-success js-btn-finalizar"
 						 type="button">
-							<i class="material-icons pmd-sm">check</i>
+							<i style="font-size: 20px;" class="zmdi zmdi-check zmdi-hc-fw"></i>
 						</button>
 					</div>
 				</form>

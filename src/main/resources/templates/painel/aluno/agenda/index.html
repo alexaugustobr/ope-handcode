@@ -1,0 +1,73 @@
+<th:block xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          xmlns:th="http://www.thymeleaf.org"
+          layout:decorate="~{layout-painel-aluno}">
+
+    <div layout:fragment="conteudo">
+
+        <header class="content__title content__title--calendar">
+            <h1></h1>
+            <small></small>
+
+            <div class="actions actions--calendar">
+                <a href="" class="actions__item actions__calender-prev"><i class="zmdi zmdi-long-arrow-left"></i></a>
+                <a href="" class="actions__item actions__calender-next"><i class="zmdi zmdi-long-arrow-right"></i></a>
+                <i class="actions__item zmdi zmdi-view-comfy actions__item--active" data-calendar-view="month"></i>
+                <i class="actions__item zmdi zmdi-view-week" data-calendar-view="basicWeek"></i>
+                <i class="actions__item zmdi zmdi-view-day" data-calendar-view="basicDay"></i>
+            </div>
+        </header>
+
+        <div id="calendario" class="calendar card fc fc-unthemed fc-ltr">
+        </div>
+
+        <!-- Add new event -->
+        <div class="modal fade" id="new-event" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">New Event</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="new-event__form">
+                            <div class="form-group">
+                                <input class="form-control new-event__title" placeholder="Event Title" type="text">
+                                <i class="form-group__bar"></i>
+                            </div>
+
+                            <div class="btn-group btn-group-toggle btn-group--colors event-tag" data-toggle="buttons">
+                                <label class="btn bg-light-blue active"><input name="event-tag" value="bg-light-blue" autocomplete="off" checked="" type="radio"></label>
+                                <label class="btn bg-teal"><input name="event-tag" value="bg-teal" autocomplete="off" type="radio"></label>
+                                <label class="btn bg-red"><input name="event-tag" value="bg-red" autocomplete="off" type="radio"></label>
+                                <label class="btn bg-purple"><input name="event-tag" value="bg-purple" autocomplete="off" type="radio"></label>
+                                <label class="btn bg-amber"><input name="event-tag" value="bg-amber" autocomplete="off" type="radio"></label>
+                                <label class="btn bg-cyan"><input name="event-tag" value="bg-cyan" autocomplete="off" type="radio"></label>
+                            </div>
+
+                            <input class="new-event__start" type="hidden">
+                            <input class="new-event__end" type="hidden">
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-link new-event__add">Add Event</button>
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="token" />
+
+
+    </div>
+
+
+    <th:block layout:fragment="javascript">
+        <script th:src="@{/js/aluno/agenda/index.js}">
+
+        </script>
+
+    </th:block>
+
+</th:block>

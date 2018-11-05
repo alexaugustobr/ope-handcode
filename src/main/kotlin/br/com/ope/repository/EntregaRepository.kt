@@ -7,5 +7,5 @@ import java.util.*
 
 interface EntregaRepository : JpaRepository<Entrega, UUID> {
     fun findAllByStatus(status: Entrega.Status) : MutableList<Entrega>
-    fun findAllByStatusAndGrupoOrderByDataCriacaoDesc(entregue: Entrega.Status, grupo: Grupo): MutableList<Entrega>
+    fun findAllByStatusAndGrupoOrderByTarefa_DataHoraDesc(entregue: Entrega.Status, grupo: Grupo): MutableList<Entrega>
 }

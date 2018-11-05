@@ -1,0 +1,90 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="tarefaDetalhe">
+    <div  th:object="${tarefa}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input th:field="*{titulo}" th:errorclass="is-invalid" type="text" class="form-control" placeholder="Titulo" />
+                    <div class="invalid-feedback">
+                        Coloque um titulo.
+                    </div>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Data e hora:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="zmdi zmdi-calendar"></i></span>
+                        </div>
+                        <input th:field="*{dataHora}" th:errorclass="is-invalid"
+                               class="form-control datetime-picker flatpickr-input" placeholder="Pick a date &amp; time"  type="text">
+                        <div class="invalid-feedback">
+                            Coloque uma data
+                        </div>
+                        <i class="form-group__bar"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <textarea th:field="*{descricao}" th:errorclass="is-invalid" type="text" class="form-control textarea-autosize" placeholder="Descriçao" > </textarea>
+                    <div class="invalid-feedback">
+                        Coloque uma descriçao.
+                    </div>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <div class="select">
+                        <label>Cursos:</label>
+                        <select  th:field="*{cursos}" th:errorclass="is-invalid" name="cursos" class="select2 select2-hidden-accessible" placeholder="Curso" multiple="multiple">
+                            <option th:each="curso : ${cursos}" th:value="${curso.id}" th:text="${curso.nome}"></option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Curso é obrigatório.
+                        </div>
+                        <i class="form-group__bar"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <div class="select">
+                        <label>Disciplinas:</label>
+                        <select  th:field="*{disciplinas}" th:errorclass="is-invalid" name="disciplinas" class="select2 select2-hidden-accessible" placeholder="Disciplina" multiple="multiple">
+                            <option th:each="disciplina : ${disciplinas}" th:value="${disciplina.id}" th:text="${disciplina.nome}"></option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Disciplina é obrigatório.
+                        </div>
+                        <i class="form-group__bar"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <div class="select">
+                        <label>Turmas:</label>
+                        <select  th:field="*{turmas}" th:errorclass="is-invalid" name="turmas" class="select2 select2-hidden-accessible" placeholder="Turma" multiple="multiple">
+                            <option th:each="turma : ${turmas}" th:value="${turma.id}" th:text="|${turma.semestre}º${turma.letra} - ${turma.curso.sigla} (${turma.periodo.nome}) - ${turma.ano}|"></option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Turma é obrigatório.
+                        </div>
+                        <i class="form-group__bar"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</th:block>
+</html>

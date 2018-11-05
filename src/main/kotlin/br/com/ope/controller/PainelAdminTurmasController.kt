@@ -2,6 +2,7 @@ package br.com.ope.controller
 
 import br.com.ope.model.Turma
 import br.com.ope.repository.CursoRepository
+import br.com.ope.repository.DisciplinaRepository
 import br.com.ope.repository.TurmaRepository
 import br.com.ope.vo.MensagemVO
 import org.springframework.stereotype.Controller
@@ -20,10 +21,12 @@ import javax.validation.Valid
 class PainelAdminTurmasController {
     val cursoRepository : CursoRepository
     val turmaRepository : TurmaRepository
+    val disciplinaRepository : DisciplinaRepository
 
-    constructor(cursoRepository: CursoRepository, turmaRepository: TurmaRepository) {
+    constructor(cursoRepository: CursoRepository, turmaRepository: TurmaRepository, disciplinaRepository: DisciplinaRepository) {
         this.cursoRepository = cursoRepository
         this.turmaRepository = turmaRepository
+        this.disciplinaRepository = disciplinaRepository
     }
 
     @GetMapping
@@ -37,6 +40,7 @@ class PainelAdminTurmasController {
         model.addAttribute("turma", turma)
         model.addAttribute("periodos", Turma.Periodo.values())
         model.addAttribute("cursos", cursoRepository.findAllByDataExclusaoIsNull())
+        model.addAttribute("disciplinas", disciplinaRepository.findAllByDataExclusaoIsNull())
         return "painel/admin/turmas/novo"
     }
 
@@ -59,6 +63,7 @@ class PainelAdminTurmasController {
         model.addAttribute("turma", turma.get())
         model.addAttribute("periodos", Turma.Periodo.values())
         model.addAttribute("cursos", cursoRepository.findAllByDataExclusaoIsNull())
+        model.addAttribute("disciplinas", disciplinaRepository.findAllByDataExclusaoIsNull())
         return "painel/admin/turmas/editar"
     }
     @PostMapping("/{id}")

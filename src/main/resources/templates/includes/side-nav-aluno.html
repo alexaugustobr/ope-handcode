@@ -1,0 +1,36 @@
+<aside class="sidebar">
+    <div class="scrollbar-inner">
+        <div class="user">
+            <div class="user__info" data-toggle="dropdown">
+                <img class="user__img" th:src="@{/img/profile-pics/8.jpg}" alt="">
+                <div>
+                    <div th:text="${#authentication?.principal?.nome}" class="user__name">Nome</div>
+                    <div th:text="${#authentication?.principal?.email}" class="user__email">Email</div>
+                </div>
+            </div>
+
+            <div class="dropdown-menu">
+                <a class="dropdown-item" th:href="@{/painel/admin/perfil}">Ver perfil</a>
+                <a class="dropdown-item" th:href="@{/logout}">Sair</a>
+            </div>
+        </div>
+
+        <ul class="navigation">
+            <li>
+                <a th:href="@{/}"><i class="zmdi zmdi-home"></i>Home</a>
+            </li>
+            <li>
+                <a th:href="@{/painel/aluno}"><i class="zmdi zmdi-view-dashboard"></i>Painel</a>
+            </li>
+            <li>
+                <a th:href="@{/painel/aluno/tarefas}"><i class="zmdi zmdi-view-list"></i>Tarefas</a>
+            </li>
+            <li>
+                <a th:href="@{/painel/aluno/boletim}"><i class="zmdi zmdi-view-list"></i>Boletim</a>
+            </li>
+            <li>
+                <a th:href="@{/painel/aluno/agenda}"><i class="zmdi zmdi-view-list"></i>Agenda</a>
+            </li>
+        </ul>
+    </div>
+</aside>

@@ -1,124 +1,22 @@
-<th:block xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout-painel-admin}">
-
-    <th:block layout:fragment="css">
-
-    </th:block>
+<th:block xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          xmlns:th="http://www.thymeleaf.org"
+          layout:decorate="~{layout-painel-aluno}">
 
     <div layout:fragment="conteudo">
         <header class="content__title">
             <nav style="background-color:transparent;">
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active show pt-0" style="background-color:transparent;" id="nav-grupo-tab" data-toggle="tab" href="#nav-grupo"
-                        role="tab" aria-controls="nav-home" aria-selected="true">Grupo</a>
-                    <a class="nav-item nav-link pt-0" style="background-color:transparent;" id="nav-tarefas-pendentes-tab" data-toggle="tab" href="#nav-tarefas-pendentes"
-                        role="tab" aria-controls="nav-profile" aria-selected="false">Tarefas Pendentes</a>
+                    <a class="nav-item nav-link active show pt-0" style="background-color:transparent;" id="nav-tarefas-pendentes-tab" data-toggle="tab" href="#nav-tarefas-pendentes"
+                       role="tab" aria-controls="nav-profile" aria-selected="false">Tarefas Pendentes</a>
                     <a class="nav-item nav-link pt-0" style="background-color:transparent;" id="nav-tarefas-entregues-tab" data-toggle="tab" href="#nav-tarefas-entregues"
                        role="tab" aria-controls="nav-profile" aria-selected="false">Tarefas Entregues</a>
-                    <!-- <a class="nav-item nav-link pt-0" style="background-color:transparent;" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
-                        role="tab" aria-controls="nav-contact" aria-selected="false">Boletim</a> -->
+
                 </div>
             </nav>
-            <div class="actions">
-                <div class="dropdown actions__item">
-                    <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a href="/painel/admin/grupos" class="dropdown-item">Lista</a>
-                    </div>
-                </div>
-            </div>
         </header>
 
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade active show" id="nav-grupo" role="tabpanel" aria-labelledby="nav-grupo-tab">
-                <div class="card profile">
-                    <div class="profile__img">
-                        <img style="height: 200px;width: 200px;" th:if="${!#strings.isEmpty(grupo.logoHash)}" th:src="@{/publico/arquivos/__${grupo.logoHash}__}"
-                            alt="Logo">
-                        <img style="height: 200px;width: 200px;" th:if="${#strings.isEmpty(grupo.logoHash)}" th:src="@{/img/group_empty.jpg}" alt="Logo">
-                    </div>
-                    <div class="profile__info">
-                        <p th:text="${grupo.nome}">Handcode</p>
-                        <ul class="icon-list">
-                            <li th:text="|Curso: ${grupo?.curso?.nome}|">Curso: ADS</li>
-                            <li th:text="|Turma: ${grupo?.turma?.semestre}º${grupo?.turma?.letra} - ${grupo?.turma?.periodo?.nome}|">
-                                Turma: 3ºA - Manhã
-                            </li>
-                            <li th:text="|Disciplina: ${grupo?.disciplina?.nome}|">Disciplina: OPE 1</li>
-                            <li th:text="|${grupo.tema}|">Tema: OPE</li>
-                        </ul>
-                        <span  th:if="${grupo.aguardando}" class="badge badge-pill badge-warning">Aguardando aprovação</span>
-                    </div>
-                </div>
-
-
-                <header class="content__title">
-                    <h1>Integrantes</h1>
-
-                    <!-- <div class="actions">
-                        <a href="" class="actions__item zmdi zmdi-trending-up"></a>
-                        <a href="" class="actions__item zmdi zmdi-check-all"></a>
-
-                        <div class="dropdown actions__item">
-                            <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a href="" class="dropdown-item">Atualizar</a>
-                                <a href="" class="dropdown-item">Editar</a>
-                            </div>
-                        </div>
-                    </div> -->
-                </header>
-                <div class="row">
-                    <div th:each="aluno : ${grupo.alunos}" class="col-xl-3 col-lg-3 col-sm-4 col-6">
-                        <div class="contacts__item">
-                            <a href="" class="contacts__img">
-                                <img th:if="${!#strings.isEmpty(aluno.fotoHash)}" th:src="@{/publico/arquivos/__${aluno.fotoHash}__}" alt="Foto">
-                                <img th:if="${#strings.isEmpty(aluno.fotoHash)}" th:src="@{/img/group_empty.jpg}" alt="Foto">
-                            </a>
-                            <div class="contacts__info">
-                                <strong th:text="${aluno.nome}">Alan presidente</strong>
-                                <small th:text="${aluno.email}">alan@alan.com</small>
-                                <small th:text="${aluno.ra}">11111</small>
-                                <br>
-                                <a  th:href="@{/painel/admin/grupos/__${grupo.id}__/remover-integrante/__${aluno.id}__}" class="btn btn-sm btn-danger">Remover</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <header class="content__title">
-                    <h1>Ex-integrantes</h1>
-
-                    <!-- <div class="actions">
-                        <a href="" class="actions__item zmdi zmdi-trending-up"></a>
-                        <a href="" class="actions__item zmdi zmdi-check-all"></a>
-
-                        <div class="dropdown actions__item">
-                            <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a href="" class="dropdown-item">Atualizar</a>
-                                <a href="" class="dropdown-item">Editar</a>
-                            </div>
-                        </div>
-                    </div> -->
-                </header>
-                <div class="row">
-                    <div th:each="aluno : ${grupo.alunosRemovidos}" class="col-xl-3 col-lg-3 col-sm-4 col-6">
-                        <div class="contacts__item">
-                            <a href="" class="contacts__img">
-                                <img th:if="${!#strings.isEmpty(aluno.fotoHash)}" th:src="@{/publico/arquivos/__${aluno.fotoHash}__}" alt="Foto">
-                                <img th:if="${#strings.isEmpty(aluno.fotoHash)}" th:src="@{/img/group_empty.jpg}" alt="Foto">
-                            </a>
-                            <div class="contacts__info">
-                                <strong th:text="${aluno.nome}">Alan presidente</strong>
-                                <small th:text="${aluno.email}">alan@alan.com</small>
-                                <small th:text="${aluno.ra}">11111</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="nav-tarefas-pendentes" role="tabpanel" aria-labelledby="nav-tarefas-pendentes-tab">
+            <div class="tab-pane fade active show" id="nav-tarefas-pendentes" role="tabpanel" aria-labelledby="nav-tarefas-pendentes-tab">
 
                 <th:block th:each="entrega, i: ${entregasPendentes}" >
                     <div class="card border-light mb-12">
@@ -134,14 +32,6 @@
                                 <th:block th:if="${entrega.nota} == null" th:utext="|Nota: Não atribuida|">Nota: 10</th:block>
                                 <th:block th:if="${entrega.nota} != null" th:utext="|Nota: ${entrega.status.nota}|">Nota: 10</th:block>
                             </p>
-
-                            <div class="dropdown actions__item ml-2">
-                                <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a th:href="@{/painel/admin/tarefas/__${entrega.tarefa.id}__}" href="" class="dropdown-item">Editar</a>
-                                    <a th:href="@{/painel/admin/tarefas/__${entrega.tarefa.id}__/remover}" href="" class="dropdown-item">Remover</a>
-                                </div>
-                            </div>
                         </div>
                         <div class="card-body m-0">
                             <p th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|"
@@ -158,7 +48,7 @@
                                     <br>Engenharia de software (Entregável 1)
                                 </div>
                             </div>
-                            <!--<div class="row mt-3">
+                           <!-- <div class="row mt-3">
                                 <div class="col-sm-6 col-12">
                                     <h5 class="mb-3 mt-3 ">Links</h5>
                                     <div class="card-text ml-3 mr-3">
@@ -182,8 +72,6 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mt-3">
                                 <div class="col-sm-6 col-12">
                                     <h5 class="mb-3 mt-3 ">Anexos</h5>
                                     <div class="card-text ml-3 mr-3">
@@ -209,11 +97,22 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-12">
-                                    <h5 class="mb-3 mt-3 ">Entrega do grupo</h5>
+                            </div>-->
+                            <div class="row mt-3">
+                                <div th:if="${not #lists.isEmpty(entrega.arquivos)}" class="col-12">
+                                    <h5 class="mb-3 mt-3 ">Entregas do grupo</h5>
                                     <div class="card-text ml-3 mr-3">
                                         <ul class="list-group">
-                                            <li class="list-group-item d-flex align-items-center p-0">
+                                            <li th:each="arquivo : ${entrega.arquivos}" class="list-group-item d-flex align-items-center p-0">
+                                                <a th:href="@{/publico/arquivos/__${arquivo.id}__}" class="flex-fill m-0 p-2">
+                                                    <span th:text="${arquivo.extensao}" class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
+                                                    <span th:text="${arquivo.nome}">Arquivo tal tal tal</span>
+                                                    <span class="float-right">
+                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
+                                                </span>
+                                                </a>
+                                            </li>
+                                            <!--<li class="list-group-item d-flex align-items-center p-0">
                                                 <a class="flex-fill m-0 p-2">
                                                     <span class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
                                                     <span>Arquivo tal tal tal</span>
@@ -230,15 +129,34 @@
                                                     <i class="zmdi zmdi-download zmdi-hc-fw"></i>
                                                 </span>
                                                 </a>
-                                            </li>
+                                            </li>-->
                                         </ul>
                                     </div>
                                 </div>
-                            </div>-->
+                            </div>
                         </div>
-                        <!--<div class="d-flex justify-content-center card-footer">
-                            <button type="button" class="btn btn-primary btn-lg mt-2 mb-2">Enviar</button>
-                        </div>-->
+                        <hr>
+                        <div th:if="${entrega?.status?.name() == 'PENDENTE'}" class="">
+                            <form method="post" th:action="@{/painel/aluno/entregas/__${entrega.id}__/enviar}" enctype="multipart/form-data">
+                                <div class="d-flex justify-content-center">
+                                    <div class="form-group">
+                                        <label>Selecione os arquivos:</label>
+                                        <input required="required" name="arquivos" type="file" class="" multiple="multiple">
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-primary btn-lg m-2">Enviar</button>
+                                </div>
+                            </form>
+                        </div>
+                        <hr>
+                        <div th:if="${not #lists.isEmpty(entrega.arquivos)}" class="mb-2">
+                            <form method="post" th:action="@{/painel/aluno/entregas/__${entrega.id}__/marcar-como-entregue}" >
+                                <div class="d-flex justify-content-center">
+                                    <button  type="submit" class="btn btn-success btn-lg m-2">Marcar como entrege</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </th:block>
 
@@ -259,14 +177,6 @@
                                 <th:block th:if="${entrega.nota} == null" th:utext="|Nota: Não atribuida|">Nota: 10</th:block>
                                 <th:block th:if="${entrega.nota} != null" th:utext="|Nota: ${entrega.status.nota}|">Nota: 10</th:block>
                             </p>
-
-                            <div class="dropdown actions__item ml-2">
-                                <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a th:href="@{/painel/admin/tarefas/__${entrega.tarefa.id}__}" href="" class="dropdown-item">Editar</a>
-                                    <a th:href="@{/painel/admin/tarefas/__${entrega.tarefa.id}__/remover}" href="" class="dropdown-item">Remover</a>
-                                </div>
-                            </div>
                         </div>
                         <div class="card-body m-0">
                             <p th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|"
@@ -281,6 +191,42 @@
                                     <br>Engenharia de software (Entregável 1)
                                     <br>Engenharia de software (Entregável 1)
                                     <br>Engenharia de software (Entregável 1)
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div th:if="${not #lists.isEmpty(entrega.arquivos)}" class="col-12">
+                                    <h5 class="mb-3 mt-3 ">Entregas do grupo</h5>
+                                    <div class="card-text ml-3 mr-3">
+                                        <ul class="list-group">
+                                            <li th:each="arquivo : ${entrega.arquivos}" class="list-group-item d-flex align-items-center p-0">
+                                                <a th:href="@{/publico/arquivos/__${arquivo.id}__}" class="flex-fill m-0 p-2">
+                                                    <span th:text="${arquivo.extensao}" class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
+                                                    <span th:text="${arquivo.nome}">Arquivo tal tal tal</span>
+                                                    <span class="float-right">
+                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
+                                                </span>
+                                                </a>
+                                            </li>
+                                            <!--<li class="list-group-item d-flex align-items-center p-0">
+                                                <a class="flex-fill m-0 p-2">
+                                                    <span class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
+                                                    <span>Arquivo tal tal tal</span>
+                                                    <span class="float-right">
+                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
+                                                </span>
+                                                </a>
+                                            </li>
+                                            <li class="list-group-item d-flex align-items-center p-0">
+                                                <a class="flex-fill m-0 p-2">
+                                                    <span class="p-2 badge badge-danger badge-pill mr-2">PDF</span>
+                                                    <span>Arquivo tal tal tal</span>
+                                                    <span class="float-right">
+                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
+                                                </span>
+                                                </a>
+                                            </li>-->
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <!--<div class="row mt-3">
@@ -369,47 +315,6 @@
 
             </div>
         </div>
-
-        <div th:if="${grupo.aguardando}" class="menu btn-support pmd-floating-action" role="navigation">
-            <a th:href="@{/painel/admin/grupos/__${grupo.id}__/recusar}" data-toggle="tooltip" data-placement="top" data-original-title="Recusar grupo" class="m-2 btn pmd-btn-fab pmd-ripple-effect btn-danger"
-                type="button">
-                <i style="font-size: 20px;" class="zmdi zmdi-minus zmdi-hc-fw"></i>
-            </a>
-            <a th:href="@{/painel/admin/grupos/__${grupo.id}__/aprovar}" data-toggle="tooltip" data-placement="top" data-original-title="Aprovar grupo" class="m-2 btn pmd-btn-fab pmd-ripple-effect btn-success"
-                type="button">
-                <i style="font-size: 20px;" class="zmdi zmdi-check zmdi-hc-fw"></i>
-            </a>
-        </div>
-
-
-        <!-- <div class="menu pmd-floating-action" role="navigation">
-            <a href="javascript:void(0);" class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-default"
-                data-title="Supervisor Account">
-                <span class="pmd-floating-hidden">Supervisor Account</span>
-                <i class="material-icons">supervisor_account</i>
-            </a>
-            <a href="javascript:void(0);" class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-default"
-                data-title="Cloud Queue">
-                <span class="pmd-floating-hidden">Cloud Queue</span>
-                <i class="material-icons">cloud_queue</i>
-            </a>
-            <a href="javascript:void(0);" class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-default"
-                data-title="Headset">
-                <span class="pmd-floating-hidden">Headset</span>
-                <i class="material-icons">headset</i>
-            </a>
-            <a href="javascript:void(0);" class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-default"
-                data-title="Dialpad">
-                <span class="pmd-floating-hidden">Dialpad</span>
-                <i class="material-icons">dialpad</i>
-            </a>
-            <a class="pmd-floating-action-btn btn pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-primary" data-title="Add" href="javascript:void(0);">
-                <span class="pmd-floating-hidden">Primary</span>
-                <i class="material-icons pmd-sm">add</i>
-            </a>
-        </div>  -->
-
-
     </div>
 
 
