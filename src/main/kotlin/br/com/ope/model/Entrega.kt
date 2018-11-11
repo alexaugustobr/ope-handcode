@@ -55,7 +55,7 @@ class Entrega : AbstractModel {
     }
 
     fun isEntregavel() : Boolean {
-        return LocalDate.now().isAfter(tarefa!!.dataHora!!.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
+        return !LocalDate.now().isAfter(tarefa!!.dataHora!!.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
     }
 
     constructor() : super()
