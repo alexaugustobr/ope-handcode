@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
+import java.util.concurrent.ThreadLocalRandom
 
 @Controller
 @RequestMapping("/painel/aluno/entregas")
@@ -83,8 +84,13 @@ class PainelAlunoEntregasController {
 
         entrega.get().dataEnvio = Date()
         entrega.get().status = Entrega.Status.REALIZADA
-        entrega.get().professorAvaliador = professorRepository.findFirstByAtivoIsTrue()
-                .orElseThrow {RuntimeException("Nao foi possivel adicionar um professor avaliador, nenhum professor cadastrado.")}
+
+        val professores = professorRepository.findAll()
+
+        if (professores.isEmpty()) throw RuntimeException("Nao foi possivel adicionar um professor avaliador, nenhum professor cadastrado.")
+
+        entrega.get().professorAvaliador = professores.get(ThreadLocalRandom.current().nextInt(0, professores.size))
+
         entregaRepository.save(entrega.get())
 
         redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Marcado como entregue!","Sucesso!", MensagemVO.TipoMensagem.success ))

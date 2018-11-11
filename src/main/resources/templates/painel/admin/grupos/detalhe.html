@@ -132,7 +132,7 @@
                                 <span class="text-success" th:class="${entrega.status.textClass}" th:text="${entrega.status.nome}">Entregue</span>
                                 <br>
                                 <th:block th:if="${entrega.nota} == null" th:utext="|Nota: Não atribuida|">Nota: 10</th:block>
-                                <th:block th:if="${entrega.nota} != null" th:utext="|Nota: ${entrega.status.nota}|">Nota: 10</th:block>
+                                <th:block th:if="${entrega.nota} != null" th:utext="|Nota: ${entrega.nota}|">Nota: 10</th:block>
                             </p>
 
                             <div class="dropdown actions__item ml-2">
@@ -257,7 +257,7 @@
                                 <span class="text-success" th:class="${entrega.status.textClass}" th:text="${entrega.status.nome}">Entregue</span>
                                 <br>
                                 <th:block th:if="${entrega.nota} == null" th:utext="|Nota: Não atribuida|">Nota: 10</th:block>
-                                <th:block th:if="${entrega.nota} != null" th:utext="|Nota: ${entrega.status.nota}|">Nota: 10</th:block>
+                                <th:block th:if="${entrega.nota} != null" th:utext="|Nota: ${entrega.nota}|">Nota: 10</th:block>
                             </p>
 
                             <div class="dropdown actions__item ml-2">
@@ -272,6 +272,11 @@
                             <p th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|"
                                class="card-subtitle">
                                 Lançada em 10/10/2018 pelo professor Alan Faraj
+                            </p>
+
+                            <p th:if="${entrega.professorAvaliador} != null" th:text="|Professor avaliador: ${entrega.professorAvaliador.nome}|"
+                               class="card-subtitle">
+                                Prof Yuri
                             </p>
 
                             <div class="row border-top border-bottom bg-light">

@@ -8,6 +8,7 @@ import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
+import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
@@ -106,36 +107,24 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
 
         val ontem = LocalDateTime.now().minusDays(1)
 
-        val tarefa1 = Tarefa(Date.from(futuro.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 2", "Entrega de parte da documentacao 2", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList())
-
-        val tarefa2 = Tarefa(Date.from(ontem.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 1", "Entrega de parte da documentacao 1", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList())
-
-        atividades.add(tarefa1)
-        atividades.add(tarefa2)
+        atividades.add(Tarefa(Date.from(ontem.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 1", "Entrega de parte da documentacao 1", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList()))
+        atividades.add(Tarefa(Date.from(ontem.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 2", "Entrega de parte da documentacao 2", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList()))
+        atividades.add(Tarefa(Date.from(ontem.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 3 e projeto 30%", "Entrega de parte da documentacao 3 e projeto", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList()))
+        atividades.add(Tarefa(Date.from(ontem.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 4 e projeto 100%", "Entrega final", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList()))
 
         tarefaRepository.saveAll(atividades)
 
         val entregas = mutableListOf<Entrega>()
 
-        entregas.add(Entrega(handcode.disciplina!!, null, Entrega.Status.PENDENTE, tarefa1, handcode, mutableListOf()))
+        entregas.add(Entrega(handcode.disciplina!!, null, Entrega.Status.PENDENTE, atividades.get(2), handcode, mutableListOf()))
 
-        entregas.add(Entrega(handcode.disciplina!!, null, Entrega.Status.PENDENTE, tarefa1, handcode, mutableListOf()))
-
-        entregas.add(Entrega(handcode.disciplina!!, null, Entrega.Status.PENDENTE, tarefa1, handcode, mutableListOf()))
-
-        entregas.add(Entrega(handcode.disciplina!!, null, Entrega.Status.PENDENTE, tarefa2, handcode, mutableListOf()))
-
-        entregas.add(Entrega(handcode.disciplina!!, null, Entrega.Status.PENDENTE, tarefa2, handcode, mutableListOf()))
+        entregas.add(Entrega(handcode.disciplina!!, null, Entrega.Status.PENDENTE, atividades.get(3), handcode, mutableListOf()))
 
 
 
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, tarefa1, handcode, mutableListOf()))
+        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, atividades.get(0), handcode, mutableListOf(), BigDecimal(5), yuri))
 
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, tarefa1, handcode, mutableListOf()))
-
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, tarefa2, handcode, mutableListOf()))
-
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, tarefa2, handcode, mutableListOf()))
+        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, atividades.get(1), handcode, mutableListOf(), BigDecimal(7), fernando))
 
         entregaRepository.saveAll(entregas)
 
