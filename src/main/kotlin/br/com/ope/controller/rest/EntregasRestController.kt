@@ -39,7 +39,7 @@ class EntregasRestController {
 
         val entrega = optionalEntrega.get()
 
-        entrega.dataEntrega = Date()
+        entrega.dataEnvio = Date()
 
         entrega.status = Entrega.Status.REALIZADA
 

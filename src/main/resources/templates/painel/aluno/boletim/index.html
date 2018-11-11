@@ -1,0 +1,61 @@
+<th:block xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          xmlns:th="http://www.thymeleaf.org"
+          layout:decorate="~{layout-painel-aluno}">
+
+    <div layout:fragment="conteudo">
+
+
+        <header class="content__title">
+            <h1>Boletim</h1>
+        </header>
+        <nav style="background-color:transparent;">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a th:each="disciplina : ${disciplinasMap}" class="nav-item nav-link pt-0 active show"
+                   style="background-color:transparent;"
+
+                   data-toggle="tab" th:href="${'#tab-'+disciplina.key.id}" role="tab"  ]
+                   aria-selected="true" th:text="${disciplina.key.sigla}">OPE I </a>
+            </div>
+        </nav>
+
+
+        <div class="card">
+
+
+            <div class="tab-content" id="nav-tabContent">
+                <th:block th:each="disciplina : ${disciplinasMap}" >
+                    <div class="tab-pane fade active show" th:href="${'#tab-'+disciplina.key.id}" role="tabpanel" aria-labelledby="nav-tarefas-pendentes-tab">
+                        <div class="listview listview--striped">
+                            <th:block th:each="entregas, i : ${disciplina.value}">
+                                <div th:each="entrega : ${entregas}" class="listview__item">
+                                    <i class="avatar-char js-random-background-color"
+                                       style="background-color: rgb(96, 125, 139);" th:text="${i.count}">01</i>
+                                    <div class="listview__content d-flex align-items-center">
+                                        <div th:text="|${entrega.tarefa.titulo} - Nota: ${entrega.nota} - Professor avaliador: ${entrega.professorAvaliador?.nome}|" class="listview__heading">Tarefa 01  - Nota: 8 - Professor : Paulo</div>
+                                    </div>
+                                    <div class="actions listview__actions">
+                                        <div class="dropdown actions__item">
+                                            <i class="zmdi zmdi-more-vert" data-toggle="dropdown"></i>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a href="" class="dropdown-item">Comentario profesor</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </div>
+
+
+    <th:block layout:fragment="javascript">
+        <script>
+
+        </script>
+
+    </th:block>
+
+</th:block>

@@ -5,12 +5,14 @@ import java.util.*
 import javax.persistence.Entity
 import javax.persistence.JoinTable
 import javax.persistence.ManyToMany
+import javax.validation.constraints.NotNull
 
 @Entity
 open class Evento : AbstractModel {
 
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
-    var dataHora : Date = Date()
+    @NotNull
+    var dataHora : Date? = null
     var descricao : String = ""
     var titulo : String = ""
 

@@ -1,7 +1,6 @@
 package br.com.ope.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import org.springframework.format.annotation.DateTimeFormat
 import java.util.*
 import javax.persistence.Entity
 import javax.persistence.OneToMany
@@ -13,8 +12,7 @@ class Tarefa : Evento {
     @JsonIgnore
     var entregas : MutableList<Entrega> = mutableListOf()
 
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
-    var dataEntrega : Date = Date()
+    fun getDataEntrega() = super.dataHora
 
     constructor() : super()
     constructor(data: Date, descricao: String, titulo: String, disciplinas: MutableList<Disciplina>, cursos: MutableList<Curso>, turmas: MutableList<Turma>, entregas: MutableList<Entrega>) : super(data, descricao, titulo, disciplinas, cursos, turmas) {

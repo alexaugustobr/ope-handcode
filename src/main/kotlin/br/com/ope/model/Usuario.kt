@@ -16,7 +16,7 @@ open class Usuario : AbstractModel, UserDetails {
     @NotBlank
     var nome  : String = ""
     @Column(unique = true)
-    @NotBlank
+    @NotBlank(message = "Email é obrigatório.")
     var email : String = ""
     var ativo : Boolean = false
     @JsonIgnore

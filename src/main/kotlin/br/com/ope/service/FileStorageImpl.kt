@@ -17,20 +17,24 @@ import java.util.stream.Stream
 class FileStorageImpl: FileStorage{
 
     val log = LoggerFactory.getLogger(this::class.java)
-    val rootLocation = Paths.get("/tmp")
+    val rootLocation = Paths.get("/tmp/ope")
+
+    override fun store(file: MultipartFile, uuid :UUID) : UUID {
+        createTempDirIfNotExists()
+        val uri = this.rootLocation.resolve(uuid.toString())
+        Files.copy(file.inputStream, uri)
+        return uuid
+    }
 
     override fun store(file: MultipartFile) : UUID {
-        createTempDirIfNotExists()
-        val uuid = UUID.randomUUID()
-        Files.copy(file.getInputStream(), this.rootLocation.resolve(uuid.toString()))
-        return uuid
+        return store(file, UUID.randomUUID())
     }
 
     override fun loadFile(uuid: UUID): Resource {
         val file = rootLocation.resolve(uuid.toString())
         val resource = UrlResource(file.toUri())
 
-        if(resource.exists() || resource.isReadable()) {
+        if(resource.exists() || resource.isReadable) {
             return resource
         }else{
             throw RuntimeException("FAIL!")
