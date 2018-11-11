@@ -41,7 +41,7 @@
 
                     <a sec:authorize="isAuthenticated()" href="" data-toggle="dropdown">
                         <i class="zmdi zmdi-account"></i>
-                        <span  th:text="|Olá ${#authentication?.principal?.nome}|"></span>
+
                     </a>
                     <div sec:authorize="isAuthenticated()" class="dropdown-menu dropdown-menu-right">
 

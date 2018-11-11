@@ -110,7 +110,7 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
         atividades.add(Tarefa(Date.from(ontem.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 1", "Entrega de parte da documentacao 1", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList()))
         atividades.add(Tarefa(Date.from(ontem.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 2", "Entrega de parte da documentacao 2", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList()))
         atividades.add(Tarefa(Date.from(ontem.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 3 e projeto 30%", "Entrega de parte da documentacao 3 e projeto", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList()))
-        atividades.add(Tarefa(Date.from(ontem.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 4 e projeto 100%", "Entrega final", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList()))
+        atividades.add(Tarefa(Date.from(futuro.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 4 e projeto 100%", "Entrega final", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList()))
 
         tarefaRepository.saveAll(atividades)
 
@@ -120,11 +120,9 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
 
         entregas.add(Entrega(handcode.disciplina!!, null, Entrega.Status.PENDENTE, atividades.get(3), handcode, mutableListOf()))
 
+        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, atividades.get(0), handcode, mutableListOf(), BigDecimal(5), yuri, "Faltou a segunda parte."))
 
-
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, atividades.get(0), handcode, mutableListOf(), BigDecimal(5), yuri))
-
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, atividades.get(1), handcode, mutableListOf(), BigDecimal(7), fernando))
+        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, atividades.get(1), handcode, mutableListOf(), BigDecimal(7), fernando, "Sistema entregue não está de acordo com a documentação"))
 
         entregaRepository.saveAll(entregas)
 

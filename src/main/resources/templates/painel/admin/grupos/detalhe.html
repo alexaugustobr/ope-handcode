@@ -122,18 +122,12 @@
 
                 <th:block th:each="entrega, i: ${entregasPendentes}" >
                     <div class="card border-light mb-12">
-                        <div class="card-header bg-light  d-flex flex-row justify-content-start align-items-center ">
-                            <i class="avatar-char bg-light-blue "></i>
+                        <div class="card-header bg-light  d-flex flex-row justify-content-start align-items-center p-2">
+                            <i class="avatar-char bg-light-blue " style="min-width: 39px;min-height: 39px;"></i>
                             <div class="m-0 ml-2 mr-2 flex-grow-1" style="flex-grow: 1">
                                 <h4 class="m-0 card-title" th:utext="|${entrega.tarefa.titulo}|">1º Entrega</h4>
                                 <span th:text="|Data para entrega: ${#dates.format(entrega.tarefa.dataEntrega, 'dd-MM-yyyy HH:mm')}|"></span>
                             </div>
-                            <p class="m-0">
-                                <span class="text-success" th:class="${entrega.status.textClass}" th:text="${entrega.status.nome}">Entregue</span>
-                                <br>
-                                <th:block th:if="${entrega.nota} == null" th:utext="|Nota: Não atribuida|">Nota: 10</th:block>
-                                <th:block th:if="${entrega.nota} != null" th:utext="|Nota: ${entrega.nota}|">Nota: 10</th:block>
-                            </p>
 
                             <div class="dropdown actions__item ml-2">
                                 <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
@@ -144,11 +138,14 @@
                             </div>
                         </div>
                         <div class="card-body m-0">
-                            <p th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|"
-                               class="card-subtitle">
-                                Lançada em 10/10/2018 pelo professor Alan Faraj
-                            </p>
-
+                            <div>
+                                <p>
+                                    <span th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|" ></span>
+                                    <br>
+                                    <span th:text="|Data para entrega: ${#dates.format(entrega.tarefa.dataEntrega, 'dd-MM-yyyy HH:mm')}|"></span>
+                                </p>
+                            </div>
+                            <h5 class="mb-2 card-title">Descrição:</h5>
                             <div class="row border-top border-bottom bg-light">
                                 <div th:utext="${entrega.tarefa.descricao}" class="card-text m-2">
                                     Engenharia de software (Entregável 1)
@@ -247,18 +244,12 @@
 
                 <th:block th:each="entrega, i: ${entregasRealizadas}" >
                     <div class="card border-light mb-12">
-                        <div class="card-header bg-light  d-flex flex-row justify-content-start align-items-center ">
-                            <i class="avatar-char bg-light-blue "></i>
+                        <div class="card-header bg-light  d-flex flex-row justify-content-start align-items-center p-2">
+                            <i class="avatar-char bg-light-blue " style="min-width: 39px;min-height: 39px;"></i>
                             <div class="m-0 ml-2 mr-2 flex-grow-1" style="flex-grow: 1">
                                 <h4 class="m-0 card-title" th:utext="|${entrega.tarefa.titulo}|">1º Entrega</h4>
                                 <span th:text="|Data para entrega: ${#dates.format(entrega.tarefa.dataEntrega, 'dd-MM-yyyy HH:mm')}|"></span>
                             </div>
-                            <p class="m-0">
-                                <span class="text-success" th:class="${entrega.status.textClass}" th:text="${entrega.status.nome}">Entregue</span>
-                                <br>
-                                <th:block th:if="${entrega.nota} == null" th:utext="|Nota: Não atribuida|">Nota: 10</th:block>
-                                <th:block th:if="${entrega.nota} != null" th:utext="|Nota: ${entrega.nota}|">Nota: 10</th:block>
-                            </p>
 
                             <div class="dropdown actions__item ml-2">
                                 <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
@@ -269,16 +260,15 @@
                             </div>
                         </div>
                         <div class="card-body m-0">
-                            <p th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|"
-                               class="card-subtitle">
-                                Lançada em 10/10/2018 pelo professor Alan Faraj
-                            </p>
+                            <div>
+                                <p>
+                                    <span th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|" ></span>
+                                    <br>
+                                    <span th:text="|Data para entrega: ${#dates.format(entrega.tarefa.dataEntrega, 'dd-MM-yyyy HH:mm')}|"></span>
+                                </p>
+                            </div>
 
-                            <p th:if="${entrega.professorAvaliador} != null" th:text="|Professor avaliador: ${entrega.professorAvaliador.nome}|"
-                               class="card-subtitle">
-                                Prof Yuri
-                            </p>
-
+                            <h5 class="mb-2 card-title">Descrição:</h5>
                             <div class="row border-top border-bottom bg-light">
                                 <div th:utext="${entrega.tarefa.descricao}" class="card-text m-2">
                                     Engenharia de software (Entregável 1)
@@ -288,6 +278,25 @@
                                     <br>Engenharia de software (Entregável 1)
                                 </div>
                             </div>
+
+                            <th:block th:if="${entrega.professorAvaliador} != null">
+                                <h5 class="mb-2 mt-3 card-title">Avaliação do professor:</h5>
+                                <div class="row border-top border-bottom bg-light">
+                                    <div th:utext="${entrega?.comentario}" class="card-text m-2">
+                                        Engenharia de software (Entregável 1)
+                                        <br>Engenharia de software (Entregável 1)
+                                        <br>Engenharia de software (Entregável 1)
+                                        <br>Engenharia de software (Entregável 1)
+                                        <br>Engenharia de software (Entregável 1)
+                                    </div>
+                                </div>
+                                <p >
+                                    <span th:text="|Professor avaliador: ${entrega.professorAvaliador.nome}|"></span>
+                                    <br>
+                                    <th:block th:if="${entrega.nota} == null" th:utext="|Nota: Não atribuida|">Nota: 10</th:block>
+                                    <th:block th:if="${entrega.nota} != null" th:utext="|Nota: ${entrega.nota}|">Nota: 10</th:block>
+                                </p>
+                            </th:block>
                             <!--<div class="row mt-3">
                                 <div class="col-sm-6 col-12">
                                     <h5 class="mb-3 mt-3 ">Links</h5>

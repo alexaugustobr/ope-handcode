@@ -13,6 +13,8 @@ class Entrega : AbstractModel {
     var dataEnvio : Date? = null
     var status : Status = Status.PENDENTE
     var nota : BigDecimal? = null
+    @Column(columnDefinition = "TEXT")
+    var comentario : String = ""
 
     @ManyToOne
     @JoinColumn
@@ -61,7 +63,7 @@ class Entrega : AbstractModel {
         this.arquivos = arquivos
     }
 
-    constructor(disciplina: Disciplina,  dataEnvio: Date? = null, situacaoEntrega: Status = Status.PENDENTE, tarefa: Tarefa, grupo: Grupo, arquivos: MutableList<Arquivo> = mutableListOf(), nota: BigDecimal, professorAvaliador: Professor) : super() {
+    constructor(disciplina: Disciplina,  dataEnvio: Date? = null, situacaoEntrega: Status = Status.PENDENTE, tarefa: Tarefa, grupo: Grupo, arquivos: MutableList<Arquivo> = mutableListOf(), nota: BigDecimal, professorAvaliador: Professor, comentario: String) : super() {
         this.disciplina = disciplina
         this.dataEnvio = dataEnvio
         this.status = situacaoEntrega
@@ -70,6 +72,7 @@ class Entrega : AbstractModel {
         this.arquivos = arquivos
         this.nota = nota
         this.professorAvaliador = professorAvaliador
+        this.comentario = comentario
     }
 
 
