@@ -13,9 +13,9 @@ class Arquivo : AbstractModel{
 
     constructor() : super()
 
-    companion object Builder{
+    class Builder{
 
-        val arquivo = Arquivo()
+        var arquivo = Arquivo()
 
         fun of(file : MultipartFile) : Builder {
 

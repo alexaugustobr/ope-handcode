@@ -17,11 +17,12 @@ import java.util.stream.Stream
 class FileStorageImpl: FileStorage{
 
     val log = LoggerFactory.getLogger(this::class.java)
-    val rootLocation = Paths.get("/tmp")
+    val rootLocation = Paths.get("/tmp/ope")
 
     override fun store(file: MultipartFile, uuid :UUID) : UUID {
         createTempDirIfNotExists()
-        Files.copy(file.inputStream, this.rootLocation.resolve(uuid.toString()))
+        val uri = this.rootLocation.resolve(uuid.toString())
+        Files.copy(file.inputStream, uri)
         return uuid
     }
 

@@ -28,8 +28,9 @@ class PainelAlunoEntregasController {
     val disciplinaRepository: DisciplinaRepository
     val arquivoRepository: ArquivoRepository
     val fileStorage : FileStorage
+    val professorRepository: ProfessorRepository
 
-    constructor(grupoRepository: GrupoRepository, alunoRepository: AlunoRepository, entregaRepository: EntregaRepository, turmaRepository: TurmaRepository, cursoRepository: CursoRepository, disciplinaRepository: DisciplinaRepository, arquivoRepository: ArquivoRepository, fileStorage: FileStorage) {
+    constructor(grupoRepository: GrupoRepository, alunoRepository: AlunoRepository, entregaRepository: EntregaRepository, turmaRepository: TurmaRepository, cursoRepository: CursoRepository, disciplinaRepository: DisciplinaRepository, arquivoRepository: ArquivoRepository, fileStorage: FileStorage, professorRepository: ProfessorRepository) {
         this.grupoRepository = grupoRepository
         this.alunoRepository = alunoRepository
         this.entregaRepository = entregaRepository
@@ -38,6 +39,7 @@ class PainelAlunoEntregasController {
         this.disciplinaRepository = disciplinaRepository
         this.arquivoRepository = arquivoRepository
         this.fileStorage = fileStorage
+        this.professorRepository = professorRepository
     }
 
     @PostMapping("/{id}/enviar")
@@ -53,7 +55,8 @@ class PainelAlunoEntregasController {
         if (dataAtual.isAfter(dataEntregaLimite)) return redirectEntregaPassouData(model, redirectAttributes)
 
         for (arquivo in arquivos) {
-            val arquivoReferencia = arquivoRepository.save(Arquivo.of(arquivo).build())
+            val arquivoReferencia = Arquivo.Builder().of(arquivo).build()
+            arquivoRepository.save(arquivoReferencia)
             fileStorage.store(arquivo, arquivoReferencia.id!!)
             entrega.get().arquivos.add(arquivoReferencia)
         }
@@ -80,6 +83,8 @@ class PainelAlunoEntregasController {
 
         entrega.get().dataEnvio = Date()
         entrega.get().status = Entrega.Status.REALIZADA
+        entrega.get().professorAvaliador = professorRepository.findFirstByAtivoIsTrue()
+                .orElseThrow {RuntimeException("Nao foi possivel adicionar um professor avaliador, nenhum professor cadastrado.")}
         entregaRepository.save(entrega.get())
 
         redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Marcado como entregue!","Sucesso!", MensagemVO.TipoMensagem.success ))

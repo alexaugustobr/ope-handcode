@@ -2,12 +2,12 @@ package br.com.ope.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.hibernate.annotations.GenericGenerator
+import java.io.Serializable
 import java.util.*
 import javax.persistence.*
 
 @MappedSuperclass
-abstract class AbstractModel {
-
+abstract class AbstractModel : Serializable {
 
     @JsonProperty
     fun getType()  = this.javaClass.simpleName

@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull
 class Aluno : Usuario {
 
     @Column(unique=true)
-    @NotNull
+    @NotNull(message = "RA é obrigatório.")
     var ra : Long? = null
 
     @ManyToOne
