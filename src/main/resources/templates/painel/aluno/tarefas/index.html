@@ -29,9 +29,9 @@
                         <div class="card-body m-0">
                             <div>
                                 <p>
-                                    <span th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|" ></span>
+                                    <span th:text="|Lançada em: ${#dates.format(entrega.tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|" ></span>
                                     <br>
-                                    <span th:text="|Data para entrega: ${#dates.format(entrega.tarefa.dataEntrega, 'dd-MM-yyyy HH:mm')}|"></span>
+                                    <span th:text="|Entregar em: ${#dates.format(entrega.tarefa.dataEntrega, 'dd-MM-yyyy HH:mm')}|"></span>
                                 </p>
                             </div>
                             <h5 class="mb-2 card-title">Descrição:</h5>
@@ -131,8 +131,9 @@
                                 </div>
                             </div>
                         </div>
-                        <hr>
-                        <div th:if="${entrega?.status?.name() == 'PENDENTE'}" class="">
+
+                        <div th:if="${entrega?.status?.name() == 'PENDENTE' and entrega?.isEntregavel()}" class="">
+                            <hr>
                             <form method="post" th:action="@{/painel/aluno/entregas/__${entrega.id}__/enviar}" enctype="multipart/form-data">
                                 <div class="d-flex justify-content-center">
                                     <div class="form-group">
@@ -145,8 +146,9 @@
                                 </div>
                             </form>
                         </div>
-                        <hr>
+
                         <div th:if="${not #lists.isEmpty(entrega.arquivos)}" class="mb-2">
+                            <hr>
                             <form method="post" th:action="@{/painel/aluno/entregas/__${entrega.id}__/marcar-como-entregue}" >
                                 <div class="d-flex justify-content-center">
                                     <button  type="submit" class="btn btn-success btn-lg m-2">Marcar como entrege</button>
@@ -171,9 +173,9 @@
                         <div class="card-body m-0">
                             <div>
                                 <p>
-                                    <span th:text="|Lançada em ${#dates.format(entrega.tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|" ></span>
+                                    <span th:text="|Lançada em: ${#dates.format(entrega.tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|" ></span>
                                     <br>
-                                    <span th:text="|Data para entrega: ${#dates.format(entrega.tarefa.dataEntrega, 'dd-MM-yyyy HH:mm')}|"></span>
+                                    <span th:text="|Entregar em: ${#dates.format(entrega.tarefa.dataEntrega, 'dd-MM-yyyy HH:mm')}|"></span>
                                 </p>
                             </div>
                             <h5 class="mb-2 card-title">Descrição:</h5>

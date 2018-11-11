@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.math.BigDecimal
+import java.time.LocalDate
+import java.time.ZoneId
 import java.util.*
 import javax.persistence.*
 
@@ -50,6 +52,10 @@ class Entrega : AbstractModel {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     fun getDataEntrega() : Date? {
         return tarefa!!.dataHora
+    }
+
+    fun isEntregavel() : Boolean {
+        return LocalDate.now().isAfter(tarefa!!.dataHora!!.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
     }
 
     constructor() : super()
