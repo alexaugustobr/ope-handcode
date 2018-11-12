@@ -12,6 +12,11 @@ class Arquivo : AbstractModel{
     var mimeType : String = ""
 
     constructor() : super()
+    constructor(nome: String, extensao: String) : super() {
+        this.nome = nome
+        this.extensao = extensao
+    }
+
 
     class Builder{
 

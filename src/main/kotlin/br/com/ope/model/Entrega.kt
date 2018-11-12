@@ -81,6 +81,15 @@ class Entrega : AbstractModel {
         this.comentario = comentario
     }
 
+    constructor(disciplina: Disciplina,  dataEnvio: Date? = null, situacaoEntrega: Status = Status.PENDENTE, tarefa: Tarefa, grupo: Grupo, arquivos: MutableList<Arquivo> = mutableListOf(), professorAvaliador: Professor) : super() {
+        this.disciplina = disciplina
+        this.dataEnvio = dataEnvio
+        this.status = situacaoEntrega
+        this.tarefa = tarefa
+        this.grupo = grupo
+        this.arquivos = arquivos
+        this.professorAvaliador = professorAvaliador
+    }
 
     enum class Status(val nome : String, val textClass: String) {
 

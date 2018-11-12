@@ -1,0 +1,40 @@
+<th:block xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          xmlns:th="http://www.thymeleaf.org"
+          layout:decorate="~{layout-painel-professor}">
+
+    <div layout:fragment="conteudo">
+        <header class="content__title">
+            <h1>Grupos</h1>
+            <div class="actions">
+                <div class="dropdown actions__item">
+                    <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
+                </div>
+            </div>
+        </header>
+        <div class="contacts row">
+            <div th:each="grupo, i : ${grupos}" class="col-xl-2 col-lg-3 col-sm-4 col-6">
+                <div class="contacts__item">
+                    <a th:href="@{/painel/admin/grupos/__${grupo.id}__}" class="contacts__img">
+                        <img th:if="${!#strings.isEmpty(grupo.logoHash)}" th:src="@{/publico/arquivos/__${grupo.logoHash}__}" alt="Logo">
+                        <img th:if="${#strings.isEmpty(grupo.logoHash)}" th:src="@{/img/group_empty.jpg}" alt="Logo">
+                    </a>
+                    <div class="contacts__info">
+                        <strong th:text="${grupo?.nome}">Cathy Shelton</strong>
+                        <small th:text="${grupo?.curso?.sigla}">curso</small>
+                    </div>
+                    <p class="m-0 badge" th:classappend="|badge-${grupo?.status?.cor}|" th:text="${grupo?.status?.nome}">Aprovado</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <th:block layout:fragment="javascript">
+        <script>
+
+        </script>
+
+    </th:block>
+
+</th:block>

@@ -14,8 +14,7 @@
                         role="tab" aria-controls="nav-profile" aria-selected="false">Tarefas Pendentes</a>
                     <a class="nav-item nav-link pt-0" style="background-color:transparent;" id="nav-tarefas-entregues-tab" data-toggle="tab" href="#nav-tarefas-entregues"
                        role="tab" aria-controls="nav-profile" aria-selected="false">Tarefas Entregues</a>
-                    <!-- <a class="nav-item nav-link pt-0" style="background-color:transparent;" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
-                        role="tab" aria-controls="nav-contact" aria-selected="false">Boletim</a> -->
+
                 </div>
             </nav>
             <div class="actions">
@@ -53,19 +52,6 @@
 
                 <header class="content__title">
                     <h1>Integrantes</h1>
-
-                    <!-- <div class="actions">
-                        <a href="" class="actions__item zmdi zmdi-trending-up"></a>
-                        <a href="" class="actions__item zmdi zmdi-check-all"></a>
-
-                        <div class="dropdown actions__item">
-                            <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a href="" class="dropdown-item">Atualizar</a>
-                                <a href="" class="dropdown-item">Editar</a>
-                            </div>
-                        </div>
-                    </div> -->
                 </header>
                 <div class="row">
                     <div th:each="aluno : ${grupo.alunos}" class="col-xl-3 col-lg-3 col-sm-4 col-6">
@@ -155,87 +141,8 @@
                                     <br>Engenharia de software (Entregável 1)
                                 </div>
                             </div>
-                            <!--<div class="row mt-3">
-                                <div class="col-sm-6 col-12">
-                                    <h5 class="mb-3 mt-3 ">Links</h5>
-                                    <div class="card-text ml-3 mr-3">
-                                        <ul class="list-group">
-                                            <li class="list-group-item d-flex align-items-center p-0">
-                                                <a class="flex-fill m-0 p-2">
-                                                    <span>Arquivo tal tal tal</span>
-                                                    <span class="float-right">
-                                                    <i class="zmdi zmdi-link zmdi-hc-fw"></i>
-                                                </span>
-                                                </a>
-                                            </li>
-                                            <li class="list-group-item d-flex align-items-center p-0">
-                                                <a class="flex-fill m-0 p-2">
-                                                    <span>Arquivo tal tal tal</span>
-                                                    <span class="float-right">
-                                                    <i class="zmdi zmdi-link zmdi-hc-fw"></i>
-                                                </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-sm-6 col-12">
-                                    <h5 class="mb-3 mt-3 ">Anexos</h5>
-                                    <div class="card-text ml-3 mr-3">
-                                        <ul class="list-group">
-                                            <li class="list-group-item d-flex align-items-center p-0">
-                                                <a class="flex-fill m-0 p-2">
-                                                    <span class="p-2 badge badge-danger badge-pill mr-2">PDF</span>
-                                                    <span>Arquivo tal tal tal</span>
-                                                    <span class="float-right">
-                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
-                                                </span>
-                                                </a>
-                                            </li>
-                                            <li class="list-group-item d-flex align-items-center p-0">
-                                                <a class="flex-fill m-0 p-2">
-                                                    <span class="p-2 badge badge-danger badge-pill mr-2">PDF</span>
-                                                    <span>Arquivo tal tal tal</span>
-                                                    <span class="float-right">
-                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
-                                                </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-12">
-                                    <h5 class="mb-3 mt-3 ">Entrega do grupo</h5>
-                                    <div class="card-text ml-3 mr-3">
-                                        <ul class="list-group">
-                                            <li class="list-group-item d-flex align-items-center p-0">
-                                                <a class="flex-fill m-0 p-2">
-                                                    <span class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
-                                                    <span>Arquivo tal tal tal</span>
-                                                    <span class="float-right">
-                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
-                                                </span>
-                                                </a>
-                                            </li>
-                                            <li class="list-group-item d-flex align-items-center p-0">
-                                                <a class="flex-fill m-0 p-2">
-                                                    <span class="p-2 badge badge-danger badge-pill mr-2">PDF</span>
-                                                    <span>Arquivo tal tal tal</span>
-                                                    <span class="float-right">
-                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
-                                                </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>-->
+
                         </div>
-                        <!--<div class="d-flex justify-content-center card-footer">
-                            <button type="button" class="btn btn-primary btn-lg mt-2 mb-2">Enviar</button>
-                        </div>-->
                     </div>
                 </th:block>
 
@@ -278,7 +185,42 @@
                                     <br>Engenharia de software (Entregável 1)
                                 </div>
                             </div>
-
+                            <div class="row mt-3">
+                                <div th:if="${not #lists.isEmpty(entrega.arquivos)}" class="col-12">
+                                    <h5 class="mb-3 mt-3 ">Entregas do grupo</h5>
+                                    <div class="card-text ml-3 mr-3">
+                                        <ul class="list-group" style="align-items: center;">
+                                            <li th:each="arquivo : ${entrega.arquivos}" class="list-group-item d-flex align-items-center p-0">
+                                                <a th:href="@{/publico/arquivos/__${arquivo.id}__}" class="flex-fill m-0 p-2">
+                                                    <span th:text="${arquivo.extensao}" class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
+                                                    <span th:text="${arquivo.nome}">Arquivo tal tal tal</span>
+                                                    <span class="float-right">
+                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
+                                                </span>
+                                                </a>
+                                            </li>
+                                            <!--<li class="list-group-item d-flex align-items-center p-0">
+                                                <a class="flex-fill m-0 p-2">
+                                                    <span class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
+                                                    <span>Arquivo tal tal tal</span>
+                                                    <span class="float-right">
+                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
+                                                </span>
+                                                </a>
+                                            </li>
+                                            <li class="list-group-item d-flex align-items-center p-0">
+                                                <a class="flex-fill m-0 p-2">
+                                                    <span class="p-2 badge badge-danger badge-pill mr-2">PDF</span>
+                                                    <span>Arquivo tal tal tal</span>
+                                                    <span class="float-right">
+                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
+                                                </span>
+                                                </a>
+                                            </li>-->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                             <th:block th:if="${entrega.professorAvaliador} != null">
                                 <h5 class="mb-2 mt-3 card-title">Avaliação do professor:</h5>
                                 <div class="row border-top border-bottom bg-light">
@@ -297,87 +239,9 @@
                                     <th:block th:if="${entrega.nota} != null" th:utext="|Nota: ${entrega.nota}|">Nota: 10</th:block>
                                 </p>
                             </th:block>
-                            <!--<div class="row mt-3">
-                                <div class="col-sm-6 col-12">
-                                    <h5 class="mb-3 mt-3 ">Links</h5>
-                                    <div class="card-text ml-3 mr-3">
-                                        <ul class="list-group">
-                                            <li class="list-group-item d-flex align-items-center p-0">
-                                                <a class="flex-fill m-0 p-2">
-                                                    <span>Arquivo tal tal tal</span>
-                                                    <span class="float-right">
-                                                    <i class="zmdi zmdi-link zmdi-hc-fw"></i>
-                                                </span>
-                                                </a>
-                                            </li>
-                                            <li class="list-group-item d-flex align-items-center p-0">
-                                                <a class="flex-fill m-0 p-2">
-                                                    <span>Arquivo tal tal tal</span>
-                                                    <span class="float-right">
-                                                    <i class="zmdi zmdi-link zmdi-hc-fw"></i>
-                                                </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-sm-6 col-12">
-                                    <h5 class="mb-3 mt-3 ">Anexos</h5>
-                                    <div class="card-text ml-3 mr-3">
-                                        <ul class="list-group">
-                                            <li class="list-group-item d-flex align-items-center p-0">
-                                                <a class="flex-fill m-0 p-2">
-                                                    <span class="p-2 badge badge-danger badge-pill mr-2">PDF</span>
-                                                    <span>Arquivo tal tal tal</span>
-                                                    <span class="float-right">
-                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
-                                                </span>
-                                                </a>
-                                            </li>
-                                            <li class="list-group-item d-flex align-items-center p-0">
-                                                <a class="flex-fill m-0 p-2">
-                                                    <span class="p-2 badge badge-danger badge-pill mr-2">PDF</span>
-                                                    <span>Arquivo tal tal tal</span>
-                                                    <span class="float-right">
-                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
-                                                </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-12">
-                                    <h5 class="mb-3 mt-3 ">Entrega do grupo</h5>
-                                    <div class="card-text ml-3 mr-3">
-                                        <ul class="list-group">
-                                            <li class="list-group-item d-flex align-items-center p-0">
-                                                <a class="flex-fill m-0 p-2">
-                                                    <span class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
-                                                    <span>Arquivo tal tal tal</span>
-                                                    <span class="float-right">
-                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
-                                                </span>
-                                                </a>
-                                            </li>
-                                            <li class="list-group-item d-flex align-items-center p-0">
-                                                <a class="flex-fill m-0 p-2">
-                                                    <span class="p-2 badge badge-danger badge-pill mr-2">PDF</span>
-                                                    <span>Arquivo tal tal tal</span>
-                                                    <span class="float-right">
-                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
-                                                </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>-->
+
                         </div>
-                        <!--<div class="d-flex justify-content-center card-footer">
-                            <button type="button" class="btn btn-primary btn-lg mt-2 mb-2">Enviar</button>
-                        </div>-->
+
                     </div>
                 </th:block>
 
@@ -396,32 +260,6 @@
         </div>
 
 
-        <!-- <div class="menu pmd-floating-action" role="navigation">
-            <a href="javascript:void(0);" class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-default"
-                data-title="Supervisor Account">
-                <span class="pmd-floating-hidden">Supervisor Account</span>
-                <i class="material-icons">supervisor_account</i>
-            </a>
-            <a href="javascript:void(0);" class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-default"
-                data-title="Cloud Queue">
-                <span class="pmd-floating-hidden">Cloud Queue</span>
-                <i class="material-icons">cloud_queue</i>
-            </a>
-            <a href="javascript:void(0);" class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-default"
-                data-title="Headset">
-                <span class="pmd-floating-hidden">Headset</span>
-                <i class="material-icons">headset</i>
-            </a>
-            <a href="javascript:void(0);" class="pmd-floating-action-btn btn btn-sm pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-default"
-                data-title="Dialpad">
-                <span class="pmd-floating-hidden">Dialpad</span>
-                <i class="material-icons">dialpad</i>
-            </a>
-            <a class="pmd-floating-action-btn btn pmd-btn-fab pmd-btn-raised pmd-ripple-effect btn-primary" data-title="Add" href="javascript:void(0);">
-                <span class="pmd-floating-hidden">Primary</span>
-                <i class="material-icons pmd-sm">add</i>
-            </a>
-        </div>  -->
 
 
     </div>

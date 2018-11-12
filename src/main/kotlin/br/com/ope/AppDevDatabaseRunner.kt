@@ -23,6 +23,7 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
                            val grupoRepository: GrupoRepository,
                            val disciplinaRepository: DisciplinaRepository,
                            val turmaRepository: TurmaRepository,
+                           val arquivoRepository: ArquivoRepository,
                            val entregaRepository: EntregaRepository) : ApplicationRunner{
 
     private val logger = LoggerFactory.getLogger(AppDevDatabaseRunner::class.java)
@@ -120,13 +121,18 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
 
         entregas.add(Entrega(handcode.disciplina!!, null, Entrega.Status.PENDENTE, atividades.get(3), handcode, mutableListOf()))
 
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, atividades.get(0), handcode, mutableListOf(), BigDecimal(5), yuri, "Faltou a segunda parte."))
+        val arquivos : MutableList<Arquivo> = mutableListOf()
 
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, atividades.get(1), handcode, mutableListOf(), BigDecimal(7), fernando, "Sistema entregue não está de acordo com a documentação"))
+        arquivos.add(Arquivo("teste1.pdf","pdf"))
+        arquivos.add(Arquivo("teste2.docx","docx"))
+
+        arquivoRepository.saveAll(arquivos)
+
+        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, atividades.get(0), handcode, arquivos, BigDecimal(5), yuri, "Faltou a segunda parte."))
+
+        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, atividades.get(1), handcode, arquivos, fernando))
 
         entregaRepository.saveAll(entregas)
-
-        logger.info("Finalizado setup dos dados simulados no banco")
 
         val eventos = mutableListOf<Evento>()
 
@@ -139,6 +145,10 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
         eventos.add(evento2)
 
         eventoRepository.saveAll(eventos)
+
+        logger.info("Finalizado setup dos dados simulados no banco")
+
+        logger.info("Servidor iniciado.")
     }
 
 }
