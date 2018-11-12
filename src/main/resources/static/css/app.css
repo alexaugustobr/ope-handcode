@@ -8,6 +8,9 @@
  * Copyright 2016-2018 Digicorp, Inc.
  * Licensed under MIT (http://propeller.in/LICENSE)
  */
+content__title--calendar {
+    padding: 0 !important;
+}
 .btn {
   font-weight: 400;
   border: 1px solid transparent;
