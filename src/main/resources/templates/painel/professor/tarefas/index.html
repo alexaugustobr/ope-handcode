@@ -64,7 +64,7 @@
                                         <li th:text="|Disciplina: ${grupo?.disciplina?.nome}|">Disciplina: OPE 1</li>
                                         <li th:text="|Tema: ${grupo.tema}|">Tema: OPE</li>
                                     </ul>
-                                    <span  th:if="${grupo.aguardando}" class="badge badge-pill badge-warning">Aguardando aprovação</span>
+
 
 
                                 </div>
@@ -91,11 +91,6 @@
                                 <div class="row mt-3">
                                     <div class="col-sm-12">
                                     <form method="post" th:action="@{/painel/professor/entregas/__${entrega.id}__/corrigir}" enctype="multipart/form-data">
-
-                                        <div class="row">
-
-
-                                        </div>
                                        <div class="row">
                                            <div class="col-sm-12 col-md-8">
                                                <div class="form-group">
@@ -121,10 +116,7 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
-
                     </th:block>
 
                 </th:block>
