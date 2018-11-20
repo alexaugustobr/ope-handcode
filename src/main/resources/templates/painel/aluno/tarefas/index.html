@@ -306,7 +306,7 @@
                                         <h5 class="mb-2 mt-3 card-title">Entrega corrigida:</h5>
                                         <div class="card-text ml-3 mr-3">
                                             <ul class="list-group" >
-                                                <li th:each="arquivo : ${entrega.arquivos}" class="list-group-item d-flex align-items-center p-0">
+                                                <li th:each="arquivo : ${entrega.arquivosCorrecao}" class="list-group-item d-flex align-items-center p-0">
                                                     <a th:href="@{/publico/arquivos/__${arquivo.id}__}" class="flex-fill m-0 p-2">
                                                         <span th:text="${arquivo.extensao}" class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
                                                         <span th:text="${arquivo.nome}">Arquivo tal tal tal</span>
