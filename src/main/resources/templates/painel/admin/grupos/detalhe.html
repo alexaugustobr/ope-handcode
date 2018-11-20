@@ -238,6 +238,24 @@
                                     <th:block th:if="${entrega.nota} == null" th:utext="|Nota: Não atribuida|">Nota: 10</th:block>
                                     <th:block th:if="${entrega.nota} != null" th:utext="|Nota: ${entrega.nota}|">Nota: 10</th:block>
                                 </p>
+                                <div class="row mt-3">
+                                    <div th:if="${not #lists.isEmpty(entrega.arquivosCorrecao)}" class="col-12">
+                                        <h5 class="mb-3 mt-3 ">Entrega corrigida:</h5>
+                                        <div class="card-text ml-3 mr-3">
+                                            <ul class="list-group" style="align-items: center;">
+                                                <li th:each="arquivo : ${entrega.arquivos}" class="list-group-item d-flex align-items-center p-0">
+                                                    <a th:href="@{/publico/arquivos/__${arquivo.id}__}" class="flex-fill m-0 p-2">
+                                                        <span th:text="${arquivo.extensao}" class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
+                                                        <span th:text="${arquivo.nome}">Arquivo tal tal tal</span>
+                                                        <span class="float-right">
+                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
+                                                </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </th:block>
 
                         </div>

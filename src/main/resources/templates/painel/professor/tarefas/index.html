@@ -78,8 +78,8 @@
                                                     <span th:text="${arquivo.extensao}" class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
                                                     <span th:text="${arquivo.nome}">Arquivo tal tal tal</span>
                                                     <span class="float-right">
-                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
-                                                </span>
+                                                        <i class="zmdi zmdi-download zmdi-hc-fw"></i>
+                                                    </span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -90,29 +90,37 @@
                             <div class="card-body m-0 bg-light ">
                                 <div class="row mt-3">
                                     <div class="col-sm-12">
-                                    <form method="post" th:action="@{/painel/professor/entregas/__${entrega.id}__/corrigir}" enctype="multipart/form-data">
-                                       <div class="row">
-                                           <div class="col-sm-12 col-md-8">
-                                               <div class="form-group">
-                                                   <textarea name="comentario" class="form-control textarea-autosize" placeholder="Comentário" style="overflow: hidden; overflow-wrap: break-word; height: 47px;"></textarea>
-                                                   <i class="form-group__bar"></i>
+                                        <form method="post" th:action="@{/painel/professor/tarefas/entregas/__${entrega.id}__/corrigir}" enctype="multipart/form-data">
+                                           <div class="row">
+                                               <input th:value="${entrega.id}" name="id" type="text" hidden="" />
+                                               <div class="col-sm-12">
+                                                   <div class="form-group">
+                                                       <textarea name="comentario" class="form-control textarea-autosize" placeholder="Comentário" style="overflow: hidden; overflow-wrap: break-word; height: 47px;"></textarea>
+                                                       <i class="form-group__bar"></i>
+                                                   </div>
+                                               </div>
+                                               <div class="col-sm-8">
+                                                   <div class="form-group">
+                                                       <input name="anexos" type="file" class="" multiple="multiple">
+                                                       <i class="form-group__bar"></i>
+                                                   </div>
+                                               </div>
+                                               <div class="col-sm-4">
+                                                   <div class="form-group">
+                                                       <input type="number" required=""
+                                                              max="10" min="0"
+                                                              class="form-control js-obrigatorio"
+                                                              placeholder="Nota" name="nota" value="">
+                                                       <i class="form-group__bar"></i>
+                                                   </div>
+                                               </div>
+                                               <div class="col-sm-6">
+                                                   <div style="align-items: center;align-content: center;display: flex;flex-direction: column;">
+                                                       <button type="submit" class="btn btn-primary btn-lg m-2">Enviar</button>
+                                                   </div>
                                                </div>
                                            </div>
-                                           <div class="col-sm-12 col-md-2">
-                                               <div class="form-group">
-                                                   <input type="number"
-                                                          class="form-control js-obrigatorio"
-                                                          placeholder="Nota" name="nota" value="">
-                                                   <i class="form-group__bar"></i>
-                                               </div>
-                                           </div>
-                                           <div class="col-sm-12 col-md-2 ">
-                                               <div style="align-items: center;align-content: center;display: flex;flex-direction: column;">
-                                                   <button type="submit" class="btn btn-primary btn-lg m-2">Enviar</button>
-                                               </div>
-                                           </div>
-                                       </div>
-                                    </form>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -124,11 +132,117 @@
             </div>
             <div class="tab-pane fade" id="nav-tarefas-corrigidas" role="tabpanel" aria-labelledby="nav-tarefas-corrigidas-tab">
 
-                <th:block th:each="entrega, i: ${entregasCorrigidas}" >
 
 
 
-                </th:block>
+                    <th:block th:each="entry, i: ${tarefaCorrigidaMap}" >
+
+                        <div th:with="tarefa=${entry.key}" class="card border-light mb-12">
+                            <div class="card-header bg-light  d-flex flex-row justify-content-start align-items-center p-2">
+                                <i class="avatar-char bg-light-blue " style="min-width: 39px;min-height: 39px;"></i>
+                                <div class="m-0 ml-2 mr-2 flex-grow-1" style="flex-grow: 1">
+                                    <h4 class="m-0 card-title" th:utext="|${tarefa.titulo}|">1º Entrega</h4>
+                                </div>
+                            </div>
+                            <div class="card-body m-0 ">
+                                <div>
+                                    <p>
+                                        <span th:text="|Lançada em: ${#dates.format(tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|" ></span>
+                                        <br>
+                                        <span th:text="|Entregar em: ${#dates.format(tarefa.dataEntrega, 'dd-MM-yyyy HH:mm')}|"></span>
+                                    </p>
+                                </div>
+                                <h5 class="mb-2 card-title">Descrição:</h5>
+                                <div class="row border-top border-bottom bg-light">
+                                    <div th:utext="${tarefa.descricao}" class="card-text m-2">
+                                        Engenharia de software (Entregável 1)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <th:block th:with="grupo=${entrega.grupo}" th:each="entrega : ${entry.value}">
+
+                            <div class="card mt-6" >
+
+                                <div  class="card-body profile mt-4" style="align-items: normal;">
+                                    <div class="profile__img">
+                                        <img style="height: 200px;width: 200px;" th:if="${!#strings.isEmpty(grupo.logoHash)}" th:src="@{/publico/arquivos/__${grupo.logoHash}__}"
+                                             alt="Logo">
+                                        <img style="height: 200px;width: 200px;" th:if="${#strings.isEmpty(grupo.logoHash)}" th:src="@{/img/group_empty.jpg}" alt="Logo">
+                                    </div>
+                                    <div class="profile__info">
+                                        <h5 class="mb-3 mt-3 ">Descrição:</h5>
+                                        <p th:text="|Grupo ${grupo.nome}|">Handcode</p>
+                                        <ul class="icon-list">
+                                            <li th:text="|Curso: ${grupo?.curso?.nome}|">Curso: ADS</li>
+                                            <li th:text="|Turma: ${grupo?.turma?.semestre}º${grupo?.turma?.letra} - ${grupo?.turma?.periodo?.nome}|">
+                                                Turma: 3ºA - Manhã
+                                            </li>
+                                            <li th:text="|Disciplina: ${grupo?.disciplina?.nome}|">Disciplina: OPE 1</li>
+                                            <li th:text="|Tema: ${grupo.tema}|">Tema: OPE</li>
+                                        </ul>
+
+
+
+                                    </div>
+
+                                    <div class="profile__info">
+                                        <h5 class="mb-3 mt-3 ">Arquivos da entrega:</h5>
+                                        <div class="card-text ml-3 mr-3" >
+                                            <ul class="list-group" style="align-items: center;">
+                                                <li th:each="arquivo : ${entrega.arquivos}" class="list-group-item d-flex align-items-center p-0">
+                                                    <a th:href="@{/publico/arquivos/__${arquivo.id}__}" class="flex-fill m-0 p-2">
+                                                        <span th:text="${arquivo.extensao}" class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
+                                                        <span th:text="${arquivo.nome}">Arquivo tal tal tal</span>
+                                                        <span class="float-right">
+                                                        <i class="zmdi zmdi-download zmdi-hc-fw"></i>
+                                                    </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-body m-0 bg-light ">
+                                    <div class="row mt-3">
+                                        <div class="col-sm-12">
+
+                                            <div class="row">
+                                                <input th:value="${entrega.id}" name="id" type="text" hidden="" />
+                                                <div class="col-sm-12">
+                                                    <p>Comentário:</p>
+                                                    <p th:utext="${entrega.comentario}" placeholder="Comentário" style="overflow: hidden; overflow-wrap: break-word; height: 47px;"></p>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <p>Arquivos da correção:</p>
+
+                                                    <ul class="list-group">
+                                                        <li th:each="arquivo : ${entrega.arquivosCorrecao}" class="list-group-item d-flex align-items-center p-0">
+                                                            <a th:href="@{/publico/arquivos/__${arquivo.id}__}" class="flex-fill m-0 p-2">
+                                                                <span th:text="${arquivo.extensao}" class="p-2 badge badge-primary badge-pill mr-2">DOCX</span>
+                                                                <span th:text="${arquivo.nome}">Arquivo tal tal tal</span>
+                                                                <span class="float-right">
+                                                    <i class="zmdi zmdi-download zmdi-hc-fw"></i>
+                                                </span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                                <div class="col-sm-6 col-md-1">
+                                                    <p th:text="|Nota: ${entrega.nota}|" placeholder="Comentário" style="overflow: hidden; overflow-wrap: break-word; height: 47px;"></p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
+
+                    </th:block>
 
             </div>
         </div>

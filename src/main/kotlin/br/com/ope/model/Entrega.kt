@@ -35,6 +35,10 @@ class Entrega : AbstractModel {
     @JoinTable
     var arquivos: MutableList<Arquivo> = mutableListOf()
 
+    @ManyToMany
+    @JoinTable
+    var arquivosCorrecao: MutableList<Arquivo> = mutableListOf()
+
     @ManyToOne
     @JoinColumn
     var disciplina: Disciplina? = null
