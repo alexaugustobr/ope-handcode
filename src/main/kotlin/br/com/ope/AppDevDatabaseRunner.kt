@@ -64,7 +64,7 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
         grupoRepository.save(handcode)
 
         val alan = Aluno(grupo= handcode, nome = "Alan Faraj", ra = 1, senha = BCryptPasswordEncoder().encode("senha"), email = "alan@email.com.br", ativo = true, permissoes = mutableSetOf(Role.ROLE_ALUNO), turma = turmaA)
-        val alex = Aluno(grupo= handcode, nome = "Alex Augusto (Javaboy)", ra = 1700072, senha = BCryptPasswordEncoder().encode("senha"), email = "alexcologia33@gmail.com", ativo = true, permissoes = mutableSetOf(Role.ROLE_ALUNO), turma = turmaA)
+        val alex = Aluno(grupo= handcode, nome = "Alex Augusto (Javaboy)", ra = 1700072, senha = BCryptPasswordEncoder().encode("senha"), email = "java@email.com.br", ativo = true, permissoes = mutableSetOf(Role.ROLE_ALUNO), turma = turmaA)
         val michael = Aluno(grupo= handcode, nome = "Michael da Silva de Souza", ra = 1700381, senha = BCryptPasswordEncoder().encode("senha"), email = "michael@email.com.br", ativo = true, permissoes = mutableSetOf(Role.ROLE_ALUNO), turma = turmaA)
         val cicinth = Aluno(grupo= handcode, nome = " Cinthia Queiroz", ra = 1700693, senha = BCryptPasswordEncoder().encode("senha"), email = "cicinth@email.com.br", ativo = true, permissoes = mutableSetOf(Role.ROLE_ALUNO), turma = turmaA)
         val mestre = Aluno(grupo= handcode, nome = "Fabio Aurelio Abe Nogueira", ra = 1700603, senha = BCryptPasswordEncoder().encode("senha"), email = "mestre@email.com.br", ativo = true, permissoes = mutableSetOf(Role.ROLE_ALUNO), turma = turmaA)

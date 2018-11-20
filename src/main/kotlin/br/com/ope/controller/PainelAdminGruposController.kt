@@ -7,6 +7,7 @@ import br.com.ope.repository.AlunoRepository
 import br.com.ope.repository.EntregaRepository
 import br.com.ope.repository.GrupoRepository
 import br.com.ope.repository.TarefaRepository
+import br.com.ope.service.MailServiceImpl
 import br.com.ope.vo.MensagemVO
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -25,12 +26,14 @@ class PainelAdminGruposController {
     val tarefaRepository : TarefaRepository
     val entregaRepository : EntregaRepository
     val alunoRepository : AlunoRepository
+    val mailService: MailServiceImpl
 
-    constructor(grupoRepository: GrupoRepository, tarefaRepository: TarefaRepository, entregaRepository: EntregaRepository, alunoRepository: AlunoRepository) {
+    constructor(grupoRepository: GrupoRepository, tarefaRepository: TarefaRepository, entregaRepository: EntregaRepository, alunoRepository: AlunoRepository, mailService: MailServiceImpl) {
         this.grupoRepository = grupoRepository
         this.tarefaRepository = tarefaRepository
         this.entregaRepository = entregaRepository
         this.alunoRepository = alunoRepository
+        this.mailService = mailService
     }
 
     @GetMapping
@@ -70,6 +73,8 @@ class PainelAdminGruposController {
 
         grupo.get().status = Grupo.Status.APROVADO
 
+        mailService.enviarEmailGrupoAprovado(grupo.get())
+
         grupoRepository.save(grupo.get())
 
         val alunosAtivos = mutableListOf<Aluno>()
@@ -93,6 +98,8 @@ class PainelAdminGruposController {
 
         if (!grupo.isPresent) return redirectGrupoNaoEncontrado(model, redirectAttributes)
 
+        mailService.enviarEmailGrupoRecusado(grupo.get())
+
         grupo.get().status = Grupo.Status.RECUSADO
 
         val alunosRemovidos = mutableListOf<Aluno>()
@@ -106,8 +113,6 @@ class PainelAdminGruposController {
         grupo.get().alunosRemovidos = alunosRemovidos
         grupo.get().disciplina = grupo.get().turma!!.disciplina
         grupoRepository.save(grupo.get())
-
-        //TODO ENVIAR EMAIL COM MOTIVO
 
         redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Grupo recusado!","Sucesso!", MensagemVO.TipoMensagem.warning ))
 
