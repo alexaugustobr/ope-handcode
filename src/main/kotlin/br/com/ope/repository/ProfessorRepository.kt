@@ -6,4 +6,5 @@ import java.util.*
 
 interface ProfessorRepository : JpaRepository<Professor, UUID> {
     fun findFirstByAtivoIsTrue() : Optional<Professor>
+    fun findAllByOrderByNome() : Optional<Professor>
 }
