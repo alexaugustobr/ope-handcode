@@ -2,7 +2,6 @@ package br.com.ope.security.jwt.provider
 
 import br.com.ope.security.UserDetailsServiceImpl
 import br.com.ope.security.jwt.exceptions.UsuarioDesabilitadoException
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -13,13 +12,8 @@ import org.springframework.stereotype.Component
 import org.springframework.util.Assert
 
 @Component
-class LoginAuthenticationProvider @Autowired
-constructor(private val usuarioNameRepository: UserDetailsServiceImpl) : AuthenticationProvider {
-    private val encoder: BCryptPasswordEncoder
-
-    init {
-        this.encoder = BCryptPasswordEncoder()
-    }
+class LoginAuthenticationProvider(private val usuarioNameRepository: UserDetailsServiceImpl,
+                                  private val encoder : BCryptPasswordEncoder = BCryptPasswordEncoder()) : AuthenticationProvider {
 
     @Throws(AuthenticationException::class)
     override fun authenticate(authentication: Authentication): Authentication {
@@ -36,7 +30,7 @@ constructor(private val usuarioNameRepository: UserDetailsServiceImpl) : Authent
         }
 
         if (!usuario.isEnabled) {
-            throw UsuarioDesabilitadoException("Usuario nao esta habilitado")
+            throw UsuarioDesabilitadoException("Usuário não está habilitado")
         }
 
         return UsernamePasswordAuthenticationToken(usuario, null, usuario.authorities)

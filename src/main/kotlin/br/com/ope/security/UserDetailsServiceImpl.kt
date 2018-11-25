@@ -1,8 +1,8 @@
 package br.com.ope.security
 
 import br.com.ope.exception.UsuarioInativoException
-import br.com.ope.exception.UsuarioSemPermissoesException
 import br.com.ope.repository.UsuarioRepository
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -20,9 +20,9 @@ class UserDetailsServiceImpl(val usuarioRepository : UsuarioRepository) : UserDe
 
         if (!usuario.isPresent) throw UsernameNotFoundException(email)
 
-        if (!usuario.get().isEnabled) throw UsuarioInativoException()
+        if (!usuario.get().isEnabled) throw BadCredentialsException("Usuário não está habilitado")
 
-        if (usuario.get().permissoes.isEmpty()) throw UsuarioSemPermissoesException()
+        if (usuario.get().permissoes.isEmpty()) throw BadCredentialsException("Usuário não está habilitado")
 
         //TODO(RETONRAR UM DTO PARA CADA TIPO DE USUARIO )
 

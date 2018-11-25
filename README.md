@@ -12,13 +12,28 @@
 
 ## Usuarios de acesso
 
-* Aluno
-    * email: aluno
-    * senha: impacta
+* Alunos
+    * email: java@email.com.br
+    * senha: senha
+    * email: cicinth@email.com.br
+    * senha: senha
+    * email: alan@email.com.br
+    * senha: senha
+    * email: mestre@email.com.br
+    * senha: senha
+    * email: gabs@email.com.br
+    * senha: senha
+    * email: russo@email.com.br
+    * senha: senha
 * Admin
     * email: admin@email.com.br
     * senha: senha
+* Professores
+    * email: yuri@email.com.br
+    * senha: senha
 
+    * email: fernando@email.com.br
+    * senha: senha
 ---
 ## Como iniciar
 Inicie a aplicacao com o profile de `DEV`
