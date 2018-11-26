@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 
 interface ProfessorRepository : JpaRepository<Professor, UUID> {
-    fun findFirstByAtivoIsTrue() : Optional<Professor>
-    fun findAllByOrderByNome() : Optional<Professor>
+    fun findAllByAtivoIsTrue() : MutableList<Professor>
+    fun findAllByOrderByNome() : MutableList<Professor>
 }

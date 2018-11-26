@@ -19,7 +19,7 @@ class PainelAdminProfessoresController {
 
     @GetMapping
     fun index(model : Model) : String {
-        model.addAttribute("professor", professorRepository.findFirstByAtivoIsTrue())
+        model.addAttribute("professores", professorRepository.findAllByAtivoIsTrue())
         return "painel/admin/professores/index"
     }
 

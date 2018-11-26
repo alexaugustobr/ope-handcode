@@ -1,0 +1,46 @@
+<th:block xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          xmlns:th="http://www.thymeleaf.org"
+          layout:decorate="~{layout-painel-admin}">
+
+    <div layout:fragment="conteudo">
+        <header class="content__title">
+            <h1>Professores</h1>
+            <div class="actions">
+                <div class="dropdown actions__item">
+                    <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="/painel/admin/professores/novo" class="dropdown-item">Novo</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="card">
+            <div class="listview listview--striped">
+                <div th:each="professor : ${professores}" class="listview__item">
+                    <div class="listview__content d-flex align-items-center">
+                        <div class="listview__heading" th:text="${professor.nome}"></div>
+                    </div>
+                    <div class="actions listview__actions">
+                        <div class="dropdown actions__item">
+                            <i class="zmdi zmdi-more-vert" data-toggle="dropdown"></i>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a th:href="@{/painel/admin/professores/__${professor.nome}__}" class="dropdown-item">Editar</a>
+                                <a th:href="@{/painel/admin/professores/__${professor.nome}__/excluir}" class="dropdown-item">Excluir</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <th:block layout:fragment="javascript">
+        <script>
+
+        </script>
+
+    </th:block>
+
+</th:block>
