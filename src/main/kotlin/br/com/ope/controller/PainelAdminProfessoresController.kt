@@ -74,6 +74,21 @@ class PainelAdminProfessoresController {
 
     }
 
+    @GetMapping("/{id}/excluir")
+    fun excluir(model : Model, redirectAttributes: RedirectAttributes, @PathVariable id : UUID) : String {
+        var professor = professorRepository.findById(id)
+
+        if(!professor.isPresent) return redirectProfessorNaoEncontrado(model, redirectAttributes)
+
+        professor.get().ativo = false
+
+        professorRepository.save(professor.get())
+
+        redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Professor excluido.","", MensagemVO.TipoMensagem.info ))
+
+        return "redirect:/painel/admin/professores"
+    }
+
     private fun redirectProfessorNaoEncontrado(model: Model, redirectAttributes: RedirectAttributes): String {
         redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Professor não encontrado!","Erro!", MensagemVO.TipoMensagem.danger ))
         return "redirect:/painel/admin/professores"
