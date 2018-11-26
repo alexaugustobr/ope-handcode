@@ -10,8 +10,14 @@ import javax.validation.constraints.NotNull
 @Entity
 open class Professor : Usuario {
 
-    constructor() : super()
+    fun atualizar(professor: Professor) : Professor {
+        this.nome = professor.nome
+        this.email = professor.email
+        return this
+    }
 
+    constructor() : super()
+    constructor(id: UUID?) : super(id)
     constructor(
             nome: String,
             email: String,
