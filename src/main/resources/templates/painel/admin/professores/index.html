@@ -19,7 +19,7 @@
             <div class="listview listview--striped">
                 <div th:each="professor : ${professores}" class="listview__item">
                     <div class="listview__content d-flex align-items-center">
-                        <div class="listview__heading" th:text="${professor.nome}"></div>
+                        <div class="listview__heading" th:text="|${professor.nome} - ${professor.email}|"></div>
                     </div>
                     <div class="actions listview__actions">
                         <div class="dropdown actions__item">
