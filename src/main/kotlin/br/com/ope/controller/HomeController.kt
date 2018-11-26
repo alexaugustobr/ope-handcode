@@ -1,5 +1,6 @@
 package br.com.ope.controller
 
+import br.com.ope.enumx.Role
 import br.com.ope.model.Aluno
 import br.com.ope.model.Grupo
 import br.com.ope.model.Turma
@@ -84,8 +85,10 @@ class HomeController {
             alunoEncontrado.email = aluno.email
             alunoEncontrado.nome = aluno.nome
             alunoEncontrado.telefone = aluno.telefone
+            alunoEncontrado.permissoes = mutableSetOf(Role.ROLE_ALUNO)
             alunoEncontrado.senha = BCryptPasswordEncoder().encode("senha")
             alunoRepository.save(alunoEncontrado)
+            println(alunoEncontrado.permissoes)
         }
 
         redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Aguarde a aprovação do administrador por email, para poder acessar a plataforma!","Grupo salvo!", MensagemVO.TipoMensagem.success ))
