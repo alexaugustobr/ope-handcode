@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
 
-@Component
+//@Component
 //@Profile(value = ["dev","default"])
 class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
                            val eventoRepository: EventoRepository,
