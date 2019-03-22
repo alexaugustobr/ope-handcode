@@ -14,10 +14,7 @@ import javax.servlet.http.HttpServletRequest
 class LoginController {
 
     @RequestMapping("/login")
-    fun login(model: Model, @RequestParam(value = "error", required = false) error: Optional<String>, request : HttpServletRequest, @AuthenticationPrincipal usuario: Usuario?): String {
-        if (usuario != null) {
-            return "redirect:/painel/"+usuario.getPainelUrl()
-        }
+    fun login(model: Model, @RequestParam(value = "error", required = false) error: Optional<String>, request : HttpServletRequest): String {
 
         if (error.isPresent) {
             val attr = Optional.ofNullable(request.session.getAttribute("SPRING_SECURITY_LAST_EXCEPTION"))
@@ -26,6 +23,7 @@ class LoginController {
                 model.addAttribute("mensagem", MensagemVO(conteudo = "Usuário ou senha incorretos!", tipo = MensagemVO.TipoMensagem.danger))
             }
         }
+
         return "login"
     }
 
