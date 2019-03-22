@@ -1,1 +1,1 @@
-web: java -XX:+UseG1GC -Xmx128m -Xms32m -jar -Dspring.profiles.active=prod target/app-0.0.1-SNAPSHOT.jar
+web: java -XX:+UseG1GC -Xmx256m -Xms32m -jar -Dspring.profiles.active=prod target/app-0.0.1-SNAPSHOT.jar
