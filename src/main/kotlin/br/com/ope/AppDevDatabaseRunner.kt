@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
 
-//@Component
+@Component
 //@Profile(value = ["dev","default"])
 class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
                            val eventoRepository: EventoRepository,
@@ -31,6 +31,10 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
 
     fun iniciarBanco() {
         logger.info("Populando banco de com dados.")
+
+        if (!usuarioRepository.findAll().isEmpty()) {
+            return
+        }
 
         val ope1 = Disciplina(nome = "Oficina projeto empresa 1", sigla = "OPE1")
         disciplinaRepository.save(ope1)
