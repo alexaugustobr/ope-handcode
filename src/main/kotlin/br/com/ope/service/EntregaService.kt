@@ -19,7 +19,7 @@ class EntregaService(val entregaRepository: EntregaRepository,
         for (disciplina in disciplinas) {
             disciplinasIdList.add(disciplina.id!!)
         }
-        val grupos = grupoRepository.findAllByDisciplina_Id(disciplinasIdList) //TODO JOIN DISCIPLINA ATUAL
+        val grupos = grupoRepository.findAllByDisciplina_IdIn(disciplinasIdList) //TODO JOIN DISCIPLINA ATUAL
 
         val entregas : MutableList<Entrega> = mutableListOf()
         for (grupo in grupos) {
