@@ -6,6 +6,7 @@ import br.com.ope.repository.DisciplinaRepository
 import br.com.ope.repository.EntregaRepository
 import br.com.ope.repository.GrupoRepository
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class EntregaService(val entregaRepository: EntregaRepository,
@@ -14,7 +15,11 @@ class EntregaService(val entregaRepository: EntregaRepository,
 
     fun gerarEntregasDaTarefa(tarefa: Tarefa) : MutableList<Entrega> {
         val disciplinas = disciplinaRepository.findAllByTarefas(tarefa)
-        val grupos = grupoRepository.findAllByDisciplina(disciplinas) //TODO JOIN DISCIPLINA ATUAL
+        val disciplinasIdList = mutableListOf<UUID>()
+        for (disciplina in disciplinas) {
+            disciplinasIdList.add(disciplina.id!!)
+        }
+        val grupos = grupoRepository.findAllByDisciplina_Id(disciplinasIdList) //TODO JOIN DISCIPLINA ATUAL
 
         val entregas : MutableList<Entrega> = mutableListOf()
         for (grupo in grupos) {

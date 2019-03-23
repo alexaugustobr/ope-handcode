@@ -2,15 +2,11 @@ package br.com.ope.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.hibernate.annotations.GenericGenerator
-import org.hibernate.annotations.TypeDef
-import org.hibernate.annotations.TypeDefs
-import org.hibernate.type.PostgresUUIDType
 import java.io.Serializable
 import java.util.*
 import javax.persistence.*
 
 @MappedSuperclass
-@TypeDefs(TypeDef(name = "uuid", defaultForType = UUID::class, typeClass = PostgresUUIDType::class))
 abstract class AbstractModel : Serializable {
 
     @JsonProperty
@@ -19,7 +15,6 @@ abstract class AbstractModel : Serializable {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Id
-    @Column(nullable = false, columnDefinition = "uuid")
     var id: UUID? = null
 
     @Temporal(TemporalType.TIMESTAMP)

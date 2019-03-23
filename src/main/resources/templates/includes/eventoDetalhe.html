@@ -58,7 +58,7 @@
                 <div class="form-group">
                     <div class="select">
                         <label>Disciplinas:</label>
-                        <select  th:field="*{disciplinas}" th:errorclass="is-invalid" name="disciplinas" class="select2 select2-hidden-accessible" placeholder="Disciplina" multiple="multiple">
+                        <select  th:field="*{disciplinas}" th:errorclass="is-invalid" name="disciplinas" class="select2 select2-hidden-accessible" placeholder="Disciplina">
                             <option th:each="disciplina : ${disciplinas}" th:value="${disciplina.id}" th:text="${disciplina.nome}"></option>
                         </select>
                         <div class="invalid-feedback">
