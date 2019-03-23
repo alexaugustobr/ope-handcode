@@ -15,6 +15,7 @@ abstract class AbstractModel : Serializable {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Id
+    @Column(nullable = false, columnDefinition = "uuid")
     var id: UUID? = null
 
     @Temporal(TemporalType.TIMESTAMP)
