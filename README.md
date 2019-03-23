@@ -12,6 +12,13 @@
 
 ## Usuarios de acesso
 
+* Aluno
+    * email: aluno
+    * senha: impacta
+* Admin
+    * email: admin@email.com.br
+    * senha: senha
+  
 * Alunos
     * email: java@email.com.br
     * senha: senha
@@ -34,7 +41,7 @@
 
     * email: fernando@email.com.br
     * senha: senha
----
+    
 ## Como iniciar
 Inicie a aplicacao com o profile de `DEV`
 via [IntelliJ](https://www.jetbrains.com/idea/) adicione a propriedade em `VM options`:
