@@ -1,6 +1,5 @@
 package br.com.ope.controller
 
-import br.com.ope.model.Curso
 import br.com.ope.model.Professor
 import br.com.ope.repository.ProfessorRepository
 import br.com.ope.vo.MensagemVO
@@ -40,6 +39,7 @@ class PainelAdminProfessoresController {
     fun novoSalvar(@Valid professor: Professor, bindingResult : BindingResult, model : Model, redirectAttributes: RedirectAttributes) : String {
         if (bindingResult.hasErrors()) return novo(professor,bindingResult,model)
         professor.ativo = true
+        professor.senha = professor.getSenhaPadrao()
         professorRepository.save(professor)
         redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Professor salvo!","Sucesso!", MensagemVO.TipoMensagem.success ))
         return "redirect:/painel/admin/professores"

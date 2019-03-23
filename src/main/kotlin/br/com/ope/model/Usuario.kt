@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.NotBlank
@@ -96,5 +97,7 @@ open class Usuario : AbstractModel, UserDetails {
     }
 
     open fun getPainelUrl() = "painel"
+
+    open fun getSenhaPadrao() = BCryptPasswordEncoder().encode("senha")
 
 }
