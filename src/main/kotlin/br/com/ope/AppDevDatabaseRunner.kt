@@ -29,7 +29,7 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
     fun iniciarBanco() {
         logger.info("Populando banco de com dados.")
 
-        if (!usuarioRepository.findOne(Example.of(Usuario(mutableSetOf(Role.ROLE_ADMIN)))).isPresent) {
+        if (usuarioRepository.findOne(Example.of(Usuario(mutableSetOf(Role.ROLE_ADMIN)))).isPresent) {
             return
         }
 
@@ -63,12 +63,14 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
 
 
         val qtdAlunoPorGrupo = 4
-        val qtdGrupo = 50
+        val qtdGrupo = 100
 
         val senhaPadrao = BCryptPasswordEncoder().encode("senha")
 
         val grupoList = mutableListOf<Grupo>()
         val alunoList = mutableListOf<Aluno>()
+
+        var alunoIndex = 1
 
         for(a in 1..qtdGrupo) {
 
@@ -86,8 +88,9 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
             grupoList.add(grupo)
 
             for(b in 1..qtdAlunoPorGrupo) {
-                val aluno = Aluno("Aluno$a", "aluno$a@email.com.br",false,senhaPadrao,mutableSetOf(Role.ROLE_ALUNO), b.toLong(),grupo, mutableListOf<Grupo>(),turma)
+                val aluno = Aluno("Aluno$alunoIndex", "aluno$alunoIndex@email.com.br",false,senhaPadrao,mutableSetOf(Role.ROLE_ALUNO), (170000+alunoIndex).toLong(),grupo, mutableListOf<Grupo>(),turma)
                 alunoList.add(aluno)
+                alunoIndex++
             }
 
         }
