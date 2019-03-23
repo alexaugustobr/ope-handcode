@@ -62,8 +62,8 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
         turmaRepository.save(turmaASI)
 
 
-        val qtdAlunoPorGrupo = 5
-        val qtdGrupo = 100
+        val qtdAlunoPorGrupo = 4
+        val qtdGrupo = 50
 
         val senhaPadrao = BCryptPasswordEncoder().encode("senha")
 
@@ -75,7 +75,7 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
             val grupo : Grupo
             val turma : Turma
 
-            if (a <= 50) {
+            if (a <= qtdGrupo/2) {
                 grupo = Grupo(nome = "Grupo$a", curso = ads, alunos = mutableListOf(), turma = turmaA, tema = "Sistema gerenciador de OPE", disciplina = ope2 )
                 turma = turmaA
             } else {
