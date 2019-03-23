@@ -49,7 +49,7 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
         disciplinaRepository.save(ope3)
         var ads = Curso("Analise de sistemas","ADS",4, disciplinaRepository.findAll())
         ads = cursoRepository.save(ads)
-        val ope4 = Disciplina(nome = "Oficina projeto empresa 3", sigla = "OPE4")
+        val ope4 = Disciplina(nome = "Oficina projeto empresa 4", sigla = "OPE4")
         disciplinaRepository.save(ope4)
         var si = Curso("Sistemas da Informação","SI",6, disciplinaRepository.findAll())
         si = cursoRepository.save(si)
