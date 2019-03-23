@@ -6,12 +6,9 @@ import br.com.ope.repository.*
 import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
+import org.springframework.data.domain.Example
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
-import java.math.BigDecimal
-import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.util.*
 
 @Component
 //@Profile(value = ["dev","default"])
@@ -32,9 +29,17 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
     fun iniciarBanco() {
         logger.info("Populando banco de com dados.")
 
-        if (!usuarioRepository.findAll().isEmpty()) {
+        if (!usuarioRepository.findOne(Example.of(Usuario(mutableSetOf(Role.ROLE_ADMIN)))).isPresent) {
             return
         }
+
+        val admin = Administrador(nome = "Administrador", email = "admin@email.com.br", senha = BCryptPasswordEncoder().encode("senha"), ativo = true, permissoes = mutableSetOf(Role.ROLE_ADMIN))
+        val yuri = Professor(nome = "Yuri", email = "yuri@email.com.br", senha = BCryptPasswordEncoder().encode("senha"), ativo = true, permissoes = mutableSetOf(Role.ROLE_PROFESSOR))
+        val professor = Professor(nome = "Professor Teste", email = "professor@email.com.br", senha = BCryptPasswordEncoder().encode("senha"), ativo = true, permissoes = mutableSetOf(Role.ROLE_PROFESSOR))
+
+        usuarioRepository.save(admin)
+        usuarioRepository.save(yuri)
+        usuarioRepository.save(professor)
 
         val ope1 = Disciplina(nome = "Oficina projeto empresa 1", sigla = "OPE1")
         disciplinaRepository.save(ope1)
@@ -44,111 +49,52 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
         disciplinaRepository.save(ope3)
         var ads = Curso("Analise de sistemas","ADS",4, disciplinaRepository.findAll())
         ads = cursoRepository.save(ads)
+        val ope4 = Disciplina(nome = "Oficina projeto empresa 3", sigla = "OPE4")
+        disciplinaRepository.save(ope4)
+        var si = Curso("Sistemas da Informação","SI",6, disciplinaRepository.findAll())
+        si = cursoRepository.save(si)
 
-        var turmaA = Turma("B",4,2018,ads, mutableListOf(),Turma.Periodo.NOITE,ope2)
+        var turmaA = Turma("A",2,2019,ads, mutableListOf(),Turma.Periodo.NOITE,ope1)
         turmaRepository.save(turmaA)
-        var turmaB2 = Turma("A",4,2018,ads, mutableListOf(),Turma.Periodo.MANHA,ope2)
-        turmaRepository.save(turmaB2)
-        var turmaB = Turma("A",3,2018,ads, mutableListOf(),Turma.Periodo.NOITE,ope1)
+        var turmaB = Turma("B",3,2019,ads, mutableListOf(),Turma.Periodo.MANHA,ope2)
         turmaRepository.save(turmaB)
-
-        val admin = Administrador(nome = "Administrador", email = "admin@email.com.br", senha = BCryptPasswordEncoder().encode("senha"), ativo = true, permissoes = mutableSetOf(Role.ROLE_ADMIN))
-        val yuri = Professor(nome = "Yuri", email = "yuri@email.com.br", senha = BCryptPasswordEncoder().encode("senha"), ativo = true, permissoes = mutableSetOf(Role.ROLE_PROFESSOR))
-        val fernando = Professor(nome = "Fernando", email = "fernando@email.com.br", senha = BCryptPasswordEncoder().encode("senha"), ativo = true, permissoes = mutableSetOf(Role.ROLE_PROFESSOR))
+        var turmaASI = Turma("A",4,2019,ads, mutableListOf(),Turma.Periodo.NOITE,ope3)
+        turmaRepository.save(turmaASI)
 
 
+        val qtdAlunoPorGrupo = 5
+        val qtdGrupo = 100
 
-        usuarioRepository.save(admin)
-        usuarioRepository.save(yuri)
-        usuarioRepository.save(fernando)
+        val senhaPadrao = BCryptPasswordEncoder().encode("senha")
+
+        val grupoList = mutableListOf<Grupo>()
+        val alunoList = mutableListOf<Aluno>()
+
+        for(a in 1..qtdGrupo) {
+
+            val grupo : Grupo
+            val turma : Turma
+
+            if (a <= 50) {
+                grupo = Grupo(nome = "Grupo$a", curso = ads, alunos = mutableListOf(), turma = turmaA, tema = "Sistema gerenciador de OPE", disciplina = ope2 )
+                turma = turmaA
+            } else {
+                grupo = Grupo(nome = "Grupo$a", curso = si, alunos = mutableListOf(), turma = turmaASI, tema = "Sistema gerenciador de OPE", disciplina = ope3 )
+                turma = turmaASI
+            }
+
+            grupoList.add(grupo)
+
+            for(b in 1..qtdAlunoPorGrupo) {
+                val aluno = Aluno("Aluno$a", "aluno$a@email.com.br",false,senhaPadrao,mutableSetOf(Role.ROLE_ALUNO), b.toLong(),grupo, mutableListOf<Grupo>(),turma)
+                alunoList.add(aluno)
+            }
+
+        }
+        grupoRepository.saveAll(grupoList)
+        alunoRepository.saveAll(alunoList)
 
 
-        val handcode = Grupo(nome = "Handcode", curso = ads, alunos = mutableListOf(), turma = turmaA, tema = "Sistema gerenciador de OPE", disciplina = ope2 )
-
-        grupoRepository.save(handcode)
-
-        val alan = Aluno(grupo= handcode, nome = "Alan Faraj", ra = 1, senha = BCryptPasswordEncoder().encode("senha"), email = "alan@email.com.br", ativo = true, permissoes = mutableSetOf(Role.ROLE_ALUNO), turma = turmaA)
-        val alex = Aluno(grupo= handcode, nome = "Alex Augusto (Javaboy)", ra = 1700072, senha = BCryptPasswordEncoder().encode("senha"), email = "java@email.com.br", ativo = true, permissoes = mutableSetOf(Role.ROLE_ALUNO), turma = turmaA)
-        val michael = Aluno(grupo= handcode, nome = "Michael da Silva de Souza", ra = 1700381, senha = BCryptPasswordEncoder().encode("senha"), email = "michael@email.com.br", ativo = true, permissoes = mutableSetOf(Role.ROLE_ALUNO), turma = turmaA)
-        val cicinth = Aluno(grupo= handcode, nome = " Cinthia Queiroz", ra = 1700693, senha = BCryptPasswordEncoder().encode("senha"), email = "cicinth@email.com.br", ativo = true, permissoes = mutableSetOf(Role.ROLE_ALUNO), turma = turmaA)
-        val mestre = Aluno(grupo= handcode, nome = "Fabio Aurelio Abe Nogueira", ra = 1700603, senha = BCryptPasswordEncoder().encode("senha"), email = "mestre@email.com.br", ativo = true, permissoes = mutableSetOf(Role.ROLE_ALUNO), turma = turmaA)
-        val gabs = Aluno(grupo= handcode, nome = "Gabriel Bueno", ra = 1601606, senha = BCryptPasswordEncoder().encode("senha"), email = "gabs@email.com.br", ativo = true, permissoes = mutableSetOf(Role.ROLE_ALUNO), turma = turmaA)
-        val russo = Aluno(grupo= handcode, nome = "Henrique Borges da Silva", ra = 1700054, senha = BCryptPasswordEncoder().encode("senha"), email = "russo@email.com.br", ativo = true, permissoes = mutableSetOf(Role.ROLE_ALUNO), turma = turmaA)
-        val diego = Aluno(grupo= handcode, nome = "Diego santos", ra = 1700677, senha = BCryptPasswordEncoder().encode("senha"), email = "digao@email.com.br", ativo = true, permissoes = mutableSetOf(Role.ROLE_ALUNO), turma = turmaA)
-
-        usuarioRepository.save(alan)
-        usuarioRepository.save(michael)
-        usuarioRepository.save(alex)
-        usuarioRepository.save(alan)
-        usuarioRepository.save(cicinth)
-        usuarioRepository.save(mestre)
-        usuarioRepository.save(gabs)
-        usuarioRepository.save(russo)
-        usuarioRepository.save(diego)
-
-
-        val aluno = Aluno(nome = "Aluno teste", ra = 123456, senha = BCryptPasswordEncoder().encode("impacta"), email = "aluno", ativo = true, permissoes = mutableSetOf(Role.ROLE_ALUNO), turma = turmaA)
-        usuarioRepository.save(aluno)
-
-        val rodolfo = Aluno(nome = "Rodolfo", ra = 1700047, senha = BCryptPasswordEncoder().encode("senha"), email = "rodolfo@email.com.br", ativo = true, permissoes = mutableSetOf(Role.ROLE_ALUNO), turma = turmaB)
-        usuarioRepository.save(rodolfo)
-
-        val grupo = Grupo(nome = "Grupo do Rodolfo", curso = ads, alunos = mutableListOf(rodolfo, aluno), turma = turmaB, tema = "Tema do Rodolfo", disciplina = ope1)
-
-        grupoRepository.save(grupo)
-
-        //val tarefa = Tarefa(Date(), Date(), 1, mutableListOf(), "Lista de entregaveis.", "Entrega de parte da documentacao", ope1, ads, turmaRepository.findAllByCurso_idOrderBySemestreDesc(ads.id
-        //        ?: UUID.randomUUID()))
-//
-        //tarefaRepository.save(tarefa)
-
-       // val evento = Evento(Date(), "Lista de entregaveis.", "Entrega de parte da documentacao", ope1, ads, turmaRepository.findAllByCurso_idOrderBySemestreDesc(ads.id
-       //         ?: UUID.randomUUID()), tarefa)
-
-        //eventoRepository.save(evento)
-
-        val atividades = mutableListOf<Tarefa>()
-        val futuro = LocalDateTime.now().plusDays(7)
-
-        val ontem = LocalDateTime.now().minusDays(1)
-
-        atividades.add(Tarefa(Date.from(ontem.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 1", "Entrega de parte da documentacao 1", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList()))
-        atividades.add(Tarefa(Date.from(ontem.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 2", "Entrega de parte da documentacao 2", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList()))
-        atividades.add(Tarefa(Date.from(ontem.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 3 e projeto 30%", "Entrega de parte da documentacao 3 e projeto", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList()))
-        atividades.add(Tarefa(Date.from(futuro.toInstant(ZoneOffset.UTC)), "Lista de entregaveis 4 e projeto 100%", "Entrega final", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA), Arrays.asList()))
-
-        tarefaRepository.saveAll(atividades)
-
-        val entregas = mutableListOf<Entrega>()
-
-        entregas.add(Entrega(handcode.disciplina!!, null, Entrega.Status.PENDENTE, atividades.get(2), handcode, mutableListOf()))
-
-        entregas.add(Entrega(handcode.disciplina!!, null, Entrega.Status.PENDENTE, atividades.get(3), handcode, mutableListOf()))
-
-        val arquivos : MutableList<Arquivo> = mutableListOf()
-
-        arquivos.add(Arquivo("teste1.pdf","pdf"))
-        arquivos.add(Arquivo("teste2.docx","docx"))
-
-        arquivoRepository.saveAll(arquivos)
-
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, atividades.get(0), handcode, arquivos, BigDecimal(5), yuri, "Faltou a segunda parte."))
-
-        entregas.add(Entrega(handcode.disciplina!!, Date(), Entrega.Status.REALIZADA, atividades.get(1), handcode, arquivos, yuri))
-
-        entregaRepository.saveAll(entregas)
-
-        val eventos = mutableListOf<Evento>()
-
-        val evento1 = Evento(Date(), "Evento", "Evento 1", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA))
-
-        eventos.add(evento1)
-
-        val evento2 = Evento(Date(), "Evento 2", "Evento 2", Arrays.asList(ope1), Arrays.asList(ads), Arrays.asList(turmaA))
-
-        eventos.add(evento2)
-
-        eventoRepository.saveAll(eventos)
 
         logger.info("Finalizado setup dos dados simulados no banco")
 

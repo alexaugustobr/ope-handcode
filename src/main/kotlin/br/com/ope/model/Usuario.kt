@@ -55,6 +55,10 @@ open class Usuario : AbstractModel, UserDetails {
 
     constructor(id: UUID?) : super(id)
 
+    constructor(permissoes : MutableSet<Role>) : super() {
+        this.permissoes = permissoes
+    }
+
     @JsonIgnore
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         val authorities = mutableSetOf<GrantedAuthority>()

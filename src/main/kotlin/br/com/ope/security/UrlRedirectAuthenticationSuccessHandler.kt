@@ -36,14 +36,11 @@ class UrlRedirectAuthenticationSuccessHandler(private var redirectStrategy : Def
     }
 
     private fun determineTargetUrl(authentication: Authentication): String {
-        return if (authentication.principal is Aluno) {
-            "/painel/aluno"
-        } else  if (authentication.principal is Professor) {
-            return "/painel/professor"
-        } else  if (authentication.principal is Administrador) {
-            return "/painel/admin"
-        } else {
-            return "/"
+        return when {
+            authentication.principal is Aluno -> "/painel/aluno"
+            authentication.principal is Professor -> "/painel/professor"
+            authentication.principal is Administrador -> "/painel/admin"
+            else -> "/"
         }
     }
 
