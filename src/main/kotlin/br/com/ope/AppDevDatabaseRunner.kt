@@ -58,7 +58,7 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
         turmaRepository.save(turmaA)
         var turmaB = Turma("B",3,2019,ads, mutableListOf(),Turma.Periodo.MANHA,ope2)
         turmaRepository.save(turmaB)
-        var turmaASI = Turma("A",4,2019,ads, mutableListOf(),Turma.Periodo.NOITE,ope3)
+        var turmaASI = Turma("A",4,2019,si, mutableListOf(),Turma.Periodo.NOITE,ope3)
         turmaRepository.save(turmaASI)
 
 
