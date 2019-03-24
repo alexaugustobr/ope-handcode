@@ -1,0 +1,28 @@
+<th:block xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          xmlns:th="http://www.thymeleaf.org"
+          layout:decorate="~{layout-painel-aluno}">
+
+    <div layout:fragment="conteudo">
+        <div class="content__inner content__inner--sm">
+
+            <header class="content__title">
+                <h1>Alterar senha</h1>
+            </header>
+
+            <div class="card">
+                <div class="card-body">
+                   <th:block th:replace="includes/usuarioAlunoSenhaForm :: usuarioAlunoSenhaForm(usuarioAlteracaoSenhaVO = ${usuarioAlteracaoSenhaVO})"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <th:block layout:fragment="javascript">
+        <script>
+
+        </script>
+
+    </th:block>
+
+</th:block>

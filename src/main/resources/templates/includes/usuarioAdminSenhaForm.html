@@ -1,21 +1,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<th:block th:fragment="professorForm">
-    <form th:action="${edicao} == true ? @{/painel/admin/professores/__${professor.id}__} : @{/painel/admin/professores/novo}" method="POST" th:object="${professor}">
+<th:block th:fragment="usuarioAdminSenhaForm">
+    <form th:action="@{/painel/admin/alterar-senha}" method="POST" th:object="${usuarioAlteracaoSenhaVO}">
         <div class="row">
             <div class="col-md-12 col-lg-4">
                 <div class="form-group">
-                    <input th:field="*{nome}" th:errorclass="is-invalid" type="text" class="form-control" placeholder="Nome" />
+                    <input th:field="*{senhaAtual}" th:errorclass="is-invalid" required type="password" class="form-control" placeholder="Senha atual" />
                     <div class="invalid-feedback">
-                        Coloque um nome.
+                        Senha atual está incorreta.
                     </div>
                     <i class="form-group__bar"></i>
                 </div>
             </div>
             <div class="col-md-12 col-lg-4">
                 <div class="form-group">
-                    <input th:field="*{email}" th:errorclass="is-invalid" type="email" class="form-control" placeholder="Email" />
+                    <input th:field="*{novaSenha}" th:errorclass="is-invalid" required type="password" class="form-control" placeholder="Nova senha" />
                     <div class="invalid-feedback">
-                        Coloque um email.
+                        Coloque uma senha nova valida.
                     </div>
                     <i class="form-group__bar"></i>
                 </div>
@@ -23,7 +23,6 @@
         </div>
         <div class="d-flex flex-row-reverse btn-row">
             <button type="submit" class="btn btn-success">Salvar</button>
-            <a href="/painel/admin/professores/" class="btn btn-outline-danger">Cancelar</a>
         </div>
     </form>
 </th:block>

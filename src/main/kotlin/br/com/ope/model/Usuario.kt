@@ -1,6 +1,7 @@
 package br.com.ope.model
 
 import br.com.ope.enumx.Role
+import br.com.ope.vo.UsuarioEdicaoVO
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -99,5 +100,22 @@ open class Usuario : AbstractModel, UserDetails {
     open fun getPainelUrl() = "painel"
 
     open fun getSenhaPadrao() = BCryptPasswordEncoder().encode("senha")
+
+    open fun parse(usuario: Usuario): Usuario {
+
+        this.email = usuario.email
+        this.nome = usuario.nome
+
+
+        return this
+    }
+
+    fun parse(usuario: UsuarioEdicaoVO): Usuario {
+
+        this.nome = usuario.nome
+        this.email = usuario.email
+
+        return this
+    }
 
 }

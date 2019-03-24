@@ -1,5 +1,6 @@
 package br.com.ope.controller
 
+import br.com.ope.enumx.Role
 import br.com.ope.model.Professor
 import br.com.ope.repository.ProfessorRepository
 import br.com.ope.vo.MensagemVO
@@ -40,6 +41,7 @@ class PainelAdminProfessoresController {
         if (bindingResult.hasErrors()) return novo(professor,bindingResult,model)
         professor.ativo = true
         professor.senha = professor.getSenhaPadrao()
+        professor.permissoes.add(Role.ROLE_PROFESSOR)
         professorRepository.save(professor)
         redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Professor salvo!","Sucesso!", MensagemVO.TipoMensagem.success ))
         return "redirect:/painel/admin/professores"
