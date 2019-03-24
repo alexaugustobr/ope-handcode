@@ -42,7 +42,7 @@
                             <li th:text="|Turma: ${grupo?.turma?.semestre}º${grupo?.turma?.letra} - ${grupo?.turma?.periodo?.nome}|">
                                 Turma: 3ºA - Manhã
                             </li>
-                            <li th:text="|Disciplina: ${grupo?.disciplina?.nome}|">Disciplina: OPE 1</li>
+                            <li th:text="|Disciplina: ${grupo?.turma?.disciplina?.nome}|">Disciplina: OPE 1</li>
                             <li th:text="|${grupo.tema}|">Tema: OPE</li>
                         </ul>
                         <span  th:if="${grupo.aguardando}" class="badge badge-pill badge-warning">Aguardando aprovação</span>

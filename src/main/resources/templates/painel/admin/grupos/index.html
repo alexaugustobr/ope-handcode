@@ -21,8 +21,8 @@
             <div th:each="grupo, i : ${grupos}" class="col-xl-2 col-lg-3 col-sm-4 col-6">
                 <div class="contacts__item">
                     <a th:href="@{/painel/admin/grupos/__${grupo.id}__}" class="contacts__img">
-                        <img th:if="${!#strings.isEmpty(grupo.logoHash)}" th:src="@{/publico/arquivos/__${grupo.logoHash}__}" alt="Logo">
-                        <img th:if="${#strings.isEmpty(grupo.logoHash)}" th:src="@{/img/group_empty.jpg}" alt="Logo">
+                        <img th:if="${!#strings.isEmpty(grupo.logoHash)}" style="height: 200px;width: 200px;" th:src="@{/publico/arquivos/__${grupo.logoHash}__}" alt="Logo">
+                        <img th:if="${#strings.isEmpty(grupo.logoHash)}" style="height: 200px;width: 200px;" th:src="@{/img/group_empty.jpg}" alt="Logo">
                     </a>
                     <div class="contacts__info">
                         <strong th:text="${grupo?.nome}">Cathy Shelton</strong>

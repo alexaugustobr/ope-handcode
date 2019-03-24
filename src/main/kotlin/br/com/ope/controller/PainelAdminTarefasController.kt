@@ -39,7 +39,7 @@ class PainelAdminTarefasController {
     @GetMapping("/novo")
     fun novo(model : Model, tarefa: Tarefa) : String {
         model.addAttribute("tarefa", tarefa)
-        model.addAttribute("turmas", turmaRepository.findAll())
+        //model.addAttribute("turmas", turmaRepository.findAll())
         model.addAttribute("disciplinas", disciplinaRepository.findAll())
         model.addAttribute("cursos", cursoRepository.findAll())
         return "painel/admin/tarefas/novo"
@@ -49,7 +49,10 @@ class PainelAdminTarefasController {
     fun novoSalvar(model: Model, @Valid tarefa : Tarefa, bindingResult: BindingResult, redirectAttributes: RedirectAttributes) : String {
 
         if (bindingResult.hasErrors()) return this.novo(model, tarefa)
-
+        tarefa.disciplinas = mutableListOf()
+        for (turma in tarefa.turmas) {
+            tarefa.disciplinas.add(turma.disciplina!!)
+        }
         tarefaService.criarNovaTarefaEGerarEntregas(tarefa)
 
         redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Tarefa salvo!","Sucesso!", MensagemVO.TipoMensagem.success ))
@@ -64,7 +67,14 @@ class PainelAdminTarefasController {
         if (!tarefa.isPresent) return redirectTarefaNaoEncontrado(model, redirectAttributes)
 
         model.addAttribute("tarefa", tarefa.get())
-        model.addAttribute("turmas", turmaRepository.findAll())
+
+        val cursoIdList = mutableListOf<UUID>()
+        for (turma in tarefa.get().turmas) {
+            cursoIdList.add(turma.curso!!.id!!)
+        }
+
+        model.addAttribute("turmas", turmaRepository.findAllByCurso_idIn(cursoIdList))
+
         model.addAttribute("disciplinas", disciplinaRepository.findAll())
         model.addAttribute("cursos", cursoRepository.findAll())
         return "painel/admin/tarefas/editar"
@@ -78,7 +88,13 @@ class PainelAdminTarefasController {
 
         if (bindingResult.hasErrors()) return "painel/admin/tarefas/editar"
 
-        tarefaRepository.save(tarefa.get().atualizar(tarefaEditado))
+        tarefa.get().atualizar(tarefaEditado)
+        tarefa.get().disciplinas = mutableListOf()
+        for (turma in tarefa.get().turmas) {
+            tarefa.get().disciplinas.add(turma.disciplina!!)
+        }
+
+        tarefaRepository.save(tarefa.get())
 
         redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Tarefa salvo!","Sucesso!", MensagemVO.TipoMensagem.success ))
         return "redirect:/painel/admin"

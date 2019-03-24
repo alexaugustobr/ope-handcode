@@ -71,7 +71,6 @@ class HomeController {
         }
 
         grupo.status = Grupo.Status.AGUARDANDO
-        grupo.disciplina = grupo.turma!!.disciplina!!
         grupoRepository.save(grupo)
 
         for (aluno in grupo.alunos) {

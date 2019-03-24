@@ -15,7 +15,8 @@ class Tarefa : Evento {
     fun getDataEntrega() = super.dataHora
 
     constructor() : super()
-    constructor(data: Date, descricao: String, titulo: String, disciplinas: MutableList<Disciplina>, cursos: MutableList<Curso>, turmas: MutableList<Turma>, entregas: MutableList<Entrega>) : super(data, descricao, titulo, disciplinas, cursos, turmas) {
+    constructor(data: Date, descricao: String, titulo: String, cursos: MutableList<Curso>, turmas: MutableList<Turma>, entregas: MutableList<Entrega>) :
+            super(data, descricao, titulo, cursos, turmas) {
         this.entregas = entregas
     }
 

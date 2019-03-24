@@ -18,16 +18,6 @@ class Grupo : AbstractModel {
     @JsonIgnore
     var curso : Curso? = null
 
-    @ManyToOne
-    @JoinColumn
-    @JsonIgnore
-    var disciplina : Disciplina? = null
-
-    @ManyToMany
-    @JoinTable
-    @JsonIgnore
-    var disciplinasAnteriores : MutableList<Disciplina> = mutableListOf()
-
     @OneToMany(mappedBy = "grupo")
     @JsonIgnore
     @Valid
@@ -46,6 +36,11 @@ class Grupo : AbstractModel {
     @JoinColumn
     var turma : Turma? = null
 
+    @ManyToMany
+    @JoinTable
+    @JsonIgnore
+    var turmasAnteriores : MutableList<Turma> = mutableListOf()
+
     @OneToMany(mappedBy = "grupo")
     var entregas : MutableList<Entrega> = mutableListOf()
 
@@ -56,14 +51,12 @@ class Grupo : AbstractModel {
                 curso: Curso?,
                 alunos: MutableList<Aluno> = mutableListOf(),
                 alunosRemovidos: MutableList<Aluno> = mutableListOf(),
-                disciplina: Disciplina? = null,
                 turma : Turma,
                 tema : String) : super(id) {
         this.nome = nome
         this.curso = curso
         this.alunos = alunos
         this.alunosRemovidos = alunosRemovidos
-        this.disciplina = disciplina
         this.turma = turma
         this.tema = tema
     }

@@ -51,10 +51,10 @@ class H2DbBaiscTest {
 
         Assert.assertFalse(disciplinaList.isEmpty())
 
-        grupoRepository.save(Grupo(nome = "grupo1",disciplina = disciplinaA, turma = turmaA, curso = cursoAds,alunos = mutableListOf<Aluno>(), alunosRemovidos = mutableListOf<Aluno>(), id = null, tema = "tema"))
-        grupoRepository.save(Grupo(nome = "grupo2",disciplina = disciplinaA, turma = turmaA, curso = cursoAds,alunos = mutableListOf<Aluno>(), alunosRemovidos = mutableListOf<Aluno>(), id = null, tema = "tema"))
+        grupoRepository.save(Grupo(nome = "grupo1", turma = turmaA, curso = cursoAds,alunos = mutableListOf<Aluno>(), alunosRemovidos = mutableListOf<Aluno>(), id = null, tema = "tema"))
+        grupoRepository.save(Grupo(nome = "grupo2", turma = turmaA, curso = cursoAds,alunos = mutableListOf<Aluno>(), alunosRemovidos = mutableListOf<Aluno>(), id = null, tema = "tema"))
 
-        Assert.assertFalse(grupoRepository.findAllByDisciplina_IdIn(Arrays.asList(disciplinaA.id, disciplinaB.id)).isEmpty())
+        Assert.assertFalse(grupoRepository.findAllByTurma_Disciplina_IdIn(Arrays.asList(disciplinaA.id, disciplinaB.id)).isEmpty())
 
 
     }

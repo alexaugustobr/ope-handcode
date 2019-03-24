@@ -1,5 +1,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="tarefaForm">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="token" />
     <form th:action="${edicao} == true ? @{/painel/admin/tarefas/__${tarefa.id}__} : @{/painel/admin/tarefas/novo}" method="POST" th:object="${tarefa}">
         <div class="row">
             <div class="col-md-6">
@@ -43,7 +44,7 @@
                 <div class="form-group">
                     <div class="select">
                         <label>Cursos:</label>
-                        <select  th:field="*{cursos}" th:errorclass="is-invalid" name="cursos" class="select2 select2-hidden-accessible" placeholder="Curso" multiple="multiple">
+                        <select required th:field="*{cursos}" th:errorclass="is-invalid" name="cursos" class="select2 select2-hidden-accessible js-cursos" placeholder="Curso" multiple="multiple">
                             <option th:each="curso : ${cursos}" th:value="${curso.id}" th:text="${curso.nome}"></option>
                         </select>
                         <div class="invalid-feedback">
@@ -57,24 +58,9 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <div class="select">
-                        <label>Disciplinas:</label>
-                        <select  th:field="*{disciplinas}" th:errorclass="is-invalid" name="disciplinas" class="select2 select2-hidden-accessible" placeholder="Disciplina" multiple="multiple">
-                            <option th:each="disciplina : ${disciplinas}" th:value="${disciplina.id}" th:text="${disciplina.nome}"></option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Disciplina é obrigatório.
-                        </div>
-                        <i class="form-group__bar"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <div class="select">
                         <label>Turmas:</label>
-                        <select  th:field="*{turmas}" th:errorclass="is-invalid" name="turmas" class="select2 select2-hidden-accessible" placeholder="Turma" multiple="multiple">
-                            <option th:each="turma : ${turmas}" th:value="${turma.id}" th:text="|${turma.semestre}º${turma.letra} - ${turma.curso.sigla} (${turma.periodo.nome}) - ${turma.ano}|"></option>
+                        <select required th:field="*{turmas}" th:errorclass="is-invalid" name="turmas" class="select2 select2-hidden-accessible js-turmas" placeholder="Turma" multiple="multiple">
+                            <option th:each="turma : ${turmas}" th:value="${turma.id}" th:text="|${turma.semestre}º${turma.letra} - ${turma?.curso?.sigla} (${turma?.periodo?.nome}) - ${turma?.ano}|"></option>
                         </select>
                         <div class="invalid-feedback">
                             Turma é obrigatório.

@@ -18,8 +18,8 @@ class Turma : AbstractModel {
     @ManyToOne
     @JoinColumn
     @NotNull
-    @JsonIgnore
     var curso : Curso? = null
+
     @OneToMany(mappedBy = "turma")
     @JsonIgnore
     var alunos: MutableList<Aluno> = mutableListOf()
@@ -57,6 +57,7 @@ class Turma : AbstractModel {
         this.ano = turma.ano
         this.curso = turma.curso
         this.periodo = turma.periodo
+        this.disciplina = turma.disciplina
         return this
     }
 

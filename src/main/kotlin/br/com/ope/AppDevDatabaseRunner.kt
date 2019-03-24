@@ -6,7 +6,6 @@ import br.com.ope.repository.*
 import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
-import org.springframework.data.domain.Example
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
 
@@ -29,7 +28,7 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
     fun iniciarBanco() {
         logger.info("Populando banco de com dados.")
 
-        if (usuarioRepository.findOne(Example.of(Usuario(mutableSetOf(Role.ROLE_ADMIN)))).isPresent) {
+        if (!usuarioRepository.findAll().isEmpty()) {
             return
         }
 
@@ -78,10 +77,10 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
             val turma : Turma
 
             if (a <= qtdGrupo/2) {
-                grupo = Grupo(nome = "Grupo$a", curso = ads, alunos = mutableListOf(), turma = turmaA, tema = "Sistema gerenciador de OPE", disciplina = ope2 )
+                grupo = Grupo(nome = "Grupo$a", curso = ads, alunos = mutableListOf(), turma = turmaA, tema = "Sistema gerenciador de OPE" )
                 turma = turmaA
             } else {
-                grupo = Grupo(nome = "Grupo$a", curso = si, alunos = mutableListOf(), turma = turmaASI, tema = "Sistema gerenciador de OPE", disciplina = ope3 )
+                grupo = Grupo(nome = "Grupo$a", curso = si, alunos = mutableListOf(), turma = turmaASI, tema = "Sistema gerenciador de OPE" )
                 turma = turmaASI
             }
 

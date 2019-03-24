@@ -33,13 +33,14 @@ open class Evento : AbstractModel {
     var arquivos: MutableList<Arquivo> = mutableListOf()
 
     constructor() : super()
-    constructor(dataHora: Date, descricao: String, titulo: String, disciplinas: MutableList<Disciplina>, cursos: MutableList<Curso>, turmas: MutableList<Turma>) : super() {
+    constructor(dataHora: Date, descricao: String, titulo: String, cursos: MutableList<Curso>, turmas: MutableList<Turma>) : super() {
         this.dataHora = dataHora
         this.descricao = descricao
         this.titulo = titulo
-        this.disciplinas = disciplinas
         this.cursos = cursos
         this.turmas = turmas
+        this.disciplinas = mutableListOf()
+
     }
 
     open fun atualizar(evento: Evento): Evento {
@@ -48,7 +49,7 @@ open class Evento : AbstractModel {
         this.titulo = evento.titulo
         this.cursos = evento.cursos
         this.turmas = evento.turmas
-        this.disciplinas = evento.disciplinas
+        this.disciplinas = mutableListOf()
         return this
     }
 

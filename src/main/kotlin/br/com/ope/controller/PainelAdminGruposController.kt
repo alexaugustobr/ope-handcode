@@ -111,7 +111,6 @@ class PainelAdminGruposController {
         alunoRepository.saveAll(alunosRemovidos)
 
         grupo.get().alunosRemovidos = alunosRemovidos
-        grupo.get().disciplina = grupo.get().turma!!.disciplina
         grupoRepository.save(grupo.get())
 
         redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Grupo recusado!","Sucesso!", MensagemVO.TipoMensagem.warning ))

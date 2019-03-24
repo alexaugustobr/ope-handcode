@@ -9,6 +9,6 @@ import java.util.*
 interface GrupoRepository : JpaRepository<Grupo, UUID> {
     fun findAllByAlunos_idIn(asList: MutableList<UUID?>): Any
     fun findAllByTurma_Tarefas(tarefa: Tarefa): Any
-    fun findAllByDisciplina_IdIn(disciplinas: MutableList<UUID>): MutableList<Grupo>
+    fun findAllByTurma_Disciplina_IdIn(disciplinas: MutableList<UUID>): MutableList<Grupo>
     fun findOneByAlunosIn(asList: List<Aluno>): Optional<Grupo>
 }

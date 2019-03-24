@@ -47,6 +47,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-12 col-lg-6">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <select th:field="*{disciplina}" th:errorclass="is-invalid" class="select2 select2-hidden-accessible" data-placeholder="Disciplina" tabindex="-1" aria-hidden="true">
+                                <option th:each="disciplina : ${disciplinas}" th:value="${disciplina.id}" th:text="${disciplina.nome}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="d-flex flex-row-reverse btn-row">
                 <button type="submit" class="btn btn-success">Salvar</button>
