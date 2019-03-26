@@ -27,6 +27,7 @@
                     <div class="contacts__info">
                         <strong th:text="${grupo?.nome}">Cathy Shelton</strong>
                         <small th:text="${grupo?.curso?.sigla}">curso</small>
+                        <small th:text="|${grupo?.turma?.semestre}º${grupo?.turma?.letra} (${grupo?.turma?.ano})|">turma e ano</small>
                     </div>
                     <p class="m-0 badge" th:classappend="|badge-${grupo?.status?.cor}|" th:text="${grupo?.status?.nome}">Aprovado</p>
                 </div>
