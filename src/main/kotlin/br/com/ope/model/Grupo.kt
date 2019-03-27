@@ -46,6 +46,8 @@ class Grupo : AbstractModel {
 
     constructor() : super()
 
+
+
     constructor(id: UUID? = null,
                 nome: String,
                 curso: Curso?,
@@ -59,6 +61,15 @@ class Grupo : AbstractModel {
         this.alunosRemovidos = alunosRemovidos
         this.turma = turma
         this.tema = tema
+    }
+
+    constructor(id: UUID?) : super(id)
+
+    constructor(id: UUID?, nome: String, status: Status, logoHash: UUID?, turma: Turma?) : super(id) {
+        this.nome = nome
+        this.status = status
+        this.logoHash = logoHash
+        this.turma = turma
     }
 
     enum class Status(val nome : String, val cor : String) {

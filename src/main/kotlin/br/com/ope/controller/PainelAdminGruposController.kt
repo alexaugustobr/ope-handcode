@@ -3,11 +3,10 @@ package br.com.ope.controller
 import br.com.ope.model.Aluno
 import br.com.ope.model.Entrega
 import br.com.ope.model.Grupo
-import br.com.ope.repository.AlunoRepository
-import br.com.ope.repository.EntregaRepository
-import br.com.ope.repository.GrupoRepository
-import br.com.ope.repository.TarefaRepository
+import br.com.ope.model.Turma
+import br.com.ope.repository.*
 import br.com.ope.service.MailServiceImpl
+import br.com.ope.vo.GrupoFiltroVO
 import br.com.ope.vo.MensagemVO
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.util.*
+import java.util.stream.Collectors
 
 @Controller
 @RequestMapping("/painel/admin/grupos")
@@ -27,18 +27,43 @@ class PainelAdminGruposController {
     val entregaRepository : EntregaRepository
     val alunoRepository : AlunoRepository
     val mailService: MailServiceImpl
+    val turmaRepository : TurmaRepository
+    val cursoRepository : CursoRepository
+    val grupoDAO : GrupoDAO
 
-    constructor(grupoRepository: GrupoRepository, tarefaRepository: TarefaRepository, entregaRepository: EntregaRepository, alunoRepository: AlunoRepository, mailService: MailServiceImpl) {
+    constructor(grupoRepository: GrupoRepository, tarefaRepository: TarefaRepository,
+                entregaRepository: EntregaRepository, alunoRepository: AlunoRepository,
+                mailService: MailServiceImpl, turmaRepository: TurmaRepository,
+                cursoRepository: CursoRepository, grupoDAO: GrupoDAO) {
         this.grupoRepository = grupoRepository
         this.tarefaRepository = tarefaRepository
         this.entregaRepository = entregaRepository
         this.alunoRepository = alunoRepository
         this.mailService = mailService
+        this.turmaRepository = turmaRepository
+        this.cursoRepository = cursoRepository
+        this.grupoDAO = grupoDAO
     }
 
     @GetMapping
-    fun index(model : Model) : String {
-        model.addAttribute("grupos", grupoRepository.findAll())
+    fun index(model : Model, grupoFiltroVO: GrupoFiltroVO) : String {
+
+
+        val periodos : List<Turma.Periodo> = mutableListOf()
+        val turmas = turmaRepository.findAll()
+        val anos = turmas.stream().map { turma -> turma.ano }.collect(Collectors.toSet())
+        val cursos = cursoRepository.findAll()
+        val grupos = grupoDAO.filtrar(grupoFiltroVO)
+        val statuses = Grupo.Status.values()
+
+        model.addAttribute("grupos", grupos)
+        model.addAttribute("filtroVO", grupoFiltroVO)
+        model.addAttribute("anos", anos)
+        model.addAttribute("periodos", periodos)
+        model.addAttribute("turmas", turmas)
+        model.addAttribute("cursos", cursos)
+        model.addAttribute("statuses", statuses)
+
         return "painel/admin/grupos/index"
     }
 

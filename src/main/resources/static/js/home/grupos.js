@@ -31,7 +31,7 @@ function carregarOptionsCurso(selectContainer, cursoId){
 
     resposta.done(function(data) {
         $.each( data, function( key, turma ) {
-            selectContainer.append(`<option value="`+turma.id+`">`+turma.semestre+` - `+turma.letra+` (`+turma.periodo+`)</option>`)
+            selectContainer.append(`<option value="`+turma.id+`">`+turma.semestre+` - `+turma.letra+` (`+turma.ano+`)</option>`)
         });
     });
 

@@ -5,7 +5,7 @@
     <div layout:fragment="conteudo">
         <header class="content__title">
             <h1>Grupos</h1>
-            <div class="actions">
+            <!--<div class="actions">
                 <div class="dropdown actions__item">
                     <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -15,8 +15,72 @@
                         <a th:href="@{/painel/admin/grupos}" class="dropdown-item">Todos</a>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </header>
+
+        <div class="card">
+            <div class="card-body">
+                <form th:action="@{/painel/admin/grupos}" method="GET" th:object="${filtroVO}">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-4">
+                            <div class="form-group">
+                                <input th:field="*{nomeGrupo}" th:errorclass="is-invalid" type="text" class="form-control" placeholder="Nome do grupo" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <select multiple="multiple" th:field="*{periodos}" th:errorclass="is-invalid" class="select2 select2-hidden-accessible" data-placeholder="Periodos" tabindex="-1" aria-hidden="true">
+                                        <option th:each="periodo : ${periodos}" th:value="${periodo}" th:text="${periodo.nome}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <select multiple="multiple" th:field="*{status}" th:errorclass="is-invalid" class="select2 select2-hidden-accessible" data-placeholder="Status" tabindex="-1" aria-hidden="true">
+                                        <option th:each="status : ${statuses}" th:value="${status}" th:text="${status.nome}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <select  th:field="*{ano}" th:errorclass="is-invalid" class="select2 select2-hidden-accessible" data-placeholder="Periodos" tabindex="-1" aria-hidden="true">
+                                        <option th:each="ano : ${anos}" th:value="${ano}" th:text="${ano}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <select multiple="multiple" th:field="*{cursos}" th:errorclass="is-invalid" class="select2 select2-hidden-accessible" data-placeholder="Cursos" tabindex="-1" aria-hidden="true">
+                                        <option th:each="curso : ${cursos}" th:value="${curso.id}" th:text="${curso.nome}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="form-group">
+                                <div class="select">
+                                    <select th:field="*{turmas}" th:errorclass="is-invalid" name="turmas" class="select2 select2-hidden-accessible js-turmas" data-placeholder="Turmas" multiple="multiple">
+                                        <option th:each="turma : ${turmas}" th:value="${turma.id}" th:text="|${turma.semestre}º${turma.letra} - ${turma?.curso?.sigla} (${turma?.periodo?.nome}) - ${turma?.ano}|"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row-reverse btn-row">
+                        <button class="btn btn-primary btn--icon-text"><i class="zmdi zmdi-search"></i>Buscar</button>
+                        <a th:href="@{/painel/admin/grupos}" class="btn btn-secondary">Limpar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div class="contacts row">
             <div th:each="grupo, i : ${grupos}" class="col-xl-2 col-lg-3 col-sm-4 col-6">
                 <div class="contacts__item">
@@ -26,7 +90,7 @@
                     </a>
                     <div class="contacts__info">
                         <strong th:text="${grupo?.nome}">Cathy Shelton</strong>
-                        <small th:text="${grupo?.curso?.sigla}">curso</small>
+                        <small th:text="${grupo?.turma?.curso?.sigla}">curso</small>
                         <small th:text="|${grupo?.turma?.semestre}º${grupo?.turma?.letra} (${grupo?.turma?.ano})|">turma e ano</small>
                     </div>
                     <p class="m-0 badge" th:classappend="|badge-${grupo?.status?.cor}|" th:text="${grupo?.status?.nome}">Aprovado</p>
@@ -37,10 +101,8 @@
     </div>
 
     <th:block layout:fragment="javascript">
-        <script>
-
+        <script th:src="@{/js/admin/grupos/index.js}">
         </script>
-
     </th:block>
 
 </th:block>

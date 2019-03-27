@@ -35,7 +35,6 @@ class ArquivoRestController {
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
                     .body(file)
         } catch (e : Exception) {
-            e.printStackTrace()
             return ResponseEntity.notFound().build()
         }
     }

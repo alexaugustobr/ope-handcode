@@ -42,7 +42,16 @@ class Turma : AbstractModel {
     constructor() : super()
 
     constructor(id: UUID?) : super(id)
-    constructor(letra: String, semestre: Int, ano: Int, curso: Curso?, alunos: MutableList<Aluno>, periodo: Periodo?, disciplina : Disciplina) : super() {
+
+    constructor(id: UUID?, letra: String, semestre: Int, ano: Int, curso: Curso?) : super(id) {
+        this.letra = letra
+        this.semestre = semestre
+        this.ano = ano
+        this.curso = curso
+    }
+
+    constructor(letra: String, semestre: Int, ano: Int, curso: Curso?,
+                alunos: MutableList<Aluno>, periodo: Periodo?, disciplina : Disciplina) : super() {
         this.letra = letra
         this.semestre = semestre
         this.ano = ano
