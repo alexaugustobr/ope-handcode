@@ -29,6 +29,7 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
         logger.info("Populando banco de com dados.")
 
         if (!usuarioRepository.findAll().isEmpty()) {
+            logger.info("Base já esta populada.")
             return
         }
 
