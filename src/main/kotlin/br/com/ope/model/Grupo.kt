@@ -44,6 +44,12 @@ class Grupo : AbstractModel {
     @OneToMany(mappedBy = "grupo")
     var entregas : MutableList<Entrega> = mutableListOf()
 
+    @JoinColumn(name = "USUARIO_EXCLUSAO_ID", referencedColumnName = "ID", foreignKey = ForeignKey(name = "FK_USUARIO_EXCLUSAO_ID"), table = "USUARIO")
+    var usuarioExclusaoId : Long? = null
+
+    @JoinColumn(name = "USUARIO_CRIACAO_ID", referencedColumnName = "ID", foreignKey = ForeignKey(name = "FK_USUARIO_CRIACAO_ID"), table = "USUARIO")
+    var usuarioCriacaoId : Long? = null
+
     constructor() : super()
 
 
