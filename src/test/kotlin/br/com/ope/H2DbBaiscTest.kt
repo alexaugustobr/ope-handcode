@@ -6,6 +6,7 @@ import br.com.ope.repository.DisciplinaRepository
 import br.com.ope.repository.GrupoRepository
 import br.com.ope.repository.TurmaRepository
 import org.junit.Assert
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,6 +22,7 @@ import javax.transaction.Transactional
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @Transactional
+@Ignore
 //@PropertySource("src/test/resources/application-pgtest.properties")
 class H2DbBaiscTest {
 
