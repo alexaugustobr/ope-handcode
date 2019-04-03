@@ -12,9 +12,8 @@ class Tarefa : Evento {
     @JsonIgnore
     var entregas : MutableList<Entrega> = mutableListOf()
 
-    fun getDataEntrega() = super.dataHora
-
     constructor() : super()
+
     constructor(data: Date, descricao: String, titulo: String, cursos: MutableList<Curso>, turmas: MutableList<Turma>, entregas: MutableList<Entrega>) :
             super(data, descricao, titulo, cursos, turmas) {
         this.entregas = entregas
@@ -25,6 +24,5 @@ class Tarefa : Evento {
         this.entregas = evento.entregas
         return this
     }
-
 
 }

@@ -31,7 +31,7 @@
                                 <p>
                                     <span th:text="|Lançada em: ${#dates.format(tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|" ></span>
                                     <br>
-                                    <span th:text="|Entregar em: ${#dates.format(tarefa.dataEntrega, 'dd-MM-yyyy HH:mm')}|"></span>
+                                    <span th:text="|Entregar em: ${#dates.format(tarefa.dataHora, 'dd-MM-yyyy HH:mm')}|"></span>
                                 </p>
                             </div>
                             <h5 class="mb-2 card-title">Descrição:</h5>
@@ -149,7 +149,7 @@
                                     <p>
                                         <span th:text="|Lançada em: ${#dates.format(tarefa.dataCriacao, 'dd-MM-yyyy HH:mm')}|" ></span>
                                         <br>
-                                        <span th:text="|Entregar em: ${#dates.format(tarefa.dataEntrega, 'dd-MM-yyyy HH:mm')}|"></span>
+                                        <span th:text="|Entregar em: ${#dates.format(tarefa.dataHora, 'dd-MM-yyyy HH:mm')}|"></span>
                                     </p>
                                 </div>
                                 <h5 class="mb-2 card-title">Descrição:</h5>
