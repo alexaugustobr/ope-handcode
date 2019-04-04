@@ -1,6 +1,7 @@
 package br.com.ope.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import io.swagger.annotations.ApiModelProperty
 import org.jetbrains.annotations.NotNull
 import java.util.*
 import javax.persistence.Entity
@@ -19,15 +20,17 @@ class Curso : DomainModel {
     var sigla : String = ""
 
     @NotNull
-    var semestres : Int = 4
+    var semestres : Int = 0
 
     @ManyToMany
     @JoinTable
     @JsonIgnore
+    @ApiModelProperty(hidden=true)
     var disciplinas: MutableList<Disciplina> = mutableListOf()
 
     @OneToMany(mappedBy = "curso")
     @JsonIgnore
+    @ApiModelProperty(hidden=true)
     var turmas: MutableList<Turma> = mutableListOf()
 
     fun atualizar(curso: Curso): Curso {

@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 
 interface CursoRepository : JpaRepository<Curso, UUID> {
-    fun findAllByDataExclusaoIsNull(): MutableList<Curso>
+    fun findAllByExcluidoIsFalse(): MutableList<Curso>
     fun findAllByOrderByNome(): MutableList<Curso>
 }

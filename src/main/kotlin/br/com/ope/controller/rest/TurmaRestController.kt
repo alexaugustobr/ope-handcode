@@ -21,7 +21,7 @@ class TurmaRestController {
     @GetMapping
     fun turmas (@RequestParam("cursoId") cursoId : List<UUID>) :  MutableList<Turma> {
         if (cursoId.isEmpty()) return mutableListOf()
-        return turmaRepository.findAllByCurso_idInOrderBySemestreDesc(cursoId)
+        return turmaRepository.findAllByCurso_idInAndExcluidoIsFalseOrderBySemestreDesc(cursoId)
     }
 
 }

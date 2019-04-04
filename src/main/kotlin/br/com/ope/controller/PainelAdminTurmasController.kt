@@ -39,7 +39,7 @@ class PainelAdminTurmasController {
     fun novo(model: Model, turma : Turma) : String {
         model.addAttribute("turma", turma)
         model.addAttribute("periodos", Turma.Periodo.values())
-        model.addAttribute("cursos", cursoRepository.findAllByDataExclusaoIsNull())
+        model.addAttribute("cursos", cursoRepository.findAllByExcluidoIsFalse())
         model.addAttribute("disciplinas", disciplinaRepository.findAllByDataExclusaoIsNull())
         return "painel/admin/turmas/novo"
     }
@@ -62,7 +62,7 @@ class PainelAdminTurmasController {
         }
         model.addAttribute("turma", turma.get())
         model.addAttribute("periodos", Turma.Periodo.values())
-        model.addAttribute("cursos", cursoRepository.findAllByDataExclusaoIsNull())
+        model.addAttribute("cursos", cursoRepository.findAllByExcluidoIsFalse())
         model.addAttribute("disciplinas", disciplinaRepository.findAllByDataExclusaoIsNull())
         return "painel/admin/turmas/editar"
     }
@@ -70,7 +70,7 @@ class PainelAdminTurmasController {
     fun editarSalvar(redirectAttributes: RedirectAttributes , model : Model, @PathVariable id : UUID, @Valid turma : Turma, bindingResult: BindingResult) : String {
         if (bindingResult.hasErrors()){
             model.addAttribute("periodos", Turma.Periodo.values())
-            model.addAttribute("cursos", cursoRepository.findAllByDataExclusaoIsNull())
+            model.addAttribute("cursos", cursoRepository.findAllByExcluidoIsFalse())
             return "painel/admin/turmas/editar"
         }
         var turmaBanco = turmaRepository.findById(id)

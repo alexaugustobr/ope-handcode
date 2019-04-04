@@ -18,7 +18,7 @@ class CursosRestController {
 
     @GetMapping
     fun cursos () :  MutableList<Curso> {
-        return cursoRepository.findAllByDataExclusaoIsNull()
+        return cursoRepository.findAllByExcluidoIsFalse()
     }
 
 }

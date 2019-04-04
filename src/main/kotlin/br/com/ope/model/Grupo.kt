@@ -88,8 +88,12 @@ class Grupo : DomainModel {
             throw BusinessException("Aluno não está no grupo!")
         }
 
+        if (aluno.grupo != this) {
+            throw BusinessException("Aluno não está no grupo!")
+        }
+
         alunos.remove(aluno)
-        alunosRemovidos.add(aluno)
+        alunosRemovidos.remove(aluno)
         aluno.grupo = null
     }
 

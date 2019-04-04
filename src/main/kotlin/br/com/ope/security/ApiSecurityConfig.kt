@@ -86,7 +86,8 @@ class ApiSecurityConfig : WebSecurityConfigurerAdapter() {
                 .and()
                 .authorizeRequests()
                 .antMatchers(LOGIN_ENTRY_POINT).permitAll()
-                //.antMatchers(TOKEN_REFRESH_ENTRY_POINT).permitAll()
+                .antMatchers(HOME_API_URL).permitAll()
+                .antMatchers(TOKEN_REFRESH_ENTRY_POINT).permitAll()
                 .and()
                 .authorizeRequests()
                 .antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT).authenticated()
@@ -98,9 +99,10 @@ class ApiSecurityConfig : WebSecurityConfigurerAdapter() {
 
     companion object {
 
-        private val LOGIN_ENTRY_POINT = "/api/v1/login"
+        private val LOGIN_ENTRY_POINT = "/api/auth/v1/login"
+        private val HOME_API_URL = "/api/home/**"
         private val TOKEN_BASED_AUTH_ENTRY_POINT = "/api/**"
-        private val TOKEN_REFRESH_ENTRY_POINT = "/api/v1/token"
+        private val TOKEN_REFRESH_ENTRY_POINT = "/api/auth/v1/token"
     }
 
 }

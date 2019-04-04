@@ -29,7 +29,7 @@ class PainelAdminCursosController {
 
     @GetMapping
     fun index(model : Model) : String {
-        model.addAttribute("cursos", cursoRepository.findAllByDataExclusaoIsNull())
+        model.addAttribute("cursos", cursoRepository.findAllByExcluidoIsFalse())
         return "painel/admin/cursos/index"
     }
 

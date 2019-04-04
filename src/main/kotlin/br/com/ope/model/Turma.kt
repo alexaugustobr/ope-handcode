@@ -1,6 +1,7 @@
 package br.com.ope.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import io.swagger.annotations.ApiModelProperty
 import java.time.Year
 import java.util.*
 import javax.persistence.*
@@ -22,6 +23,7 @@ class Turma : DomainModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     @NotNull
+    @ApiModelProperty(hidden=true)
     var curso : Curso? = null
 
     @OneToMany(mappedBy = "turma")
@@ -85,5 +87,7 @@ class Turma : DomainModel {
         NOITE("Noite")
 
     }
+
+
 
 }
