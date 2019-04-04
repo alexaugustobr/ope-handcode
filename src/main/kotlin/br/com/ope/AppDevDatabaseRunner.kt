@@ -78,17 +78,17 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
             val turma : Turma
 
             if (a <= qtdGrupo/2) {
-                grupo = Grupo(nome = "Grupo$a", curso = ads, alunos = mutableListOf(), turma = turmaA, tema = "Sistema gerenciador de OPE" )
+                grupo = Grupo(nome = "Grupo$a", alunos = mutableListOf(), turma = turmaA, tema = "Sistema gerenciador de OPE" )
                 turma = turmaA
             } else {
-                grupo = Grupo(nome = "Grupo$a", curso = si, alunos = mutableListOf(), turma = turmaASI, tema = "Sistema gerenciador de OPE" )
+                grupo = Grupo(nome = "Grupo$a", alunos = mutableListOf(), turma = turmaASI, tema = "Sistema gerenciador de OPE" )
                 turma = turmaASI
             }
 
             grupoList.add(grupo)
 
             for(b in 1..qtdAlunoPorGrupo) {
-                val aluno = Aluno("Aluno$alunoIndex", "aluno$alunoIndex@email.com.br",false,senhaPadrao,mutableSetOf(Role.ROLE_ALUNO), (170000+alunoIndex).toLong(),grupo, mutableListOf<Grupo>(),turma)
+                val aluno = Aluno("Aluno$alunoIndex", "aluno$alunoIndex@email.com.br",false,senhaPadrao,mutableSetOf(Role.ROLE_ALUNO), (170000+alunoIndex).toLong(),grupo,turma)
                 alunoList.add(aluno)
                 alunoIndex++
             }

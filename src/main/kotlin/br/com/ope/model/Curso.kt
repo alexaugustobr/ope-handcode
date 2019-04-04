@@ -10,22 +10,21 @@ import javax.persistence.OneToMany
 import javax.validation.constraints.NotBlank
 
 @Entity
-class Curso : AbstractModel {
+class Curso : DomainModel {
 
     @NotBlank
     var nome : String = ""
+
     @NotBlank
     var sigla : String = ""
+
     @NotNull
     var semestres : Int = 4
+
     @ManyToMany
     @JoinTable
     @JsonIgnore
     var disciplinas: MutableList<Disciplina> = mutableListOf()
-
-    @OneToMany(mappedBy = "curso")
-    @JsonIgnore
-    var grupos: MutableList<Grupo> = mutableListOf()
 
     @OneToMany(mappedBy = "curso")
     @JsonIgnore

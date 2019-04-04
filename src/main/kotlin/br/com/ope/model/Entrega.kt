@@ -10,23 +10,26 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-class Entrega : AbstractModel {
+class Entrega : DomainModel {
 
     var dataEnvio : Date? = null
+
     var status : Status = Status.PENDENTE
+
     var nota : BigDecimal? = null
+
     @Column(columnDefinition = "TEXT")
     var comentario : String = ""
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     var professorAvaliador : Professor? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     var tarefa : Tarefa? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     @JsonIgnore
     var grupo : Grupo? = null
@@ -39,7 +42,7 @@ class Entrega : AbstractModel {
     @JoinTable
     var arquivosCorrecao: MutableList<Arquivo> = mutableListOf()
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     var disciplina: Disciplina? = null
 

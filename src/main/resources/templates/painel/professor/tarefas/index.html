@@ -57,7 +57,7 @@
                                     <h5 class="mb-3 mt-3 ">Descrição:</h5>
                                     <p th:text="|Grupo ${grupo.nome}|">Handcode</p>
                                     <ul class="icon-list">
-                                        <li th:text="|Curso: ${grupo?.curso?.nome}|">Curso: ADS</li>
+                                        <li th:text="|Curso: ${grupo?.turma?.curso?.nome}|">Curso: ADS</li>
                                         <li th:text="|Turma: ${grupo?.turma?.semestre}º${grupo?.turma?.letra} - ${grupo?.turma?.periodo?.nome}|">
                                             Turma: 3ºA - Manhã
                                         </li>
@@ -175,7 +175,7 @@
                                         <h5 class="mb-3 mt-3 ">Descrição:</h5>
                                         <p th:text="|Grupo ${grupo.nome}|">Handcode</p>
                                         <ul class="icon-list">
-                                            <li th:text="|Curso: ${grupo?.curso?.nome}|">Curso: ADS</li>
+                                            <li th:text="|Curso: ${grupo?.turma?.curso?.nome}|">Curso: ADS</li>
                                             <li th:text="|Turma: ${grupo?.turma?.semestre}º${grupo?.turma?.letra} - ${grupo?.turma?.periodo?.nome}|">
                                                 Turma: 3ºA - Manhã
                                             </li>

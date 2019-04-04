@@ -8,14 +8,18 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 @Entity
-class Turma : AbstractModel {
+class Turma : DomainModel {
+
     @NotBlank
     var letra : String = ""
+
     @NotNull
     var semestre : Int = 1
+
     @NotNull
     var ano : Int = Year.now().value
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     @NotNull
     var curso : Curso? = null
@@ -23,6 +27,7 @@ class Turma : AbstractModel {
     @OneToMany(mappedBy = "turma")
     @JsonIgnore
     var alunos: MutableList<Aluno> = mutableListOf()
+
     @Enumerated(EnumType.STRING)
     @NotNull
     var periodo : Periodo? = null
@@ -33,11 +38,14 @@ class Turma : AbstractModel {
 
     @ManyToMany(mappedBy = "turmas")
     @JsonIgnore
-    var tarefas: MutableList<Tarefa> = mutableListOf()
+    var eventos: MutableList<Evento> = mutableListOf()
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     var disciplina : Disciplina? = null
+
+    @ManyToMany(mappedBy = "turmas")
+    var tarefas : MutableList<Tarefa> = mutableListOf()
 
     constructor() : super()
 

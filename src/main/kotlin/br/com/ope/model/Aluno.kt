@@ -13,22 +13,18 @@ class Aluno : Usuario {
     @NotNull(message = "RA é obrigatório.")
     var ra : Long? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     @JsonIgnore
     var grupo : Grupo? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     var turma: Turma? = null
 
     var fotoHash : UUID? = null
 
     var telefone : String? = null
-
-    @ManyToMany(mappedBy = "alunosRemovidos")
-    @JsonIgnore
-    var gruposRemovidos : MutableList<Grupo> = mutableListOf()
 
     constructor() : super()
 
@@ -40,11 +36,9 @@ class Aluno : Usuario {
                 senha: String = "",
                 permissoes: MutableSet<Role> = mutableSetOf(),
                 ra: Long = 0,
-                grupo: Grupo? = null,
-                gruposRemovidos: MutableList<Grupo> = mutableListOf(), turma : Turma) : super(nome, email, ativo, senha, permissoes) {
+                grupo: Grupo? = null, turma : Turma) : super(nome, email, ativo, senha, permissoes) {
         this.ra = ra
         this.grupo = grupo
-        this.gruposRemovidos = gruposRemovidos
         this.turma = turma
     }
 

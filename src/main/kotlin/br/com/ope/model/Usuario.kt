@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank
 
 
 @Entity
-open class Usuario : AbstractModel, UserDetails {
+open class Usuario : DomainModel, UserDetails {
 
     @NotBlank
     var nome  : String = ""

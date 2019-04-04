@@ -7,7 +7,7 @@ import javax.persistence.ManyToMany
 import javax.persistence.OneToMany
 
 @Entity
-class Disciplina : AbstractModel {
+class Disciplina : DomainModel {
 
     var nome : String = ""
     var sigla  : String = ""

@@ -20,7 +20,7 @@
                     </a>
                     <div class="contacts__info">
                         <strong th:text="${grupo?.nome}">Cathy Shelton</strong>
-                        <small th:text="${grupo?.curso?.sigla}">curso</small>
+                        <small th:text="${grupo?.turma?.curso?.sigla}">curso</small>
                     </div>
                     <p class="m-0 badge" th:classappend="|badge-${grupo?.status?.cor}|" th:text="${grupo?.status?.nome}">Aprovado</p>
                 </div>

@@ -65,8 +65,8 @@
 										<div class="col-sm-6">
 											<div class="form-group">
 												<div class="select">
-													<select th:errorclass="is-invalid" th:field="*{curso}" class="form-control js-obrigatorio js-cursos" placeholder="Curso">
-														<option th:selected="${curso.id eq grupo?.curso?.id}" th:each="curso : ${cursos}" th:value="${curso.id}" th:text="${curso.nome}"></option>
+													<select  class="form-control js-obrigatorio js-cursos" placeholder="Curso">
+														<option th:selected="${curso.id eq grupo?.turma?.curso?.id}" th:each="curso : ${cursos}" th:value="${curso.id}" th:text="${curso.nome}"></option>
 													</select>
 													<div class="invalid-feedback">
 														Curso é obrigatório.

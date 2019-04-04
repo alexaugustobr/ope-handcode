@@ -7,7 +7,7 @@ import java.util.*
 import javax.persistence.*
 
 @MappedSuperclass
-abstract class AbstractModel : Serializable {
+abstract class DomainModel : Serializable {
 
     @JsonProperty
     fun getType()  = this.javaClass.simpleName
@@ -24,8 +24,14 @@ abstract class AbstractModel : Serializable {
 
     var dataExclusao : Date? = null
 
+    var dataUltimaAlteracao : Date? = null
+
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     var excluido : Boolean = false
+
+    var usuarioExclusaoId : Long? = null
+
+    var usuarioCriacaoId : Long? = null
 
     constructor()
 
@@ -37,7 +43,7 @@ abstract class AbstractModel : Serializable {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as AbstractModel
+        other as DomainModel
 
         if (id != other.id) return false
 

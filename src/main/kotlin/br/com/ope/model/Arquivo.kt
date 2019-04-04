@@ -6,7 +6,7 @@ import java.util.*
 import javax.persistence.Entity
 
 @Entity
-class Arquivo : AbstractModel{
+class Arquivo : DomainModel{
     var nome : String = ""
     var extensao : String = ""
     var mimeType : String = ""

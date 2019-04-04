@@ -1,5 +1,6 @@
 package br.com.ope.model
 
+import br.com.ope.exception.BusinessException
 import com.fasterxml.jackson.annotation.JsonIgnore
 import java.util.*
 import javax.persistence.*
@@ -7,16 +8,12 @@ import javax.validation.Valid
 import javax.validation.constraints.NotBlank
 
 @Entity
-class Grupo : AbstractModel {
+class Grupo : DomainModel {
 
     @NotBlank
     var nome : String = ""
     @NotBlank
     var tema : String = ""
-    @ManyToOne
-    @JoinColumn
-    @JsonIgnore
-    var curso : Curso? = null
 
     @OneToMany(mappedBy = "grupo")
     @JsonIgnore
@@ -25,6 +22,7 @@ class Grupo : AbstractModel {
 
     @ManyToMany
     @JoinTable
+    @JsonIgnore
     var alunosRemovidos : MutableList<Aluno> = mutableListOf()
 
     @Enumerated(EnumType.STRING)
@@ -32,7 +30,7 @@ class Grupo : AbstractModel {
 
     var logoHash : UUID? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     var turma : Turma? = null
 
@@ -44,25 +42,15 @@ class Grupo : AbstractModel {
     @OneToMany(mappedBy = "grupo")
     var entregas : MutableList<Entrega> = mutableListOf()
 
-    @JoinColumn(name = "USUARIO_EXCLUSAO_ID", referencedColumnName = "ID", foreignKey = ForeignKey(name = "FK_USUARIO_EXCLUSAO_ID"), table = "USUARIO")
-    var usuarioExclusaoId : Long? = null
-
-    @JoinColumn(name = "USUARIO_CRIACAO_ID", referencedColumnName = "ID", foreignKey = ForeignKey(name = "FK_USUARIO_CRIACAO_ID"), table = "USUARIO")
-    var usuarioCriacaoId : Long? = null
-
     constructor() : super()
-
-
 
     constructor(id: UUID? = null,
                 nome: String,
-                curso: Curso?,
                 alunos: MutableList<Aluno> = mutableListOf(),
                 alunosRemovidos: MutableList<Aluno> = mutableListOf(),
                 turma : Turma,
                 tema : String) : super(id) {
         this.nome = nome
-        this.curso = curso
         this.alunos = alunos
         this.alunosRemovidos = alunosRemovidos
         this.turma = turma
@@ -91,5 +79,18 @@ class Grupo : AbstractModel {
     fun isNotAprovado() = !isAprovado()
 
     fun isAguardando() = Status.AGUARDANDO == status
+
+    @Throws(BusinessException::class)
+    fun removerAluno(aluno: Aluno) {
+        //if is valido
+
+        if (!alunos.contains(aluno)) {
+            throw BusinessException("Aluno não está no grupo!")
+        }
+
+        alunos.remove(aluno)
+        alunosRemovidos.add(aluno)
+        aluno.grupo = null
+    }
 
 }

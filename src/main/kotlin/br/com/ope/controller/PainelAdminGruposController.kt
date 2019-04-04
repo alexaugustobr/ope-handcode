@@ -1,10 +1,12 @@
 package br.com.ope.controller
 
+import br.com.ope.exception.BusinessException
 import br.com.ope.model.Aluno
 import br.com.ope.model.Entrega
 import br.com.ope.model.Grupo
 import br.com.ope.model.Turma
 import br.com.ope.repository.*
+import br.com.ope.service.GrupoService
 import br.com.ope.service.MailServiceImpl
 import br.com.ope.vo.GrupoFiltroVO
 import br.com.ope.vo.MensagemVO
@@ -20,30 +22,17 @@ import java.util.stream.Collectors
 
 @Controller
 @RequestMapping("/painel/admin/grupos")
-class PainelAdminGruposController {
+class PainelAdminGruposController(val grupoRepository : GrupoRepository,
+                                  val tarefaRepository : TarefaRepository,
+                                  val entregaRepository : EntregaRepository,
+                                  val alunoRepository : AlunoRepository,
+                                  val mailService: MailServiceImpl,
+                                  val turmaRepository : TurmaRepository,
+                                  val cursoRepository : CursoRepository,
+                                  val grupoDAO : GrupoDAO,
+                                  val grupoService : GrupoService) {
 
-    val grupoRepository : GrupoRepository
-    val tarefaRepository : TarefaRepository
-    val entregaRepository : EntregaRepository
-    val alunoRepository : AlunoRepository
-    val mailService: MailServiceImpl
-    val turmaRepository : TurmaRepository
-    val cursoRepository : CursoRepository
-    val grupoDAO : GrupoDAO
 
-    constructor(grupoRepository: GrupoRepository, tarefaRepository: TarefaRepository,
-                entregaRepository: EntregaRepository, alunoRepository: AlunoRepository,
-                mailService: MailServiceImpl, turmaRepository: TurmaRepository,
-                cursoRepository: CursoRepository, grupoDAO: GrupoDAO) {
-        this.grupoRepository = grupoRepository
-        this.tarefaRepository = tarefaRepository
-        this.entregaRepository = entregaRepository
-        this.alunoRepository = alunoRepository
-        this.mailService = mailService
-        this.turmaRepository = turmaRepository
-        this.cursoRepository = cursoRepository
-        this.grupoDAO = grupoDAO
-    }
 
     @GetMapping
     fun index(model : Model, grupoFiltroVO: GrupoFiltroVO) : String {
@@ -143,19 +132,32 @@ class PainelAdminGruposController {
         return "redirect:/painel/admin/grupos/$id"
     }
 
-    @GetMapping("/{id}/remover-integrante/{alunoId}")
-    fun removerIntegrante(model : Model, @PathVariable id : UUID, @PathVariable alunoId : UUID, redirectAttributes: RedirectAttributes, @RequestParam(required = false) motivo : String?) : String {
+    @GetMapping("/{grupoId}/remover-integrante/{alunoId}")
+    fun removerIntegrante(model : Model, @PathVariable grupoId : UUID, @PathVariable alunoId : UUID, redirectAttributes: RedirectAttributes, @RequestParam(required = false) motivo : String?) : String {
 
-        val aluno = alunoRepository.findById(alunoId)
+
+        try {
+            grupoService.removerAlunoDoGrupo(alunoId,grupoId)
+            redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Aluno removido!","Sucesso!", MensagemVO.TipoMensagem.warning ))
+        } catch (e : BusinessException) {
+            e.printStackTrace()
+            redirectAttributes.addFlashAttribute("mensagem", MensagemVO(e.message ?: "","Erro!", MensagemVO.TipoMensagem.danger ))
+        } catch (e : Exception) {
+            e.printStackTrace()
+            redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Ocorreu um erro ao remover o aluno do grupo.","Erro!", MensagemVO.TipoMensagem.danger ))
+        }
+
+
+        /*val aluno = alunoRepository.findById(alunoId)
 
         if (!aluno.isPresent){
             redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Aluno nao encontrado!","Erro!", MensagemVO.TipoMensagem.danger ))
-            return "redirect:/painel/admin/grupos/$id"
+            return "redirect:/painel/admin/grupos/$grupoId"
         }
 
         val grupo = aluno.get().grupo!!
         aluno.get().grupo = null
-        aluno.get().gruposRemovidos.add(grupo)
+        //aluno.get().gruposRemovidos.add(grupo)
         alunoRepository.save(aluno.get())
         grupo.alunosRemovidos.add(aluno.get())
         grupoRepository.save(grupo)
@@ -163,8 +165,8 @@ class PainelAdminGruposController {
         //TODO ENVIAR EMAIL COM MOTIVO
 
         redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Aluno removido!","Sucesso!", MensagemVO.TipoMensagem.warning ))
-
-        return "redirect:/painel/admin/grupos/$id"
+        */
+        return "redirect:/painel/admin/grupos/$grupoId"
     }
 
 }

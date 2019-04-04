@@ -8,7 +8,7 @@ import javax.persistence.ManyToMany
 import javax.validation.constraints.NotNull
 
 @Entity
-open class Evento : AbstractModel {
+open class Evento : DomainModel {
 
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
     @NotNull
