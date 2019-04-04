@@ -22,13 +22,65 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 class SwaggerConfig {
 
     @Bean
-    fun apiV2(): Docket {
+    fun apiV2Home(): Docket {
         return Docket(DocumentationType.SWAGGER_2)
                 .host(url)
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController::class.java))
                 .paths(regex("/api/home/.*")).build()
                 .apiInfo(apiInfo())
+                .groupName("API V1 Home(pública)")
+                .globalResponseMessage(RequestMethod.GET, mutableListOf<ResponseMessage>(
+                        ResponseMessageBuilder()
+                                .code(404)
+                                .message("Não foram encontrados resultados para sua busca.")
+                                .build(),
+                        ResponseMessageBuilder()
+                                .code(204)
+                                .message("Resposta sem conteudo.")
+                                .build(),
+                        ResponseMessageBuilder()
+                                .code(401)
+                                .message("Token inválido.")
+                                .build(),
+                        ResponseMessageBuilder()
+                                .code(403)
+                                .message("Falha de autenticação.")
+                                .build()
+                ))
+                .globalResponseMessage(RequestMethod.POST, mutableListOf<ResponseMessage>(
+                        ResponseMessageBuilder()
+                                .code(201)
+                                .message("A API retorna uma mensagem de sucesso e o id do objeto cadastrado.")
+                                .build(),
+                        ResponseMessageBuilder()
+                                .code(200)
+                                .message("A API retorna uma mensagem de sucesso.")
+                                .build(),
+                        ResponseMessageBuilder()
+                                .code(400)
+                                .message("A API retorna a causa do erro junto com o campo e o objeto incorretos.")
+                                .build(),
+                        ResponseMessageBuilder()
+                                .code(401)
+                                .message("Token inválido.")
+                                .build(),
+                        ResponseMessageBuilder()
+                                .code(403)
+                                .message("Falha de autenticação.")
+                                .build()
+                ))
+    }
+
+    @Bean
+    fun apiV2Admin(): Docket {
+        return Docket(DocumentationType.SWAGGER_2)
+                .host(url)
+                .select()
+                .apis(RequestHandlerSelectors.withClassAnnotation(RestController::class.java))
+                .paths(regex("/api/v1/.*")).build()
+                .apiInfo(apiInfo())
+                .groupName("API V1 Administrador")
                 .globalResponseMessage(RequestMethod.GET, mutableListOf<ResponseMessage>(
                         ResponseMessageBuilder()
                                 .code(404)
@@ -77,7 +129,7 @@ class SwaggerConfig {
                                 .modelRef(ModelRef("string"))
                                 .required(true)
                                 .build()
-                        ))
+                ))
     }
 
     private fun apiInfo(): ApiInfo {

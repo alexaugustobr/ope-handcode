@@ -1,24 +1,23 @@
 package br.com.ope.controller
 
-import br.com.ope.enumx.Role
 import br.com.ope.model.Aluno
 import br.com.ope.model.Grupo
 import br.com.ope.model.Turma
 import br.com.ope.repository.AlunoRepository
 import br.com.ope.repository.CursoRepository
 import br.com.ope.repository.GrupoRepository
+import br.com.ope.service.GrupoService
 import br.com.ope.validators.GrupoNovoValidator
 import br.com.ope.vo.MensagemVO
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.validation.BindException
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.util.*
-import javax.validation.Valid
 
 @Controller
 class HomeController {
@@ -27,12 +26,14 @@ class HomeController {
     val grupoRepository : GrupoRepository
     val alunoRepository : AlunoRepository
     val grupoNovoValidator : GrupoNovoValidator
+    val grupoService : GrupoService
 
-    constructor(cursoRepository: CursoRepository, grupoRepository: GrupoRepository, alunoRepository: AlunoRepository, grupoNovoValidator: GrupoNovoValidator) {
+    constructor(cursoRepository: CursoRepository, grupoRepository: GrupoRepository, alunoRepository: AlunoRepository, grupoNovoValidator: GrupoNovoValidator, grupoService: GrupoService) {
         this.cursoRepository = cursoRepository
         this.grupoRepository = grupoRepository
         this.alunoRepository = alunoRepository
         this.grupoNovoValidator = grupoNovoValidator
+        this.grupoService = grupoService
     }
 
     @GetMapping("/")
@@ -62,35 +63,22 @@ class HomeController {
     }
 
     @PostMapping("/grupos")
-    fun gruposSalvar(model : Model, redirectAttributes: RedirectAttributes, @Valid grupo: Grupo, bindingResult: BindingResult) : String {
+    fun gruposSalvar(model : Model, redirectAttributes: RedirectAttributes, grupo: Grupo, bindingResult : BindingResult) : String {
 
-        grupoNovoValidator.validate(grupo, bindingResult)
-
-        if (bindingResult.hasErrors()) {
+        try {
+            grupoService.cadastrarGrupo(grupo)
+            redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Aguarde a aprovação do administrador por email, para poder acessar a plataforma!","Grupo salvo!", MensagemVO.TipoMensagem.success ))
+        } catch (e : BindException) {
+            e.printStackTrace()
+            for (allError in e.allErrors) {
+                bindingResult.addError(allError)
+            }
             return this.grupos(model,grupo)
+        } catch (e : Exception) {
+            e.printStackTrace()
+            redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Ocorreu um erro interno.","Erro!", MensagemVO.TipoMensagem.danger ))
         }
 
-        grupo.status = Grupo.Status.AGUARDANDO
-        grupoRepository.save(grupo)
-
-        for (aluno in grupo.alunos) {
-
-            //TODO EDITA OU CRIA UM NOVO
-            val alunoEncontrado = alunoRepository.findOneByRa(aluno.ra!!).orElse(aluno)
-
-            alunoEncontrado.turma = grupo.turma
-            alunoEncontrado.grupo = grupo
-            alunoEncontrado.ativo = false
-            alunoEncontrado.email = aluno.email
-            alunoEncontrado.nome = aluno.nome
-            alunoEncontrado.telefone = aluno.telefone
-            alunoEncontrado.permissoes = mutableSetOf(Role.ROLE_ALUNO)
-            alunoEncontrado.senha = BCryptPasswordEncoder().encode("senha")
-            alunoRepository.save(alunoEncontrado)
-            println(alunoEncontrado.permissoes)
-        }
-
-        redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Aguarde a aprovação do administrador por email, para poder acessar a plataforma!","Grupo salvo!", MensagemVO.TipoMensagem.success ))
         return "redirect:/grupos"
     }
 

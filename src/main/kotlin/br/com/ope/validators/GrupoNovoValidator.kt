@@ -23,9 +23,11 @@ class GrupoNovoValidator : Validator {
 
     override fun validate(target: Any?, errors: Errors) {
 
-        val grupoValidado = target!! as Grupo
+        val grupo = target!! as Grupo
 
-        this.validarAlunos(grupoValidado, errors)
+        ValidatorUtil.validate(grupo, errors)
+
+        this.validarAlunos(grupo, errors)
 
     }
 

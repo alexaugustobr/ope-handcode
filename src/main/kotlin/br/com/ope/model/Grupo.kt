@@ -1,5 +1,6 @@
 package br.com.ope.model
 
+import br.com.ope.dto.v1.GrupoCadastroV1DTO
 import br.com.ope.exception.BusinessException
 import com.fasterxml.jackson.annotation.JsonIgnore
 import java.util.*
@@ -48,22 +49,28 @@ class Grupo : DomainModel {
                 nome: String,
                 alunos: MutableList<Aluno> = mutableListOf(),
                 alunosRemovidos: MutableList<Aluno> = mutableListOf(),
+                status: Status = Grupo.Status.AGUARDANDO,
                 turma : Turma,
-                tema : String) : super(id) {
+                logoHash: UUID? = null,
+                tema : String = "") : super(id) {
         this.nome = nome
         this.alunos = alunos
         this.alunosRemovidos = alunosRemovidos
         this.turma = turma
         this.tema = tema
+        this.status = status
+        this.logoHash = logoHash
     }
 
-    constructor(id: UUID?) : super(id)
+    constructor(id: UUID? = null) : super(id)
 
-    constructor(id: UUID?, nome: String, status: Status, logoHash: UUID?, turma: Turma?) : super(id) {
+    constructor(id: UUID? = null, nome: String, status: Status = Grupo.Status.AGUARDANDO, logoHash: UUID?, turma: Turma?, tema : String = "") : super(id) {
         this.nome = nome
         this.status = status
         this.logoHash = logoHash
         this.turma = turma
+        this.status = status
+        this.tema = tema
     }
 
     enum class Status(val nome : String, val cor : String) {
@@ -95,6 +102,25 @@ class Grupo : DomainModel {
         alunos.remove(aluno)
         alunosRemovidos.remove(aluno)
         aluno.grupo = null
+    }
+
+    companion object {
+        fun criarNovoGrupo(dto : GrupoCadastroV1DTO) : Grupo {
+            val alunos : MutableList<Aluno> = mutableListOf<Aluno>()
+
+            for (alunoDto in dto.alunos) {
+                alunos.add(Aluno.criarNovo(alunoDto, dto))
+            }
+
+            val grupo = Grupo(
+                    nome = dto.nome,
+                    turma = Turma(dto.turma),
+                    tema = dto.tema,
+                    logoHash = dto.logoHash,
+                    alunos = alunos
+            )
+            return grupo
+        }
     }
 
 }

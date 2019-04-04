@@ -39,7 +39,7 @@ open class Usuario : DomainModel, UserDetails {
         this.nome = nome
     }
 
-    constructor(nome: String, email: String, ativo: Boolean, senha: String, permissoes: MutableSet<Role>) : super() {
+    constructor(nome: String, email: String, ativo: Boolean = false, senha: String = "", permissoes: MutableSet<Role> = mutableSetOf()) : super() {
         this.nome = nome
         this.email = email
         this.ativo = ativo

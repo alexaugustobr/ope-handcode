@@ -88,7 +88,7 @@ class AppDevDatabaseRunner(val cursoRepository: CursoRepository,
             grupoList.add(grupo)
 
             for(b in 1..qtdAlunoPorGrupo) {
-                val aluno = Aluno("Aluno$alunoIndex", "aluno$alunoIndex@email.com.br",false,senhaPadrao,mutableSetOf(Role.ROLE_ALUNO), (170000+alunoIndex).toLong(),grupo,turma)
+                val aluno = Aluno("Aluno$alunoIndex", "aluno$alunoIndex@email.com.br",false, senhaPadrao, "", mutableSetOf(Role.ROLE_ALUNO), (170000+alunoIndex).toLong(),grupo,turma)
                 alunoList.add(aluno)
                 alunoIndex++
             }
