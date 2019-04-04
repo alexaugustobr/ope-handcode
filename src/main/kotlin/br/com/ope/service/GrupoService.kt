@@ -17,6 +17,7 @@ class GrupoService(val grupoRepository: GrupoRepository, val alunoRepository: Al
         grupo.removerAluno(aluno)
         grupoRepository.save(grupo)
         alunoRepository.save(aluno)
+        //TODO ENVIAR EMAIL COM MOTIVO
     }
 
 }

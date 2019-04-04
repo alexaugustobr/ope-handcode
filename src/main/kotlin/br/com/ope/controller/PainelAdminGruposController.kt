@@ -147,25 +147,6 @@ class PainelAdminGruposController(val grupoRepository : GrupoRepository,
             redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Ocorreu um erro ao remover o aluno do grupo.","Erro!", MensagemVO.TipoMensagem.danger ))
         }
 
-
-        /*val aluno = alunoRepository.findById(alunoId)
-
-        if (!aluno.isPresent){
-            redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Aluno nao encontrado!","Erro!", MensagemVO.TipoMensagem.danger ))
-            return "redirect:/painel/admin/grupos/$grupoId"
-        }
-
-        val grupo = aluno.get().grupo!!
-        aluno.get().grupo = null
-        //aluno.get().gruposRemovidos.add(grupo)
-        alunoRepository.save(aluno.get())
-        grupo.alunosRemovidos.add(aluno.get())
-        grupoRepository.save(grupo)
-
-        //TODO ENVIAR EMAIL COM MOTIVO
-
-        redirectAttributes.addFlashAttribute("mensagem", MensagemVO("Aluno removido!","Sucesso!", MensagemVO.TipoMensagem.warning ))
-        */
         return "redirect:/painel/admin/grupos/$grupoId"
     }
 
