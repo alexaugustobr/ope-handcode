@@ -11,7 +11,7 @@ import java.util.*
 class GrupoService(private val grupoRepository: GrupoRepository, private val alunoRepository: AlunoRepository)  : DomainService() {
 
     @Throws(EntidadeNaoEncontradaException::class, BusinessException::class)
-    fun removerAlunoDoGrupo(alunoId : UUID, grupoId : UUID, motivo: String? = "") {
+    fun removerAlunoDoGrupo(alunoId : UUID, grupoId : UUID, motivo: String = "") {
         val grupo = grupoRepository.findById(grupoId).orElseThrow { EntidadeNaoEncontradaException() }
         val aluno = alunoRepository.findById(alunoId).orElseThrow { EntidadeNaoEncontradaException() }
         grupo.removerAluno(aluno)
