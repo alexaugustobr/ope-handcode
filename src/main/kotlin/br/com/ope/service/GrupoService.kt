@@ -54,9 +54,7 @@ class GrupoService(private val grupoRepository: GrupoRepository,
         return grupo
     }
 
-
-
-    @Throws(EntidadeNaoEncontradaException::class, BusinessException::class)
+    @Throws(EntidadeNaoEncontradaException::class, BusinessException::class, BindException::class)
     fun cadastrarGrupo(grupoDTO : GrupoCadastroV1DTO) : GrupoCadastroV1DTO {
         val grupo = GrupoCadastroV1DTO.fromDomain(cadastrarGrupo(Grupo.criarNovoGrupo(grupoDTO)))
         return grupo

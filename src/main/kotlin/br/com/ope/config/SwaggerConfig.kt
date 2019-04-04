@@ -29,7 +29,7 @@ class SwaggerConfig {
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController::class.java))
                 .paths(regex("/api/home/.*")).build()
                 .apiInfo(apiInfo())
-                .groupName("API V1 Home(pública)")
+                .groupName("API-V1-Home(publica)")
                 .globalResponseMessage(RequestMethod.GET, mutableListOf<ResponseMessage>(
                         ResponseMessageBuilder()
                                 .code(404)
@@ -80,7 +80,7 @@ class SwaggerConfig {
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController::class.java))
                 .paths(regex("/api/v1/.*")).build()
                 .apiInfo(apiInfo())
-                .groupName("API V1 Administrador")
+                .groupName("API-V1-Administrador")
                 .globalResponseMessage(RequestMethod.GET, mutableListOf<ResponseMessage>(
                         ResponseMessageBuilder()
                                 .code(404)

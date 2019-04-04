@@ -61,7 +61,7 @@ class GrupoNovoValidator : Validator {
 
                 val alunoEncontrado = alunoRepository.findOneByEmail(email) //TODO JOIN GRUPO
                 if (alunoEncontrado.isPresent && alunoEncontrado.get().grupo != null) {
-                    errors.rejectValue("email", "exists", "Aluno do está ativo em outro grupo.")
+                    errors.rejectValue("email", "exists", "Já existe um aluno utilizando este email.")
                 }
 
                 if (emailList.contains(email)) {

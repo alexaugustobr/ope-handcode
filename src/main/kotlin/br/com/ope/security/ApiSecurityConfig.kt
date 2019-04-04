@@ -57,7 +57,7 @@ class ApiSecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     private fun buildJwtTokenAuthenticationProcessingFilter(): JwtTokenAuthenticationFilter {
-        val pathsToSkip = Arrays.asList(TOKEN_REFRESH_ENTRY_POINT, LOGIN_ENTRY_POINT)
+        val pathsToSkip = Arrays.asList(TOKEN_REFRESH_ENTRY_POINT, LOGIN_ENTRY_POINT, HOME_API_URL)
         val matcher = SkipPathRequestMatcher(pathsToSkip, TOKEN_BASED_AUTH_ENTRY_POINT)
         val filter = JwtTokenAuthenticationFilter(failureHandler!!, tokenExtractor!!, matcher)
         filter.setAuthenticationManager(this.authenticationManager)
@@ -85,9 +85,7 @@ class ApiSecurityConfig : WebSecurityConfigurerAdapter() {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(LOGIN_ENTRY_POINT).permitAll()
-                .antMatchers(HOME_API_URL).permitAll()
-                .antMatchers(TOKEN_REFRESH_ENTRY_POINT).permitAll()
+                .antMatchers(LOGIN_ENTRY_POINT, HOME_API_URL, TOKEN_REFRESH_ENTRY_POINT).permitAll()
                 .and()
                 .authorizeRequests()
                 .antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT).authenticated()

@@ -7,6 +7,7 @@ import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -27,6 +28,8 @@ class TurmaApiHomeV1 : ApiRestController {
 
     @ApiOperation(
             value="Listar as turmas por cursos",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
             response=TurmaV1DTO::class,
             notes="Essa operação necessita de um ou mais parametros de cursoId")
     @ApiResponses(value=[
